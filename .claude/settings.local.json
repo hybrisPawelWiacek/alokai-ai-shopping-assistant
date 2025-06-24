@@ -13,7 +13,9 @@
       "Bash(grep:*)",
       "Bash(touch:*)",
       "Bash(ls:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(brew install:*)",
+      "Bash(gh auth:*)"
     ],
     "deny": []
   }

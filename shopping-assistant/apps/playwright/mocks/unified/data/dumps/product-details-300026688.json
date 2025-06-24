@@ -1,0 +1,391 @@
+{
+  "product": {
+    "id": "300026688",
+    "sku": "300026688",
+    "name": "Slip On Vans Classic Slip on black white checker/white 13.0",
+    "slug": "300026688-slip-on-vans-classic-slip-on-black-white-checker-white-13-0",
+    "price": {
+      "isDiscounted": false,
+      "regularPrice": {
+        "currency": "USD",
+        "amount": 81.76,
+        "precisionAmount": "81.76"
+      },
+      "value": {
+        "currency": "USD",
+        "amount": 81.76,
+        "precisionAmount": "81.76"
+      }
+    },
+    "primaryImage": {
+      "alt": "Slip On Vans Classic Slip on black white checker/white 13.0",
+      "url": "sap/medias/context/bWFzdGVyfGltYWdlc3w5MDE5fGltYWdlL2pwZWd8YURZNUwyZ3hOUzg0TnprMk5qUTVOemd6TXpJMnxhMjkyM2YzMDQxNGZkNTk5ZTU0MjEzN2IxMGJjNGY0OTk4ZmVjNjhlY2FlZTY1M2I0ZTgxNmQyZmI5MTFiOGE3"
+    },
+    "rating": null,
+    "quantityLimit": 5,
+    "attributes": [
+      {
+        "name": "size",
+        "label": "Size",
+        "value": "13.0 US",
+        "valueLabel": "13.0 US"
+      },
+      {
+        "name": "style",
+        "label": "Style",
+        "value": "black/white",
+        "valueLabel": "black/white"
+      }
+    ],
+    "variants": [
+      {
+        "id": "300026679",
+        "sku": "300026679",
+        "slug": "300026679",
+        "name": null,
+        "quantityLimit": 87,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "10.0 US",
+            "valueLabel": "10.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026680",
+        "sku": "300026680",
+        "slug": "300026680",
+        "name": null,
+        "quantityLimit": 99,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "10.5 US",
+            "valueLabel": "10.5 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026681",
+        "sku": "300026681",
+        "slug": "300026681",
+        "name": null,
+        "quantityLimit": 121,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "11.0 US",
+            "valueLabel": "11.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026682",
+        "sku": "300026682",
+        "slug": "300026682",
+        "name": null,
+        "quantityLimit": 157,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "12.0 US",
+            "valueLabel": "12.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026684",
+        "sku": "300026684",
+        "slug": "300026684",
+        "name": null,
+        "quantityLimit": null,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "8.5 US",
+            "valueLabel": "8.5 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026685",
+        "sku": "300026685",
+        "slug": "300026685",
+        "name": null,
+        "quantityLimit": 0,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "9.0 US",
+            "valueLabel": "9.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026686",
+        "sku": "300026686",
+        "slug": "300026686",
+        "name": null,
+        "quantityLimit": 2,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "9.5 US",
+            "valueLabel": "9.5 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026687",
+        "sku": "300026687",
+        "slug": "300026687",
+        "name": null,
+        "quantityLimit": 4,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "11.5 US",
+            "valueLabel": "11.5 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026688",
+        "sku": "300026688",
+        "slug": "300026688",
+        "name": null,
+        "quantityLimit": 5,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "13.0 US",
+            "valueLabel": "13.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026689",
+        "sku": "300026689",
+        "slug": "300026689",
+        "name": null,
+        "quantityLimit": 11,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "14.0 US",
+            "valueLabel": "14.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026690",
+        "sku": "300026690",
+        "slug": "300026690",
+        "name": null,
+        "quantityLimit": 15,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "15.0 US",
+            "valueLabel": "15.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300026691",
+        "sku": "300026691",
+        "slug": "300026691",
+        "name": null,
+        "quantityLimit": 22,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "7.0 US",
+            "valueLabel": "7.0 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black/white",
+            "valueLabel": "black/white"
+          }
+        ]
+      },
+      {
+        "id": "300068437",
+        "sku": "300068437",
+        "slug": "300068437",
+        "name": null,
+        "quantityLimit": 29,
+        "attributes": [
+          {
+            "name": "size",
+            "label": "Size",
+            "value": "11.5 US",
+            "valueLabel": "11.5 US"
+          },
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black white checker/white",
+            "valueLabel": "black white checker/white"
+          }
+        ]
+      },
+      {
+        "id": "M18729",
+        "sku": "M18729",
+        "slug": "m18729",
+        "name": null,
+        "quantityLimit": 0,
+        "attributes": [
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "red",
+            "valueLabel": "red"
+          }
+        ]
+      },
+      {
+        "id": "M28324",
+        "sku": "M28324",
+        "slug": "m28324",
+        "name": null,
+        "quantityLimit": 0,
+        "attributes": [
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "white",
+            "valueLabel": "white"
+          }
+        ]
+      },
+      {
+        "id": "M35392",
+        "sku": "M35392",
+        "slug": "m35392",
+        "name": null,
+        "quantityLimit": 0,
+        "attributes": [
+          {
+            "name": "style",
+            "label": "Style",
+            "value": "black",
+            "valueLabel": "black"
+          }
+        ]
+      }
+    ],
+    "description": "Features:<br /><br />+ canvas upper<br />+ vulcanized waffle rubber outsole",
+    "gallery": [
+      {
+        "alt": "Slip On Vans Classic Slip on black white checker/white 13.0",
+        "url": "sap/medias/context/bWFzdGVyfGltYWdlc3wyMTkyMHxpbWFnZS9qcGVnfGFERTVMMmhqWkM4NE56azJOalF4T1RFNU1EQTJ8YTZhMmU3YmU5Y2QzNzUwMmU4OTRjNTNhMzgxZDRjNTM2OTUzMTc4ZTg5MmY2ZTkwZDE4YTgxMzg4MzE5YjE0Yg"
+      }
+    ]
+  },
+  "categoryHierarchy": [
+    {
+      "id": "Vans",
+      "name": "Vans",
+      "slug": "Vans",
+      "subcategories": null,
+      "parentCategoryId": null
+    },
+    {
+      "id": "shoes",
+      "name": "Shoes",
+      "slug": "shoes",
+      "subcategories": null,
+      "parentCategoryId": "Vans"
+    },
+    {
+      "id": "230000",
+      "name": "Shoes",
+      "slug": "230000",
+      "subcategories": null,
+      "parentCategoryId": "shoes"
+    }
+  ]
+}

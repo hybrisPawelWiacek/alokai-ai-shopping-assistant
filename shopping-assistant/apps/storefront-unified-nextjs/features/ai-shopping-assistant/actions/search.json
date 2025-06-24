@@ -1,0 +1,162 @@
+{
+  "searchProducts": {
+    "id": "searchProducts",
+    "name": "Search Products",
+    "description": "Search for products in the catalog based on query, filters, and sorting preferences",
+    "category": "search",
+    "mode": "both",
+    "parameters": {
+      "query": {
+        "type": "string",
+        "description": "Search query text to find products",
+        "required": true
+      },
+      "filters": {
+        "type": "object",
+        "description": "Filters to narrow down search results",
+        "required": false,
+        "properties": {
+          "categories": {
+            "type": "array",
+            "description": "Category IDs to filter by",
+            "items": {
+              "type": "string",
+              "description": "Category ID"
+            }
+          },
+          "priceRange": {
+            "type": "object",
+            "description": "Price range filter",
+            "properties": {
+              "min": {
+                "type": "number",
+                "description": "Minimum price",
+                "min": 0
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum price",
+                "min": 0
+              }
+            }
+          },
+          "brands": {
+            "type": "array",
+            "description": "Brand names to filter by",
+            "items": {
+              "type": "string",
+              "description": "Brand name"
+            }
+          },
+          "inStock": {
+            "type": "boolean",
+            "description": "Only show products in stock",
+            "default": false
+          }
+        }
+      },
+      "sortBy": {
+        "type": "string",
+        "description": "How to sort the results",
+        "required": false,
+        "enum": ["relevance", "price_asc", "price_desc", "name", "rating", "newest"],
+        "default": "relevance"
+      },
+      "pagination": {
+        "type": "object",
+        "description": "Pagination settings",
+        "required": false,
+        "properties": {
+          "limit": {
+            "type": "number",
+            "description": "Number of results per page",
+            "default": 20,
+            "min": 1,
+            "max": 100
+          },
+          "offset": {
+            "type": "number",
+            "description": "Number of results to skip",
+            "default": 0,
+            "min": 0
+          }
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "products": {
+          "type": "array",
+          "description": "Array of products matching the search"
+        },
+        "totalCount": {
+          "type": "number",
+          "description": "Total number of matching products"
+        },
+        "facets": {
+          "type": "object",
+          "description": "Available filter options based on results"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 30,
+      "windowMs": 60000
+    },
+    "monitoring": {
+      "trackExecutionTime": true,
+      "trackErrorRate": true,
+      "sampleRate": 1.0
+    },
+    "ui": {
+      "component": "SearchResults",
+      "props": {
+        "showFilters": true,
+        "showSorting": true
+      }
+    }
+  },
+  "getProductDetails": {
+    "id": "getProductDetails",
+    "name": "Get Product Details",
+    "description": "Retrieve detailed information about a specific product including descriptions, images, variants, and pricing",
+    "category": "product",
+    "mode": "both",
+    "parameters": {
+      "productId": {
+        "type": "string",
+        "description": "Unique identifier of the product",
+        "required": true
+      },
+      "includeVariants": {
+        "type": "boolean",
+        "description": "Include product variants in the response",
+        "default": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "product": {
+          "type": "object",
+          "description": "Detailed product information"
+        },
+        "variants": {
+          "type": "array",
+          "description": "Product variants if requested"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 100,
+      "windowMs": 60000
+    },
+    "security": {
+      "validateInput": true
+    },
+    "ui": {
+      "component": "ProductDetail"
+    }
+  }
+}

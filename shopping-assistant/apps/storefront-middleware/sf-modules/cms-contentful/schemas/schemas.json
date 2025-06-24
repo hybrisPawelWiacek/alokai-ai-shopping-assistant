@@ -1,0 +1,6309 @@
+{
+  "contentTypes": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "accordion",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:29.140Z",
+        "updatedAt": "2024-04-18T07:55:35.571Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:35.571Z",
+        "firstPublishedAt": "2024-04-18T07:55:35.571Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/accordion"
+      },
+      "displayField": "entryTitle",
+      "name": "Accordion",
+      "description": "[Component] Container for Storefront UI Accordion Items.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Accordion"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "allowMultipleOpen",
+          "name": "Allow multiple open",
+          "type": "Boolean",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": true
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "items",
+          "name": "Items",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "accordionItem"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "banner",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:29.484Z",
+        "updatedAt": "2024-04-18T17:05:13.930Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 5,
+        "publishedAt": "2024-04-18T17:05:13.930Z",
+        "firstPublishedAt": "2024-04-18T07:55:35.035Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 3,
+        "version": 6,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/banner"
+      },
+      "displayField": "title",
+      "name": "Banner",
+      "description": "[Component] A single Storefront UI Banner.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Banner"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "subtitle",
+          "name": "Subtitle",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "Text",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Asset"
+        },
+        {
+          "id": "button",
+          "name": "Button",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "button"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "backgroundColor",
+          "name": "Background color",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "page",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:29.492Z",
+        "updatedAt": "2024-09-18T13:13:52.637Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 9,
+        "publishedAt": "2024-09-18T13:13:52.637Z",
+        "firstPublishedAt": "2024-04-18T07:55:36.751Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "publishedCounter": 5,
+        "version": 10,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/page"
+      },
+      "displayField": "url",
+      "name": "Page",
+      "description": "[Container] Dynamic container for creating pages featuring layout and page components.",
+      "fields": [
+        {
+          "id": "url",
+          "name": "URL",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+            {
+              "unique": true
+            },
+            {
+              "regexp": {
+                "pattern": "^\\/(.*)$",
+                "flags": null
+              },
+              "message": "The page url needs to start with a forward slash (/)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "componentsAboveFold",
+          "name": "Components above the fold",
+          "type": "Array",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "accordion",
+                  "banner",
+                  "card",
+                  "editorial",
+                  "gallery",
+                  "grid",
+                  "hero",
+                  "newsletterBox",
+                  "scrollable",
+                  "categoryCartGrid"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "componentsBelowFold",
+          "name": "Components below the fold",
+          "type": "Array",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "accordion",
+                  "banner",
+                  "card",
+                  "editorial",
+                  "gallery",
+                  "grid",
+                  "hero",
+                  "newsletterBox",
+                  "scrollable",
+                  "categoryCartGrid"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ],
+      "metadata": {
+        "annotations": {
+          "ContentType": [
+            {
+              "sys": {
+                "id": "Contentful:AggregateRoot",
+                "type": "Link",
+                "linkType": "Annotation"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "card",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:29.551Z",
+        "updatedAt": "2024-04-18T07:55:33.988Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:33.988Z",
+        "firstPublishedAt": "2024-04-18T07:55:33.988Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/card"
+      },
+      "displayField": "title",
+      "name": "Card",
+      "description": "[Component] A single Storefront UI Card.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Card"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "Text",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkMimetypeGroup": [
+                "image"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Asset"
+        },
+        {
+          "id": "button",
+          "name": "Button",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "button"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "editorial",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:29.574Z",
+        "updatedAt": "2024-04-18T16:45:48.867Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 5,
+        "publishedAt": "2024-04-18T16:45:48.867Z",
+        "firstPublishedAt": "2024-04-18T07:55:36.162Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 3,
+        "version": 6,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/editorial"
+      },
+      "displayField": "entryTitle",
+      "name": "Editorial",
+      "description": "[Component] Takes the raw HTML generated by the Rich Text editor and renders it on a page.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Editorial"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "content",
+          "name": "Content",
+          "type": "RichText",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "enabledMarks": [
+                "bold",
+                "italic",
+                "underline",
+                "code",
+                "superscript",
+                "subscript"
+              ],
+              "message": "Only bold, italic, underline, code, superscript, and subscript marks are allowed"
+            },
+            {
+              "enabledNodeTypes": [
+                "heading-1",
+                "heading-2",
+                "heading-3",
+                "heading-4",
+                "heading-5",
+                "heading-6",
+                "ordered-list",
+                "unordered-list",
+                "hr",
+                "blockquote",
+                "embedded-entry-block",
+                "embedded-asset-block",
+                "table",
+                "hyperlink",
+                "entry-hyperlink",
+                "asset-hyperlink",
+                "embedded-entry-inline"
+              ],
+              "message": "Only heading 1, heading 2, heading 3, heading 4, heading 5, heading 6, ordered list, unordered list, horizontal rule, quote, block entry, asset, table, link to Url, link to entry, link to asset, and inline entry nodes are allowed"
+            },
+            {
+              "nodes": {
+              }
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "accordionItem",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:29.589Z",
+        "updatedAt": "2024-04-18T07:55:34.509Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:34.509Z",
+        "firstPublishedAt": "2024-04-18T07:55:34.509Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/accordionItem"
+      },
+      "displayField": "summary",
+      "name": "Accordion Item",
+      "description": "[Field Group] A single Storefront UI Accordion Item. To be used with Accordion Content Type only.",
+      "fields": [
+        {
+          "id": "summary",
+          "name": "Summary",
+          "type": "Symbol",
+          "localized": true,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "details",
+          "name": "Details",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "gallery",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:29.794Z",
+        "updatedAt": "2024-04-18T07:55:37.379Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:37.379Z",
+        "firstPublishedAt": "2024-04-18T07:55:37.379Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/gallery"
+      },
+      "displayField": "entryTitle",
+      "name": "Gallery",
+      "description": "[Component] A single Storefront UI Gallery.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Gallery"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "images",
+          "name": "Images",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkMimetypeGroup": [
+                  "image"
+                ]
+              }
+            ],
+            "linkType": "Asset"
+          }
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "scrollable",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:30.717Z",
+        "updatedAt": "2024-04-18T07:55:40.729Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:40.729Z",
+        "firstPublishedAt": "2024-04-18T07:55:40.729Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/scrollable"
+      },
+      "displayField": "entryTitle",
+      "name": "Scrollable",
+      "description": "[Component] A single Storefront UI Scollable.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Scrollable"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "items",
+          "name": "Items",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "banner",
+                  "hero",
+                  "card",
+                  "productList"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "buttonsPlacement",
+          "name": "Buttons placement",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "block",
+                "floating",
+                "none"
+              ]
+            }
+          ],
+          "defaultValue": {
+            "en": "block"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "direction",
+          "name": "Direction",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "horizontal",
+                "vertical"
+              ]
+            }
+          ],
+          "defaultValue": {
+            "en": "horizontal"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "drag",
+          "name": "Drag",
+          "type": "Boolean",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": false
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "grid",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:30.733Z",
+        "updatedAt": "2024-09-26T14:36:12.275Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 5,
+        "publishedAt": "2024-09-26T14:36:12.275Z",
+        "firstPublishedAt": "2024-04-18T07:55:39.708Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "5Wu2g3BJoB0xlLMbs5ReJR"
+          }
+        },
+        "publishedCounter": 3,
+        "version": 6,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "5Wu2g3BJoB0xlLMbs5ReJR"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/grid"
+      },
+      "displayField": "entryTitle",
+      "name": "Grid",
+      "description": "[Component] Powerful component which takes in other page components (e.g. Banner) and displays them in a structured grid layout.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Grid"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "unique": true
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "items",
+          "name": "Items",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "banner",
+                  "card",
+                  "editorial",
+                  "gallery",
+                  "accordion",
+                  "categoryCard"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "hero",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:30.747Z",
+        "updatedAt": "2024-04-18T07:55:38.750Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:38.750Z",
+        "firstPublishedAt": "2024-04-18T07:55:38.750Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/hero"
+      },
+      "displayField": "title",
+      "name": "Hero",
+      "description": "[Component] A single Storefront UI Hero.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Hero"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "subtitle",
+          "name": "Subtitle",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkMimetypeGroup": [
+                "image"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Asset"
+        },
+        {
+          "id": "backgroundImage",
+          "name": "Background image",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkMimetypeGroup": [
+                "image"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Asset"
+        },
+        {
+          "id": "backgroundImageMobile",
+          "name": "Background Image Mobile",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkMimetypeGroup": [
+                "image"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Asset"
+        },
+        {
+          "id": "buttonA",
+          "name": "Button A",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "button"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "buttonB",
+          "name": "Button B",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "button"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "styler",
+          "name": "Styler",
+          "type": "Object",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "newsletterBox",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:30.754Z",
+        "updatedAt": "2024-09-17T22:50:48.696Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 5,
+        "publishedAt": "2024-09-17T22:50:48.696Z",
+        "firstPublishedAt": "2024-04-18T07:55:38.313Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "publishedCounter": 3,
+        "version": 6,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/newsletterBox"
+      },
+      "displayField": "header",
+      "name": "Newsletter Box",
+      "description": "[Component] A single Storefront UI Newsletter Box.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "NewsletterBox"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "header",
+          "name": "Header",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "subheader",
+          "name": "Subheader",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "inputPlaceholder",
+          "name": "Input placeholder",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "buttonText",
+          "name": "Button text",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "backgroundImage",
+          "name": "Background image",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkMimetypeGroup": [
+                "image"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Asset"
+        },
+        {
+          "id": "backgroundColor",
+          "name": "Background color",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesScreenResolutions",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:31.636Z",
+        "updatedAt": "2024-04-18T07:55:42.760Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:42.760Z",
+        "firstPublishedAt": "2024-04-18T07:55:42.760Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesScreenResolutions"
+      },
+      "displayField": null,
+      "name": "Styles - screen resolutions",
+      "description": "[Field Group] Screen resolution to apply the styles for. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "min",
+          "name": "Min",
+          "type": "Integer",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "max",
+          "name": "Max",
+          "type": "Integer",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "styles",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:31.650Z",
+        "updatedAt": "2024-04-18T07:55:44.221Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:44.221Z",
+        "firstPublishedAt": "2024-04-18T07:55:44.221Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/styles"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles",
+      "description": "[Field Group] Allows customizing certain CSS properties of your components.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component styles"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "resolutions",
+          "name": "Screen resolutions",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesScreenResolutions"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "margins",
+          "name": "Margins",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesMargins"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "paddings",
+          "name": "Paddings",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesPaddings"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "gaps",
+          "name": "Gaps",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesGaps"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "heights",
+          "name": "Heights",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesHeights"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "widths",
+          "name": "Widths",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesWidths"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "grid",
+          "name": "Grid",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesGrid"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "flex",
+          "name": "Flex",
+          "type": "Link",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "linkContentType": [
+                "stylesFlex"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesMargins",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:31.758Z",
+        "updatedAt": "2024-04-18T07:55:41.697Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:41.697Z",
+        "firstPublishedAt": "2024-04-18T07:55:41.697Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesMargins"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles - margins",
+      "description": "[Field Group] CSS margin properties to apply for a component. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component margins"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "margin_top",
+          "name": "Margin top",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "^((\\d+(\\.\\d+)?(px|em|%|in|cm|mm|pt|pc|rem|vw|vh|vmin|vmax)|auto|inherit|initial|unset)\\s*){1,4}$",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw) or be one of \"auto\", \"inherit\", \"initial\", \"unset\"."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "margin_bottom",
+          "name": "Margin bottom",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "^((\\d+(\\.\\d+)?(px|em|%|in|cm|mm|pt|pc|rem|vw|vh|vmin|vmax)|auto|inherit|initial|unset)\\s*){1,4}$",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw) or be one of \"auto\", \"inherit\", \"initial\", \"unset\"."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "margin_left",
+          "name": "Margin left",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "^((\\d+(\\.\\d+)?(px|em|%|in|cm|mm|pt|pc|rem|vw|vh|vmin|vmax)|auto|inherit|initial|unset)\\s*){1,4}$",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw) or be one of \"auto\", \"inherit\", \"initial\", \"unset\"."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "margin_right",
+          "name": "Margin right",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "^((\\d+(\\.\\d+)?(px|em|%|in|cm|mm|pt|pc|rem|vw|vh|vmin|vmax)|auto|inherit|initial|unset)\\s*){1,4}$",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw) or be one of \"auto\", \"inherit\", \"initial\", \"unset\"."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesPaddings",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:31.769Z",
+        "updatedAt": "2024-04-18T07:55:43.193Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:43.193Z",
+        "firstPublishedAt": "2024-04-18T07:55:43.193Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesPaddings"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles - paddings",
+      "description": "[Field Group] CSS padding properties to apply for a component. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component paddings"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "padding_top",
+          "name": "Padding top",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "padding_bottom",
+          "name": "Padding bottom",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "padding_left",
+          "name": "Padding left",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "padding_right",
+          "name": "Padding right",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "button",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:31.779Z",
+        "updatedAt": "2024-04-18T07:55:43.722Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:43.722Z",
+        "firstPublishedAt": "2024-04-18T07:55:43.722Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/button"
+      },
+      "displayField": "label",
+      "name": "Button",
+      "description": "[Field Group] Allows adding buttons with (caption + link) to components such as Banner and Hero.",
+      "fields": [
+        {
+          "id": "label",
+          "name": "Label",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "link",
+          "name": "Link",
+          "type": "Symbol",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "^\\/(.*)$",
+                "flags": null
+              },
+              "message": "The path needs to start with a forward slash (/)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "productList",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:32.605Z",
+        "updatedAt": "2024-04-18T07:55:47.978Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:47.978Z",
+        "firstPublishedAt": "2024-04-18T07:55:47.978Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/productList"
+      },
+      "displayField": "component",
+      "name": "ProductList",
+      "description": "[Component] Product list for Scrollable",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "ProductList"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "items",
+          "name": "Items",
+          "type": "Array",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "productListItem"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "categoryCard",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:32.606Z",
+        "updatedAt": "2024-04-18T07:55:47.535Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:47.535Z",
+        "firstPublishedAt": "2024-04-18T07:55:47.535Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/categoryCard"
+      },
+      "displayField": "categoryId",
+      "name": "CategoryCard",
+      "description": "[Component] A single Storefront UI Category Card.",
+      "fields": [
+        {
+          "id": "component",
+          "name": "Component",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "CategoryCard"
+          },
+          "disabled": true,
+          "omitted": false
+        },
+        {
+          "id": "image",
+          "name": "Image",
+          "type": "Link",
+          "localized": true,
+          "required": false,
+          "validations": [
+            {
+              "linkMimetypeGroup": [
+                "image"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Asset"
+        },
+        {
+          "id": "categoryId",
+          "name": "CategoryId",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "styles",
+          "name": "Styles",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "styles"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesHeights",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:32.630Z",
+        "updatedAt": "2024-04-18T07:55:45.268Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:45.268Z",
+        "firstPublishedAt": "2024-04-18T07:55:45.268Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesHeights"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles - heights",
+      "description": "[Field Group] CSS height properties to apply for a component. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component height"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "height",
+          "name": "Height",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "min_height",
+          "name": "Min height",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "max_height",
+          "name": "Max height",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesFlex",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:32.767Z",
+        "updatedAt": "2024-04-18T07:55:45.802Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:45.802Z",
+        "firstPublishedAt": "2024-04-18T07:55:45.802Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesFlex"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles - flex",
+      "description": "[Field Group] CSS flex container properties to apply for a component. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component flex container properties"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "display",
+          "name": "Display",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "initial",
+                "flex",
+                "inline-flex"
+              ]
+            }
+          ],
+          "defaultValue": {
+            "en": "flex"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "flex_direction",
+          "name": "Flex direction",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "row",
+                "row-reverse",
+                "column",
+                "column-reverse"
+              ]
+            }
+          ],
+          "defaultValue": {
+            "en": "row"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "flex_wrap",
+          "name": "Flex wrap",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "nowrap",
+                "wrap",
+                "wrap-reverse"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "justify_content",
+          "name": "Justify content",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "center",
+                "stretch",
+                "space-evenly",
+                "space-around",
+                "space-between",
+                "flex-end",
+                "flex-start"
+              ]
+            }
+          ],
+          "defaultValue": {
+            "en": "flex-start"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "align_items",
+          "name": "Align items",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "stretch",
+                "flex-start",
+                "flex-end",
+                "center",
+                "baseline"
+              ]
+            }
+          ],
+          "defaultValue": {
+            "en": "stretch"
+          },
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesWidths",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:32.780Z",
+        "updatedAt": "2024-04-18T07:55:46.901Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:46.901Z",
+        "firstPublishedAt": "2024-04-18T07:55:46.901Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesWidths"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles - widths",
+      "description": "[Field Group] CSS width properties to apply for a component. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component width"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "width",
+          "name": "Width",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "min_width",
+          "name": "Min width",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "max_width",
+          "name": "Max width",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesGaps",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:32.814Z",
+        "updatedAt": "2024-04-18T07:55:44.753Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:44.753Z",
+        "firstPublishedAt": "2024-04-18T07:55:44.753Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesGaps"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles - gaps",
+      "description": "[Field Group] CSS gaps properties to apply for a component. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component gaps"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "column_gap",
+          "name": "Column gap",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "row_gap",
+          "name": "Row gap",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "regexp": {
+                "pattern": "\\b\\d+(?:\\.\\d+)?(?:px|em|rem|vh|vw|vmin|vmax|ex|ch|cm|mm|in|pt|pc)\\b",
+                "flags": null
+              },
+              "message": "The provided value must end with a CSS length unit (e.g. px, rem, vw)."
+            }
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "stylesGrid",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:32.821Z",
+        "updatedAt": "2024-04-18T07:55:46.373Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:46.373Z",
+        "firstPublishedAt": "2024-04-18T07:55:46.373Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/stylesGrid"
+      },
+      "displayField": "entryTitle",
+      "name": "Styles - grid",
+      "description": "[Field Group] CSS grid container properties to apply for a component. To be used with the Styles Content Type only.",
+      "fields": [
+        {
+          "id": "entryTitle",
+          "name": "Entry title",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "defaultValue": {
+            "en": "Component grid container properties"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "display",
+          "name": "Display",
+          "type": "Symbol",
+          "localized": false,
+          "required": false,
+          "validations": [
+            {
+              "in": [
+                "block",
+                "grid",
+                "inline-grid"
+              ]
+            }
+          ],
+          "defaultValue": {
+            "en": "grid"
+          },
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "grid_template_areas",
+          "name": "Grid template areas",
+          "type": "Text",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "productListItem",
+        "type": "ContentType",
+        "createdAt": "2024-04-18T07:55:33.593Z",
+        "updatedAt": "2024-04-18T07:55:48.556Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 1,
+        "publishedAt": "2024-04-18T07:55:48.556Z",
+        "firstPublishedAt": "2024-04-18T07:55:48.556Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 2,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/productListItem"
+      },
+      "displayField": "product",
+      "name": "ProductListItem",
+      "description": "[Component] Entry item used within Product List component",
+      "fields": [
+        {
+          "id": "product",
+          "name": "Product",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "categoryPage",
+        "type": "ContentType",
+        "createdAt": "2024-09-17T22:09:04.725Z",
+        "updatedAt": "2024-09-18T13:42:32.335Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 9,
+        "publishedAt": "2024-09-18T13:42:32.335Z",
+        "firstPublishedAt": "2024-09-17T22:09:05.260Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "publishedCounter": 5,
+        "version": 10,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/categoryPage"
+      },
+      "displayField": "url",
+      "name": "Category Page",
+      "description": "[Container] Dynamic container for creating Category page components.",
+      "fields": [
+        {
+          "id": "url",
+          "name": "URL",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "componentsTop",
+          "name": "Components from section top",
+          "type": "Array",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "componentsBottom",
+          "name": "Components from section bottom",
+          "type": "Array",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "productPage",
+        "type": "ContentType",
+        "createdAt": "2024-09-17T22:19:56.932Z",
+        "updatedAt": "2024-09-18T13:43:31.309Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 7,
+        "publishedAt": "2024-09-18T13:43:31.309Z",
+        "firstPublishedAt": "2024-09-17T22:19:57.584Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "publishedCounter": 4,
+        "version": 8,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "urn": "crn:contentful:::content:spaces/d4wizuml8p4u/environments/master/content_types/productPage"
+      },
+      "displayField": "url",
+      "name": "Product Page",
+      "description": "[Container] Dynamic container for creating Products page components.",
+      "fields": [
+        {
+          "id": "url",
+          "name": "URL",
+          "type": "Symbol",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        },
+        {
+          "id": "componentsBottom",
+          "name": "Components from section bottom",
+          "type": "Array",
+          "localized": true,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+            ],
+            "linkType": "Entry"
+          }
+        }
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "id": "testtag",
+        "type": "Tag",
+        "createdAt": "2024-04-18T07:55:49.560Z",
+        "updatedAt": "2024-04-18T07:55:49.560Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "version": 1,
+        "visibility": "public"
+      },
+      "name": "testtag"
+    }
+  ],
+  "editorInterfaces": [
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:35.791Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:54.030Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "accordion",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "allowMultipleOpen",
+          "settings": {
+            "helpText": "If true, users will be able to expand multiple accordion items at the same time. When false, expanding one item will collapse the currently open one.",
+            "trueLabel": "Yes",
+            "falseLabel": "No"
+          },
+          "widgetId": "boolean",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "items",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 7,
+        "createdAt": "2024-04-18T07:55:35.176Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T17:05:14.645Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "banner",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "title",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "subtitle",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "description",
+          "widgetId": "multipleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "image",
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "button",
+          "widgetId": "entryCardEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "backgroundColor",
+          "widgetId": "4Vy3oAINwRgnxakoTz06tG",
+          "widgetNamespace": "app"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 10,
+        "createdAt": "2024-04-18T07:55:36.956Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-09-18T13:13:53.440Z",
+        "updatedBy": {
+          "sys": {
+            "id": "6tzc16DmiJ5vW5yuNSDpGC",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "page",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "url",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "componentsAboveFold",
+          "settings": {
+            "helpText": "Components visible immediately once the page is loaded.",
+            "bulkEditing": false,
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryCardsEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "componentsBelowFold",
+          "settings": {
+            "helpText": "Components visible only after scrolling down",
+            "bulkEditing": false,
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryCardsEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:34.088Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:54.257Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "card",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "title",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "description",
+          "widgetId": "multipleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "image",
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "button",
+          "widgetId": "entryCardEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 6,
+        "createdAt": "2024-04-18T07:55:36.300Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T16:45:49.491Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "editorial",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field exists only to become an Entry title. Give it whatever name you like (e.g. Blog Post Editorial)."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "content",
+          "widgetId": "richTextEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:34.645Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:54.027Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "accordionItem",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "sidebar": [
+        {
+          "settings": {
+          },
+          "widgetId": "publication-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "content-preview-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "incoming-links-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "translation-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "versions-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "disabled": true,
+          "settings": {
+          },
+          "widgetId": "releases-widget",
+          "widgetNamespace": "sidebar-builtin"
+        }
+      ],
+      "controls": [
+        {
+          "fieldId": "summary",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "details",
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:37.482Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:55.020Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "gallery",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "images",
+          "widgetId": "assetGalleryEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:40.822Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:55.020Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "scrollable",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "entryTitle",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "items",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "buttonsPlacement",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "direction",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "drag",
+          "widgetId": "boolean",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 6,
+        "createdAt": "2024-04-18T07:55:39.860Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-09-26T14:36:13.059Z",
+        "updatedBy": {
+          "sys": {
+            "id": "5Wu2g3BJoB0xlLMbs5ReJR",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "grid",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "items",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:38.900Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:56.066Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "hero",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "sidebar": [
+        {
+          "settings": {
+          },
+          "widgetId": "nFnEqlAYKBhn8MyDnVO3b",
+          "widgetNamespace": "app"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "publication-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "content-preview-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "incoming-links-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "translation-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "settings": {
+          },
+          "widgetId": "versions-widget",
+          "widgetNamespace": "sidebar-builtin"
+        },
+        {
+          "disabled": true,
+          "settings": {
+          },
+          "widgetId": "releases-widget",
+          "widgetNamespace": "sidebar-builtin"
+        }
+      ],
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "title",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "subtitle",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "description",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "image",
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "backgroundImage",
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "backgroundImageMobile",
+          "settings": {
+            "helpText": "background image that's visible only on mobile (for screens below 768px of width)",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "buttonA",
+          "widgetId": "entryCardEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "buttonB",
+          "widgetId": "entryCardEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styler",
+          "settings": {
+            "helpText": "This field is used by Vue Storefront Styler. Do not edit it directly from within Contentful unless you really know what you're doing."
+          },
+          "widgetId": "objectEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 7,
+        "createdAt": "2024-04-18T07:55:38.406Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-09-17T22:50:49.595Z",
+        "updatedBy": {
+          "sys": {
+            "id": "6tzc16DmiJ5vW5yuNSDpGC",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "newsletterBox",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "header",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "subheader",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "inputPlaceholder",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "buttonText",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "backgroundImage",
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "backgroundColor",
+          "widgetId": "4Vy3oAINwRgnxakoTz06tG",
+          "widgetNamespace": "app"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:42.810Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:56.066Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesScreenResolutions",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "min",
+          "settings": {
+            "helpText": "Minimal screen resolution (in pixels) to apply the styles for."
+          },
+          "widgetId": "numberEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "max",
+          "settings": {
+            "helpText": "Maximal screen resolution (in pixels) to apply the styles for."
+          },
+          "widgetId": "numberEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:44.368Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.128Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "styles",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "resolutions",
+          "settings": {
+            "helpText": "Screen resolution to apply the styles for.",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "margins",
+          "settings": {
+            "helpText": "CSS margin properties to apply for a component.",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "paddings",
+          "settings": {
+            "helpText": "CSS padding properties to apply for a component.",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "gaps",
+          "settings": {
+            "helpText": "CSS gaps properties to apply for a component.",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "heights",
+          "settings": {
+            "helpText": "CSS height properties to apply for a component.",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "widths",
+          "settings": {
+            "helpText": "CSS width properties to apply for a component",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "grid",
+          "settings": {
+            "helpText": "CSS grid properties to apply for a component.",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "flex",
+          "settings": {
+            "helpText": "CSS flex container properties to apply for a component.",
+            "showLinkEntityAction": true,
+            "showCreateEntityAction": true
+          },
+          "widgetId": "entryLinkEditor",
+          "widgetNamespace": "builtin"
+        }
+      ],
+      "editorLayout": [
+        {
+          "name": "Content",
+          "items": [
+            {
+              "name": "Resolutions",
+              "items": [
+              ],
+              "groupId": "resolutions"
+            },
+            {
+              "name": "Margins",
+              "items": [
+              ],
+              "groupId": "margins"
+            },
+            {
+              "name": "Paddings",
+              "items": [
+              ],
+              "groupId": "paddings"
+            },
+            {
+              "name": "Height",
+              "items": [
+              ],
+              "groupId": "height"
+            },
+            {
+              "name": "Width",
+              "items": [
+              ],
+              "groupId": "width"
+            },
+            {
+              "name": "Gaps",
+              "items": [
+              ],
+              "groupId": "gaps"
+            },
+            {
+              "name": "Grid",
+              "items": [
+              ],
+              "groupId": "grid"
+            },
+            {
+              "name": "Flexbox",
+              "items": [
+              ],
+              "groupId": "flexbox"
+            },
+            {
+              "fieldId": "resolutions"
+            },
+            {
+              "fieldId": "entryTitle"
+            },
+            {
+              "fieldId": "margins"
+            },
+            {
+              "fieldId": "paddings"
+            },
+            {
+              "fieldId": "gaps"
+            },
+            {
+              "fieldId": "heights"
+            },
+            {
+              "fieldId": "widths"
+            },
+            {
+              "fieldId": "grid"
+            },
+            {
+              "fieldId": "flex"
+            }
+          ],
+          "groupId": "content"
+        }
+      ],
+      "groupControls": [
+        {
+          "groupId": "content",
+          "settings": {
+          },
+          "widgetId": "topLevelTab",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "margins",
+          "settings": {
+            "helpText": "",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "paddings",
+          "settings": {
+            "helpText": "",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "height",
+          "settings": {
+            "helpText": "",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "width",
+          "settings": {
+            "helpText": "",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "gaps",
+          "settings": {
+            "helpText": "",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "grid",
+          "settings": {
+            "helpText": "",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "flexbox",
+          "settings": {
+            "helpText": "",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "groupId": "resolutions",
+          "settings": {
+            "helpText": "Screen resolution to apply the styles for",
+            "collapsedByDefault": true
+          },
+          "widgetId": "fieldset",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:41.851Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.071Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesMargins",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "margin_top",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "margin_bottom",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "margin_left",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "margin_right",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:43.344Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:56.058Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesPaddings",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "padding_top",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "padding_bottom",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "padding_left",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "padding_right",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:43.843Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:56.066Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "button",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "label",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "link",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:48.101Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.999Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "productList",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "items",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:47.637Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.016Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "categoryCard",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "component",
+          "settings": {
+            "helpText": "Name of the corresponding frontend component."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "image",
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "categoryId",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "styles",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:45.390Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.072Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesHeights",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "height",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "min_height",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "max_height",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:45.927Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.025Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesFlex",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "display",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "flex_direction",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "flex_wrap",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "justify_content",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "align_items",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:47.053Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.046Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesWidths",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "width",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "min_width",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "max_width",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:44.880Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:57.032Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesGaps",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "column_gap",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "row_gap",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:46.511Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:58.013Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "stylesGrid",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "entryTitle",
+          "settings": {
+            "helpText": "This field only exists only to help you identify the entry within the CMS. It won't be used by the frontend application."
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "display",
+          "widgetId": "dropdown",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "grid_template_areas",
+          "settings": {
+            "helpText": "If you had added three components to the grid, you can choose to display them in a single row or stacked. To achieve those two layouts, you would have to set the \"areas\" property to either \"a b c\" or \"a a\" \"b c\" respectively."
+          },
+          "widgetId": "multipleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 2,
+        "createdAt": "2024-04-18T07:55:48.633Z",
+        "createdBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:58.007Z",
+        "updatedBy": {
+          "sys": {
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "productListItem",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "product",
+          "settings": {
+            "helpText": "Product unique identifier (SKU, ID, CODE)"
+          },
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 10,
+        "createdAt": "2024-09-17T22:09:05.366Z",
+        "createdBy": {
+          "sys": {
+            "id": "6tzc16DmiJ5vW5yuNSDpGC",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-09-18T13:42:33.497Z",
+        "updatedBy": {
+          "sys": {
+            "id": "6tzc16DmiJ5vW5yuNSDpGC",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "categoryPage",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "url",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "componentsTop",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "componentsBottom",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "d4wizuml8p4u",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 8,
+        "createdAt": "2024-09-17T22:19:57.775Z",
+        "createdBy": {
+          "sys": {
+            "id": "6tzc16DmiJ5vW5yuNSDpGC",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2024-09-18T13:43:32.105Z",
+        "updatedBy": {
+          "sys": {
+            "id": "6tzc16DmiJ5vW5yuNSDpGC",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "productPage",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "url",
+          "widgetId": "singleLine",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "componentsBottom",
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    }
+  ],
+  "locales": [
+    {
+      "name": "German",
+      "code": "de",
+      "fallbackCode": "en",
+      "default": false,
+      "contentManagementApi": true,
+      "contentDeliveryApi": true,
+      "optional": false,
+      "sys": {
+        "type": "Locale",
+        "id": "5pxTh2fxHVqgxO6bEXR1Oi",
+        "version": 1,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "environment": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Environment",
+            "id": "sapccv2",
+            "uuid": "f9716a5c-7293-4a77-9f4b-94f04fa05c98"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "createdAt": "2024-04-18T07:55:20Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:20Z"
+      }
+    },
+    {
+      "name": "English (United States)",
+      "code": "en",
+      "fallbackCode": null,
+      "default": true,
+      "contentManagementApi": true,
+      "contentDeliveryApi": true,
+      "optional": false,
+      "sys": {
+        "type": "Locale",
+        "id": "5kX8XNg8bu6100PXcMxu2m",
+        "version": 2,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "environment": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Environment",
+            "id": "sapccv2",
+            "uuid": "f9716a5c-7293-4a77-9f4b-94f04fa05c98"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "createdAt": "2024-04-18T07:55:20Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "7EKEbZ9xXr4KJfDLoTZY8x"
+          }
+        },
+        "updatedAt": "2024-04-18T07:55:27Z"
+      }
+    }
+  ],
+  "webhooks": [
+  ],
+  "roles": [
+    {
+      "name": "Author",
+      "description": "Allows editing of content",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": [
+            "create"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "read"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "update"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "create"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "read"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "update"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "permissions": {
+        "ContentModel": [
+          "read"
+        ],
+        "Settings": [
+        ],
+        "ContentDelivery": [
+        ],
+        "Environments": [
+        ],
+        "EnvironmentAliases": [
+        ],
+        "Tags": [
+        ]
+      },
+      "sys": {
+        "type": "Role",
+        "id": "5ljx4RdxhCaKKLTAwmei8q",
+        "version": 0,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "createdAt": "2024-04-16T15:41:16Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "updatedAt": "2024-04-16T15:41:16Z"
+      }
+    },
+    {
+      "name": "Editor",
+      "description": "Allows editing, publishing and archiving of content",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": "all",
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": "all",
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "permissions": {
+        "ContentModel": [
+          "read"
+        ],
+        "Settings": [
+        ],
+        "ContentDelivery": [
+        ],
+        "Environments": [
+        ],
+        "EnvironmentAliases": [
+        ],
+        "Tags": [
+        ]
+      },
+      "sys": {
+        "type": "Role",
+        "id": "5ljWSB9Xno1yq3j77dAqdA",
+        "version": 0,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "createdAt": "2024-04-16T15:41:16Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "updatedAt": "2024-04-16T15:41:16Z"
+      }
+    },
+    {
+      "name": "Freelancer",
+      "description": "Allows only editing of content they created themselves",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": [
+            "create"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "create"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "read"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              },
+              {
+                "equals": [
+                  {
+                    "doc": "sys.createdBy.sys.id"
+                  },
+                  "User.current()"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "update"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              },
+              {
+                "equals": [
+                  {
+                    "doc": "sys.createdBy.sys.id"
+                  },
+                  "User.current()"
+                ]
+              },
+              {
+                "paths": [
+                  {
+                    "doc": "fields.%.%"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "delete"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              },
+              {
+                "equals": [
+                  {
+                    "doc": "sys.createdBy.sys.id"
+                  },
+                  "User.current()"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "read"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              },
+              {
+                "equals": [
+                  {
+                    "doc": "sys.createdBy.sys.id"
+                  },
+                  "User.current()"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "update"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              },
+              {
+                "equals": [
+                  {
+                    "doc": "sys.createdBy.sys.id"
+                  },
+                  "User.current()"
+                ]
+              },
+              {
+                "paths": [
+                  {
+                    "doc": "fields.%.%"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "delete"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              },
+              {
+                "equals": [
+                  {
+                    "doc": "sys.createdBy.sys.id"
+                  },
+                  "User.current()"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "permissions": {
+        "ContentModel": [
+          "read"
+        ],
+        "Settings": [
+        ],
+        "ContentDelivery": [
+        ],
+        "Environments": [
+        ],
+        "EnvironmentAliases": [
+        ],
+        "Tags": [
+        ]
+      },
+      "sys": {
+        "type": "Role",
+        "id": "5lkkbvNxFZSlDjQEPlGFeq",
+        "version": 0,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "createdAt": "2024-04-16T15:41:16Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "updatedAt": "2024-04-16T15:41:16Z"
+      }
+    },
+    {
+      "name": "Translator",
+      "description": "Allows editing of localized fields in the specified language",
+      "policies": [
+        {
+          "effect": "allow",
+          "actions": [
+            "read"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "read"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "update"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Entry"
+                ]
+              },
+              {
+                "paths": [
+                  {
+                    "doc": "fields.%.%"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "effect": "allow",
+          "actions": [
+            "update"
+          ],
+          "constraint": {
+            "and": [
+              {
+                "equals": [
+                  {
+                    "doc": "sys.type"
+                  },
+                  "Asset"
+                ]
+              },
+              {
+                "paths": [
+                  {
+                    "doc": "fields.%.%"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "permissions": {
+        "ContentModel": [
+          "read"
+        ],
+        "Settings": [
+        ],
+        "ContentDelivery": [
+        ],
+        "Environments": [
+        ],
+        "EnvironmentAliases": [
+        ],
+        "Tags": [
+        ]
+      },
+      "sys": {
+        "type": "Role",
+        "id": "5lkJF5YaBADtQJJz6202tk",
+        "version": 0,
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "d4wizuml8p4u"
+          }
+        },
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "createdAt": "2024-04-16T15:41:16Z",
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "6tzc16DmiJ5vW5yuNSDpGC"
+          }
+        },
+        "updatedAt": "2024-04-16T15:41:16Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,427 @@
+
+
+# Alokai Storefront
+Every time you choose to apply a rule(s), explicitly state the rule(s) in the output. You can abbreviate the rule description to a single word or phrase.
+
+## Project Context
+Storefront coded using Alokai (formerly Vue Storefront).
+
+The flow of information is as follows:
+ecommerce/CMS/other third parties -> Alokai Middleware -> Frontend
+Each vendor has its own integration.
+Alokai attempts to normalize the contract as much as possible so that it's possible to switch between vendors.
+The contract is so called Unified Data Model.
+
+## Code Style and Structure
+- Write concise, technical TypeScript code with accurate examples
+- Use functional and declarative programming patterns; avoid classes
+- Prefer iteration and modularization over code duplication
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError)
+- Use single file components
+- PREFER SERVER_SIDE COMPONENTS FOR UI
+  - Prefer client-side for personalised data that may differ case by case. Such as prices.
+    - If personalised data is mixed with non-personalised ones, load personalised data using Skeleton component, while the rest should be loaded server side. 
+- When searching for business entities and methods always search the UDM first
+- Before creating a new generic functionality, check hooks, we may already have something available
+- Do not create types for server methods and entities on the frontend side, SDK already infers them
+
+### Frontend structure
+
+NextJS related work
+```
+apps/
+├── playwright/                     # Playwright testing framework directory
+│   ├── CONTRIBUTING.md             # Contribution guidelines
+│   ├── README.md                   # Documentation for the Playwright setup
+│   ├── cart.test.ts                # Test for cart functionality
+│   ├── eslint.config.mjs           # ESLint configuration
+│   ├── homepage.test.ts            # Test for homepage functionality
+│   ├── lint-staged.config.mjs      # Lint-staged configuration
+│   ├── mocks/                      # Mock data for tests
+│   ├── package.json                # Project dependencies and scripts
+│   ├── playwright.config.ts        # Playwright configuration
+│   ├── product-details.test.ts     # Test for product details functionality
+│   ├── setup/                      # Test setup and configuration
+│   ├── tests/                      # General tests and utilities
+│   └── tsconfig.json               # TypeScript configuration for tests
+└── storefront-unified-nextjs/      # Main Next.js application
+    ├── app/                        # App router
+    ├── components/                 # Reusable UI components
+    ├── config/                     # Configuration files
+    ├── coverage/                   # Coverage reports
+    ├── helpers/                    # Utility/helper functions
+    ├── hooks/                      # Custom React hooks
+    ├── lang/                       # Language-specific resources
+    ├── public/                     # Public assets
+    ├── sdk/                        # Software Development Kit (API interactions, etc.)
+    ├── stores/                     # State management stores
+    ├── types/                      # TypeScript types and interfaces
+    ├── README.md                   # Documentation for the project
+    ├── eslint.config.mjs           # ESLint configuration
+    ├── global.d.ts                 # Global TypeScript declarations
+    ├── i18n.ts                     # Internationalization setup
+    ├── lint-staged.config.mjs      # Lint-staged configuration
+    ├── middleware.ts               # Middleware setup
+    ├── next-env.d.ts               # Next.js environment types
+    ├── next.config.mjs             # Next.js configuration
+    ├── package.json                # Project dependencies and scripts
+    ├── postcss.config.mjs          # PostCSS configuration
+    ├── tailwind.config.ts          # Tailwind CSS configuration
+    ├── tsconfig.json               # TypeScript configuration
+    └── yarn-error.log              # Error log for Yarn
+```
+
+#### Adding locales
+Add locales for new functionality in separate files, not the base one. 
+In fact, avoid even reading the base.json file.
+
+- 1. Create a new file in apps/storefront-unified-nextjs/lang/<locale name>/
+as follows:
+```json
+{
+  "FeatureNamespace": {
+    "myKey": "value"
+  }
+}
+```
+- 2. Update the barrel import in apps/storefront-unified-nextjs/lang/index.ts
+
+#### Using locales
+
+1. Basic import and usage:
+```ts
+import { NextIntlClientProvider, useTranslations } from 'next-intl';
+
+// Get translations for a specific namespace
+const t = useTranslations('FeatureNamespace');
+// NEVER DO useTranslations('base'); as it is not a valid namespace
+```
+
+2. Basic Translation
+
+```ts
+// Simple string translation
+<span>{t('myKey')}</span>
+
+// Translation with count/pluralization
+{t('myKey', { count: product.rating?.count || 0 })}
+```
+
+3. Rich Text Translation
+```ts
+// For translations containing HTML/components
+{t.rich('FeatureNamespace.myKey', {
+  link: (chunks) => (
+    <SfLink href="#" variant="secondary">
+      {chunks}
+    </SfLink>
+  ),
+})}
+
+```
+4. Client Components
+When using translations in client components, wrap them in NextIntlClientProvider:
+```tsx
+<noscript>
+  {/* Server component */}
+  <DecoratedPrice />
+</noscript>
+<NextIntlClientProvider>
+  {/* Client component */}
+  <DecoratedPriceClient />
+</NextIntlClientProvider>
+```
+If the whole component is client side and you get problems with translations, a common problem is that it is actually not wrapped in the NextIntlClientProvider.
+
+
+
+
+
+#### Displaying notifications
+Use notifications hook for displaying notifications.
+`apps/storefront-unified-nextjs/hooks/use-notification.ts`
+
+
+
+### Middleware structure
+```
+apps/
+└── storefront-middleware/           # Middleware layer for the storefront
+    ├── eslint.config.mjs            # ESLint configuration
+    ├── integrations/                # Third-party service integrations
+    ├── lib/                         # Core library utilities
+    ├── middleware.config.ts         # Middleware configuration file
+    ├── multistore/                  # Multi-store implementation files
+    ├── multistore.config.ts         # Multi-store configuration file
+    ├── package.json                 # Project dependencies and scripts
+    ├── src/                         # Source code for middleware
+    ├── tsconfig.json                # TypeScript configuration
+    └── types.ts                     # TypeScript types and interfaces
+```
+
+#### Available integrations
+
+- SAP Commerce Cloud, available under `/apps/storefront-middleware/integrations/sapcc`
+
+## Documentation
+
+- Don't include comments unless it's for complex logic
+- Document API interactions and data flows
+
+## Tech Stack
+- TypeScript
+- Tailwind CSS
+- Storefront UI
+- Alokai
+- The project is a monorepo facilitated by turborepo
+- NextJS with App Router
+- Zustand (Not to be used directly, Powers Alokai State hooks that can be checked in `apps/storefront-unified-nextjs/sdk/alokai-context.tsx`)
+- next-intl
+- Tanstack, available in `@tanstack/react-query`
+
+
+## Naming Conventions
+
+- Favor named exports for components and utilities
+- use PascalCase for components
+- use camelCase for composables
+
+## TypeScript Usage
+
+- Use TypeScript for all code; prefer interfaces over types
+- Avoid enums; use const objects with 'as const' assertion
+- Avoid try/catch blocks unless there's good reason to translate or handle error in that abstraction
+- Use explicit return types for all functions
+- Use functional components with TypeScript interfaces
+
+## State Management
+
+- Use Zustand provided on the context for global state when needed
+- Implement proper cleanup in useEffect hooks
+
+## Syntax and Formatting
+
+- Use curly braces in conditionals
+- Implement proper TypeScript discriminated unions for message types
+- Use declarative JSX
+
+## UI and Styling
+
+- Use Storefront UI for components
+- Implement Tailwind CSS for styling
+- Consider extension-specific constraints (popup dimensions, permissions)
+
+## Error Handling
+
+- Implement proper error boundaries
+- Log errors appropriately for debugging
+- Provide user-friendly error messages
+- Handle network failures gracefully
+
+## Testing
+
+- Write unit tests for utilities and components
+- Implement E2E tests for critical flows
+
+## Security
+
+- Sanitize user inputs
+- Handle sensitive data properly
+
+## Git Usage
+
+Commit Message Prefixes:
+
+- "fix:" for bug fixes
+- "feat:" for new features
+- "perf:" for performance improvements
+- "docs:" for documentation changes
+- "style:" for formatting changes
+- "refactor:" for code refactoring
+- "test:" for adding missing tests
+- "chore:" for maintenance tasks
+Rules:
+- Use lowercase for commit messages
+- Keep the summary line concise
+- Include description for non-obvious changes
+- Reference issue numbers when applicable
+
+## Development Workflow
+
+- Use proper version control
+- Implement proper code review process
+- Test in multiple environments
+- Follow semantic versioning for releases
+- Maintain changelog
+
+### Adding new method
+
+`apps/storefront-middleware/api/custom-methods/custom.ts` contains all the custom methods that aren't part of integrations.
+The Alokai framework checks this path explicitly for custom methods.
+
+ New file should be created there, like this:
+```ts
+import { type IntegrationContext } from "../../types";
+import {
+  getNormalizers,
+} from "@vsf-enterprise/unified-api-<integration name>/udl";
+/**
+ * @description
+ * Boilerplate custom method to be replaced
+ *
+ * More information can be found at {@link https://docs.alokai.com/unified-data-layer/integration-and-setup/creating-new-api-methods}
+ */
+export async function exampleCustomMethod(
+  context: IntegrationContext,
+  args: MyArgs,
+): Promise<MyResponse> {
+  // your implementation
+
+  // Types are available in node_modules/@vsf-enterprise/<integration name>
+  const ecomemrceApi = context.api; // You can access integration methods directly
+
+  // So here i.e. types are available in node_modules/@vsf-enterprise/contentful-api/lib/types/index.d.ts
+  const contentful = await context.getApiClient("contentful"); // You can access other integrations using getApiClient
+  const { normalizeProduct } = getNormalizers(context);
+
+
+  const [productResponse, content] = Promise.all(
+    ecomemrceApi.getProduct({ id: params.id }),
+    contentful.api.getEntries({
+      content_type: "product",
+      "fields.sku": params.id,
+    })
+  );
+
+  return {
+              // if you need to pass through any new fields, extend the normaliser with custom field
+    product: normalizeProduct(productResponse.data),
+    content,
+  };
+}
+```
+
+
+
+And then it should be re-exported in `apps/storefront-middleware/api/custom-methods/index.ts`.
+
+
+This will be then available on the SDK
+```ts
+// type is automatically inferred from the server methods
+const { someKey } = await sdk.customExtension.exampleCustomMethod({ someArg: 'whatever' });
+```
+
+
+### Extending normalisers
+If you already have a method but lack some fields on the returned entity or if you add a new method but the normaliser also removes some fields, you can extend the normaliser.
+
+```ts 
+//apps/storefront-middleware/integrations/<ecommerce name>/extensions/unified.ts
+import {
+  type AddCustomFields,
+  type InferAddCustomFields,
+  createUnifiedExtension,
+} from "@vsf-enterprise/unified-api-<integration>";
+
+const unifiedApiExtension = createUnifiedExtension({
+  normalizers: {
+    addCustomFields: [
+      {
+        normalizeProduct(context, input) {
+          return {
+            description: input.description,
+            type: input.type,
+          };
+        },
+      },
+      {
+        normalizeMoney: () => ({
+          formattedAmount: "overridden value",
+        }),
+      },
+    ],
+  },
+});
+
+declare module "@vsf-enterprise/unified-api-<integration>" {
+  export interface AddCustomFields
+    extends InferAddCustomFields<typeof unifiedApiExtension> {}
+}
+
+```
+
+The fields will be available on the frontend under $custom property
+```ts
+const product = await sdk.unifed.getProduct(productId);
+
+// `description` and `type` are now available as part of $custom property
+const { description, type } = product.$custom;
+```
+
+### Utility endpoints
+
+Utility endpoints can be added as an extension:
+`apps/storefront-middleware/integrations/<integration-name>/extensions`
+
+## Pulling data from frontend
+Here's an example how to pull data on the frontend side.
+
+First, check if there is a hook available: `apps/storefront-unified-nextjs/hooks`, if not then use the Alokai SDK directly:
+
+Server side:
+```ts
+import { getSdk } from '@/sdk';
+
+const getProductDetails = cache(async ({ id, sku }: GetProductDetailsArgs) => {
+  const sdk = getSdk();
+
+  try {
+    return await sdk.unified.getProductDetails({
+      id,
+      sku,
+    });
+  } catch (_) {
+    return null;
+  }
+});
+```
+Client side:
+```ts
+import { useSdk } from '@/sdk/alokai-context';
+...
+
+const sdk = useSdk();
+
+...
+const { data, isFetching } = useQuery<{
+  /**
+    * Product data
+    */
+  product: SfProduct;
+}>({
+  enabled: isAboveFold,
+  queryFn: () =>
+    sdk.unified.getProductDetails({
+      id,
+      sku,
+    }),
+  queryKey: ['lazyProduct', `${id}-${sku}`],
+});
+const product = data?.product;
+
+
+```
+
+The exact contract of the available default methods (UDM, Unified Data Model) in the `sdk.unified` namespace can be viewed in:
+`node_modules/@vue-storefront/unified-data-model/src/methods/index.ts`
+Entities can be found here:
+`node_modules/@vue-storefront/unified-data-model/src/models/index.ts`
+
+
+There may be custom methods added for the sake of this specific implementation. In such case it will most likely be
+created using the "Adding new method" section, or, less likely, "Adding new endpoints to integrations".
+So if some functionality does not exist in the Universal Data Model, search for it in `apps/storefront-middleware/api/custom-methods/`
+and if it's not there, then `apps/storefront-middleware/integrations/<integration-name>/extensions`
+
+```

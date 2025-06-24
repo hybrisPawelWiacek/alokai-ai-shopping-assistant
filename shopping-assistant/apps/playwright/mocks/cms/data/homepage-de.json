@@ -1,0 +1,151 @@
+{
+  "componentsAboveFold": [
+    {
+      "buttonA": {
+        "label": "Jetzt bestellen",
+        "link": "/product/300026688-slip-on-vans-classic-slip-on-black-white-checker-white-13-0/300026688?sku=300026688"
+      },
+      "buttonB": {
+        "label": "Mehr anzeigen",
+        "link": "/category"
+      },
+      "component": "Hero",
+      "description": "Diese modische Sneaker-Kollektion bietet verschiedene Farben, Komfort und Stil.",
+      "id": "e7b0021e-2a13-4d39-8384-f21439525fb2",
+      "image": {
+        "alt": "sneakers",
+        "desktop": "cms-mock/sneakers.avif",
+        "mobile": "cms-mock/sneakers.avif",
+        "thumbnail": "cms-mock/sneakers.avif"
+      },
+      "styles": "",
+      "subtitle": "SONDERANGEBOT",
+      "title": "Heiße Sneaker-Verkäufe",
+      "uniqueClass": "cms-component-e7b0021e-2a13-4d39-8384-f21439525fb2"
+    },
+    {
+      "component": "Editorial",
+      "content": "<h2 style=\"text-align: center;\"><strong>Einkaufen nach Kategorie</strong></h2>",
+      "id": "87547032-7f4b-4175-b861-59df33a3458b",
+      "styles": "\n    .cms-component-87547032-7f4b-4175-b861-59df33a3458b { display: flex !important;flex-direction: row !important;justify-content: center !important;align-items: stretch !important;margin-top: 3.625rem !important;margin-bottom: 2.5rem !important;margin-left: 1rem !important;margin-right: 1rem !important; }\n  ",
+      "uniqueClass": "cms-component-87547032-7f4b-4175-b861-59df33a3458b"
+    },
+    {
+      "component": "Grid",
+      "id": "7be6ee1d-7197-48a2-bf5f-b897e4c7b8ca",
+      "items": [
+        {
+          "categoryId": "260000",
+          "component": "CategoryCard",
+          "id": "ff664419-3ad3-4df2-95ca-3047f6ef267b",
+          "image": {
+            "alt": "woman",
+            "desktop": "cms-mock/woman.avif",
+            "mobile": "cms-mock/woman.avif",
+            "thumbnail": "cms-mock/woman.avif"
+          },
+          "styles": "",
+          "uniqueClass": "cms-component-ff664419-3ad3-4df2-95ca-3047f6ef267b"
+        },
+        {
+          "categoryId": "250000",
+          "component": "CategoryCard",
+          "id": "a08b4243-20e7-477b-84bb-3a75c6ce7045",
+          "image": {
+            "alt": "man",
+            "desktop": "cms-mock/man.avif",
+            "mobile": "cms-mock/man.avif",
+            "thumbnail": "cms-mock/man.avif"
+          },
+          "styles": "",
+          "uniqueClass": "cms-component-a08b4243-20e7-477b-84bb-3a75c6ce7045"
+        },
+        {
+          "categoryId": "clothes",
+          "component": "CategoryCard",
+          "id": "8cd67def-de49-4ccd-9271-09a00aea8be0",
+          "image": {
+            "alt": "clothes",
+            "desktop": "cms-mock/clothes.avif",
+            "mobile": "cms-mock/clothes.avif",
+            "thumbnail": "cms-mock/clothes.avif"
+          },
+          "styles": "",
+          "uniqueClass": "cms-component-8cd67def-de49-4ccd-9271-09a00aea8be0"
+        }
+      ],
+      "styles": "@media (min-width: 816px) { \n    .cms-component-7be6ee1d-7197-48a2-bf5f-b897e4c7b8ca { display: flex !important;flex-direction: row !important;justify-content: space-between !important;align-items: stretch !important;column-gap: 24px !important;max-width: 800px !important;margin-bottom: 2.5rem !important;margin-left: auto !important;margin-right: auto !important; }\n   }@media (max-width: 815px) { \n    .cms-component-7be6ee1d-7197-48a2-bf5f-b897e4c7b8ca { display: flex !important;flex-direction: column !important;justify-content: flex-start !important;align-items: center !important;row-gap: 24px !important;margin-bottom: 2.5rem !important; }\n   }",
+      "uniqueClass": "cms-component-7be6ee1d-7197-48a2-bf5f-b897e4c7b8ca"
+    }
+  ],
+  "componentsBelowFold": [
+    {
+      "component": "Grid",
+      "id": "c1d08ca4-6d5f-4fd3-a8db-7b69226d4296",
+      "items": [
+        {
+          "backgroundColor": "#e1daf6",
+          "button": {
+            "label": "Jetzt entdecken",
+            "link": "/category"
+          },
+          "component": "Banner",
+          "description": "Verleihen Sie Ihrem Outfit einen farbigen Akzent",
+          "id": "c3fdf185-3ba3-41bf-a516-f3cfff845dc1",
+          "image": {
+            "alt": "fresh and bold",
+            "desktop": "cms-mock/fresh_and_bold.avif",
+            "mobile": "cms-mock/fresh_and_bold.avif",
+            "thumbnail": "cms-mock/fresh_and_bold.avif"
+          },
+          "styles": "",
+          "subtitle": "NEUE KOLLEKTION",
+          "title": "Frisch und mutig",
+          "uniqueClass": "cms-component-c3fdf185-3ba3-41bf-a516-f3cfff845dc1"
+        },
+        {
+          "backgroundColor": "#fed3db",
+          "button": {
+            "label": "Jetzt entdecken",
+            "link": "/category"
+          },
+          "component": "Banner",
+          "description": "Treten Sie stilvoll mit unserer Sonnenbrillenkollektion auf",
+          "id": "0e9e6e48-9eb5-4409-b623-225121e2a620",
+          "image": {
+            "alt": "sunny days ahead",
+            "desktop": "cms-mock/sunny_days_ahead.avif",
+            "mobile": "cms-mock/sunny_days_ahead.avif",
+            "thumbnail": "cms-mock/sunny_days_ahead.avif"
+          },
+          "styles": "",
+          "subtitle": "Lassen Sie sich inspirieren",
+          "title": "Sonnige Tage voraus",
+          "uniqueClass": "cms-component-0e9e6e48-9eb5-4409-b623-225121e2a620"
+        },
+        {
+          "backgroundColor": "#fddca5",
+          "button": {
+            "label": "Jetzt entdecken",
+            "link": "/category"
+          },
+          "component": "Banner",
+          "description": "Erkunden Sie die Natur mit unseren Rucksäcken",
+          "id": "e9fc6719-0e8f-4e78-87f8-d9f6d77ef33e",
+          "image": {
+            "alt": "pack it up",
+            "desktop": "cms-mock/pack_it_up.avif",
+            "mobile": "cms-mock/pack_it_up.avif",
+            "thumbnail": "cms-mock/pack_it_up.avif"
+          },
+          "styles": "",
+          "subtitle": "Erkunde die Natur",
+          "title": "Pack es ein",
+          "uniqueClass": "cms-component-e9fc6719-0e8f-4e78-87f8-d9f6d77ef33e"
+        }
+      ],
+      "styles": "@media (min-width: 769px) { \n    .cms-component-c1d08ca4-6d5f-4fd3-a8db-7b69226d4296 { flex-direction: row !important;justify-content: flex-start !important;align-items: stretch !important;display: grid !important;grid-template-areas: \"a b c\" !important;column-gap: 1rem !important;row-gap: 1rem !important;max-width: 1366px !important;margin-left: auto !important;margin-right: auto !important; }\n   }@media (max-width: 768px) { \n    .cms-component-c1d08ca4-6d5f-4fd3-a8db-7b69226d4296 { display: flex !important;flex-direction: column !important;justify-content: flex-start !important;align-items: stretch !important;row-gap: 1rem !important;margin-bottom: 2.5rem !important;padding-left: 1rem !important;padding-right: 1rem !important; }\n   }",
+      "uniqueClass": "cms-component-c1d08ca4-6d5f-4fd3-a8db-7b69226d4296"
+    }
+  ]
+}

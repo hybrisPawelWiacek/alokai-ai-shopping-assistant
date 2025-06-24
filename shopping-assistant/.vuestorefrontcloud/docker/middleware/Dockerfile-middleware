@@ -1,0 +1,28 @@
+FROM node:18-alpine
+
+ARG NPM_USER
+ARG NPM_PASS
+ARG NPM_EMAIL
+ARG NPM_REGISTRY
+
+WORKDIR /var/www
+
+COPY ./package.json .
+COPY ./turbo.json .
+COPY ./yarn.lock .
+COPY ./.npmrc .
+COPY ./apps/storefront-middleware/ ./apps/storefront-middleware/
+
+RUN apk add --no-cache libc6-compat && \
+  npm install -g npm-cli-login && \
+  npm-cli-login
+
+RUN yarn install --production --ignore-scripts && \
+    yarn turbo run build --scope="storefront-middleware" && \
+    yarn cache clean --all
+
+COPY .vuestorefrontcloud/docker/middleware/middleware.sh /usr/local/bin/
+
+RUN chmod a+x /usr/local/bin/middleware.sh
+
+ENTRYPOINT ["middleware.sh"]

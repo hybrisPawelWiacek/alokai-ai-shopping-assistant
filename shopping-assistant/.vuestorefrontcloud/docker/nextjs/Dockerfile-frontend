@@ -1,0 +1,59 @@
+FROM node:18-alpine as base
+
+ARG NPM_USER
+ARG NPM_PASS
+ARG NPM_EMAIL
+ARG NPM_REGISTRY
+
+FROM base AS builder
+WORKDIR /var/www
+
+COPY ./package.json ./yarn.lock ./
+COPY ./turbo.json .
+COPY ./.npmrc .
+
+RUN apk add --no-cache libc6-compat jq && \
+  npm install -g npm-cli-login && \
+  npm-cli-login
+
+# First, we copy just package.json to install dependencies first to cache them in Docker layer
+# Each Docker command is cached separately. In case when Docker will find that the result of a
+# command would be different it will invalidate the cache for the line AND THE FOLLOWING ONES.
+# Due to this fact we first copy package.json and install dependencies. If we'd copy sourcecode
+# first, then every change in the code would invalidate the cache for dependencies installation
+# and the cache mechanism would almost never work in practice.
+RUN mkdir -p ./apps/storefront-middleware/ && \
+  mkdir -p ./apps/storefront-unified-nextjs/
+
+COPY ./apps/storefront-middleware/package.json ./apps/storefront-middleware/package.json
+COPY ./apps/storefront-unified-nextjs/package.json ./apps/storefront-unified-nextjs/package.json
+
+# All the swithes are needed to avoid unnecessary growth of the layer
+RUN yarn install --ignore-scripts --no-cache --frozen-lockfile && yarn cache clean
+
+# Then, we copy then application code, and build it
+COPY ./apps/storefront-middleware/ ./apps/storefront-middleware/
+COPY ./apps/storefront-unified-nextjs/ ./apps/storefront-unified-nextjs/
+RUN cp -f apps/storefront-unified-nextjs/.env.example apps/storefront-unified-nextjs/.env
+RUN yarn turbo run build --scope="storefront-unified-nextjs"
+
+FROM base AS runner
+WORKDIR /var/www
+RUN apk add --no-cache jq
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+COPY .vuestorefrontcloud/docker/nextjs/vue-storefront.sh /usr/local/bin/
+RUN chmod a+x /usr/local/bin/vue-storefront.sh
+
+COPY --from=builder --chown=nextjs:nodejs  /var/www/apps/storefront-unified-nextjs/public ./public
+COPY --from=builder --chown=nextjs:nodejs /var/www/apps/storefront-unified-nextjs/.next/standalone/storefront-unified-nextjs ./
+COPY --from=builder --chown=nextjs:nodejs /var/www/apps/storefront-unified-nextjs/.next/static ./.next/static
+
+# Extract the version of the next package
+RUN NEXT_PKG_VERSION=$(cat package.json | jq -r .dependencies.next) && \
+    rm package.json && \
+    npm install "next@$NEXT_PKG_VERSION"
+
+USER nextjs
+
+ENTRYPOINT ["vue-storefront.sh"]

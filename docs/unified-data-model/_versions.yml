@@ -1,0 +1,8 @@
+versions:
+  - title: connect v1
+    path: /
+    latest: true
+  - title: legacy v1
+    path: /legacy-v1
+  - title: legacy v0
+    path: /legacy-v0

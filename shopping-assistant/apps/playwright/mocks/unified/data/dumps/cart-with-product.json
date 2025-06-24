@@ -1,0 +1,69 @@
+{
+  "appliedCoupons": [],
+  "billingAddress": null,
+  "customerEmail": null,
+  "id": "e067b8fb-0571-410e-b105-0786a881c5c4",
+  "lineItems": [
+    {
+      "attributes": [],
+      "id": "45574",
+      "productId": "45574",
+      "image": {
+        "alt": "Snowboard Ski Tool Toko Plexiklinge 3 mm/flexibel",
+        "url": "sap/medias/context/bWFzdGVyfGltYWdlc3w1NzU5fGltYWdlL2pwZWd8YURCaEwyZ3dOQzg0TnprMk5qUTVNalU1TURNNHw1YTgwYjE3NjRmYjFlOTQyZjBmNmQwY2MwOWFlNDBmNWYyMTI0NGE4NzQ5YTM2MjA0YTFiMWFjYjFhYzg0NTli"
+      },
+      "slug": "45574-snowboard-ski-tool-toko-plexiklinge-3-mm-flexibel",
+      "name": "Snowboard Ski Tool Toko Plexiklinge 3 mm/flexibel",
+      "quantity": 1,
+      "sku": "45574",
+      "totalPrice": {
+        "currency": "USD",
+        "amount": 6.6,
+        "precisionAmount": "6.60"
+      },
+      "unitPrice": {
+        "isDiscounted": false,
+        "regularPrice": {
+          "currency": "USD",
+          "amount": 6.6,
+          "precisionAmount": "6.60"
+        },
+        "value": {
+          "currency": "USD",
+          "amount": 6.6,
+          "precisionAmount": "6.60"
+        }
+      },
+      "quantityLimit": 199999934
+    }
+  ],
+  "shippingAddress": null,
+  "shippingMethod": null,
+  "subtotalDiscountedPrice": {
+    "currency": "USD",
+    "amount": 6.6,
+    "precisionAmount": "6.60"
+  },
+  "subtotalRegularPrice": {
+    "currency": "USD",
+    "amount": 6.6,
+    "precisionAmount": "6.60"
+  },
+  "totalCouponDiscounts": {
+    "currency": "USD",
+    "amount": 0,
+    "precisionAmount": "0.00"
+  },
+  "totalItems": 1,
+  "totalPrice": {
+    "currency": "USD",
+    "amount": 6.6,
+    "precisionAmount": "6.60"
+  },
+  "totalShippingPrice": null,
+  "totalTax": {
+    "currency": "USD",
+    "amount": 1.1,
+    "precisionAmount": "1.10"
+  }
+}

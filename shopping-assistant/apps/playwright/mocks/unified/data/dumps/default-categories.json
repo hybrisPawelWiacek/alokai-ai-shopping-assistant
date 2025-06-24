@@ -1,0 +1,421 @@
+[
+  {
+    "id": "250000",
+    "name": "Streetwear men",
+    "slug": "250000",
+    "subcategories": [
+      {
+        "id": "251100",
+        "name": "Belts",
+        "slug": "251100",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250800",
+        "name": "Boardshorts",
+        "slug": "250800",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "251200",
+        "name": "Coats",
+        "slug": "251200",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "190400",
+        "name": "Fleece",
+        "slug": "190400",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250500",
+        "name": "Denim Pants",
+        "slug": "250500",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250400",
+        "name": "Jackets",
+        "slug": "250400",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "251500",
+        "name": "Long Sleeve",
+        "slug": "251500",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250900",
+        "name": "Pants",
+        "slug": "250900",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250700",
+        "name": "Polos",
+        "slug": "250700",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250300",
+        "name": "Shirts",
+        "slug": "250300",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "251300",
+        "name": "Suit",
+        "slug": "251300",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250600",
+        "name": "Shorts",
+        "slug": "250600",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "250200",
+        "name": "Sweater",
+        "slug": "250200",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "252000",
+        "name": "Sweater Hooded",
+        "slug": "252000",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "252100",
+        "name": "Sweater Hooded Zip",
+        "slug": "252100",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "251600",
+        "name": "Tank Top",
+        "slug": "251600",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "252300",
+        "name": "Underwear",
+        "slug": "252300",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "251000",
+        "name": "Vests",
+        "slug": "251000",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      },
+      {
+        "id": "251400",
+        "name": "Windbreaker",
+        "slug": "251400",
+        "subcategories": null,
+        "parentCategoryId": "250000"
+      }
+    ],
+    "parentCategoryId": "categories"
+  },
+  {
+    "id": "260000",
+    "name": "Streetwear women",
+    "slug": "260000",
+    "subcategories": [
+      {
+        "id": "260800",
+        "name": "Bikinis women",
+        "slug": "260800",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "262300",
+        "name": "Boardshorts women",
+        "slug": "262300",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "262400",
+        "name": "Cardigan women",
+        "slug": "262400",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260500",
+        "name": "Denim Pants women",
+        "slug": "260500",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261200",
+        "name": "Coats women",
+        "slug": "261200",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "262600",
+        "name": "Fashion Shirt LS Women",
+        "slug": "262600",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "262500",
+        "name": "Fashion Shirt SS Women",
+        "slug": "262500",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "200400",
+        "name": "Fleece women",
+        "slug": "200400",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260400",
+        "name": "Jackets women",
+        "slug": "260400",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261700",
+        "name": "Longsleeves women",
+        "slug": "261700",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261400",
+        "name": "Overall women",
+        "slug": "261400",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260900",
+        "name": "Pants women",
+        "slug": "260900",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261600",
+        "name": "Polos women",
+        "slug": "261600",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260300",
+        "name": "Shirts women",
+        "slug": "260300",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260700",
+        "name": "Skirts and Dresses women",
+        "slug": "260700",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260600",
+        "name": "Shorts women",
+        "slug": "260600",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "262000",
+        "name": "Sweater Hooded women",
+        "slug": "262000",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "262100",
+        "name": "Sweater Hooded Zip women",
+        "slug": "262100",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260200",
+        "name": "Sweater women",
+        "slug": "260200",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "260100",
+        "name": "T-Shirts women",
+        "slug": "260100",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261800",
+        "name": "Tops",
+        "slug": "261800",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261300",
+        "name": "Underwear women",
+        "slug": "261300",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261000",
+        "name": "Vests women",
+        "slug": "261000",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      },
+      {
+        "id": "261500",
+        "name": "Windbreaker women",
+        "slug": "261500",
+        "subcategories": null,
+        "parentCategoryId": "260000"
+      }
+    ],
+    "parentCategoryId": "categories"
+  },
+  {
+    "id": "clothes",
+    "name": "Clothes",
+    "slug": "clothes",
+    "subcategories": [
+      {
+        "id": "helmet",
+        "name": "Helmets",
+        "slug": "helmet",
+        "subcategories": null,
+        "parentCategoryId": "clothes"
+      },
+      {
+        "id": "shoes",
+        "name": "Shoes",
+        "slug": "shoes",
+        "subcategories": [
+          {
+            "id": "sandals",
+            "name": "Sandals",
+            "slug": "sandals",
+            "subcategories": [
+              {
+                "id": "230400",
+                "name": "Sandals men",
+                "slug": "230400",
+                "subcategories": null,
+                "parentCategoryId": "sandals"
+              },
+              {
+                "id": "400300",
+                "name": "Sandals women",
+                "slug": "400300",
+                "subcategories": null,
+                "parentCategoryId": "sandals"
+              },
+              {
+                "id": "390200",
+                "name": "Sandals youth",
+                "slug": "390200",
+                "subcategories": null,
+                "parentCategoryId": "sandals"
+              }
+            ],
+            "parentCategoryId": "shoes"
+          }
+        ],
+        "parentCategoryId": "clothes"
+      },
+      {
+        "id": "caps",
+        "name": "Caps",
+        "slug": "caps",
+        "subcategories": null,
+        "parentCategoryId": "clothes"
+      },
+      {
+        "id": "sunglasses",
+        "name": "Sunglasses",
+        "slug": "sunglasses",
+        "subcategories": null,
+        "parentCategoryId": "clothes"
+      },
+      {
+        "id": "shirts",
+        "name": "Shirts",
+        "slug": "shirts",
+        "subcategories": null,
+        "parentCategoryId": "clothes"
+      },
+      {
+        "id": "tshirts",
+        "name": "T-Shirts",
+        "slug": "tshirts",
+        "subcategories": [
+          {
+            "id": "250100",
+            "name": "T-Shirts men",
+            "slug": "250100",
+            "subcategories": null,
+            "parentCategoryId": "tshirts"
+          },
+          {
+            "id": "260100",
+            "name": "T-Shirts women",
+            "slug": "260100",
+            "subcategories": null,
+            "parentCategoryId": "tshirts"
+          },
+          {
+            "id": "270100",
+            "name": "T-Shirts youth",
+            "slug": "270100",
+            "subcategories": null,
+            "parentCategoryId": "tshirts"
+          }
+        ],
+        "parentCategoryId": "clothes"
+      }
+    ],
+    "parentCategoryId": "categories"
+  }
+]

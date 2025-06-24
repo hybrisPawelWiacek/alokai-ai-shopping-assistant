@@ -1,0 +1,36 @@
+{
+  "appliedCoupons": [],
+  "billingAddress": null,
+  "customerEmail": null,
+  "id": "e067b8fb-0571-410e-b105-0786a881c5c4",
+  "lineItems": [],
+  "shippingAddress": null,
+  "shippingMethod": null,
+  "subtotalDiscountedPrice": {
+    "currency": "USD",
+    "amount": 0,
+    "precisionAmount": "0.00"
+  },
+  "subtotalRegularPrice": {
+    "currency": "USD",
+    "amount": 0,
+    "precisionAmount": "0.00"
+  },
+  "totalCouponDiscounts": {
+    "currency": "USD",
+    "amount": 0,
+    "precisionAmount": "0.00"
+  },
+  "totalItems": 0,
+  "totalPrice": {
+    "currency": "USD",
+    "amount": 0,
+    "precisionAmount": "0.00"
+  },
+  "totalShippingPrice": null,
+  "totalTax": {
+    "currency": "USD",
+    "amount": 0,
+    "precisionAmount": "0.00"
+  }
+}

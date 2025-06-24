@@ -1,0 +1,576 @@
+{
+  "AddToCartButton": {
+    "label": "Add to cart"
+  },
+  "AddressFormFields": {
+    "address2": "Apt#, Suite, etc",
+    "address2Hint": "Optional",
+    "city": "City",
+    "country": "Country",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "postalCode": "Zip Code",
+    "selectPlaceholder": "-- Select-- ",
+    "state": "State",
+    "streetName": "Street",
+    "streetNameHint": "Street address or P.O. Box",
+    "title": "Title"
+  },
+  "AddressModal": {
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "AuthButton": {
+    "dropdown": {
+      "logout": "Logout",
+      "myAccount": "My Account",
+      "myOrders": "My Orders"
+    },
+    "login": "Log in"
+  },
+  "BottomNav": {
+    "account": "Account",
+    "cart": "Cart",
+    "home": "Home",
+    "products": "Products"
+  },
+  "Breadcrumbs": {
+    "categoryRoot": "Category",
+    "dropdownAriaLabel": "Show more breadcrumbs",
+    "home": "Home"
+  },
+  "CartPage": {
+    "backButton": "Continue shopping",
+    "emptyCart": "Your cart is empty",
+    "emptyCartBackButton": "See what's new",
+    "emptyCartImgAlt": "empty cart image",
+    "emptyCartMessage": "Don't know where to start?",
+    "goToCheckout": "Proceed to Checkout",
+    "heading": "My Cart",
+    "homeBreadcrumb": "Home",
+    "metaTitle": "Cart"
+  },
+  "CartProductCard": {
+    "imagePlaceholder": "Image placeholder",
+    "sale": "Sale",
+    "tag": {
+      "outOfStock": "Out of stock",
+      "smallerQuantity": "Wanted: {desiredQuantity,number}, {maxValue,number} left in stock"
+    }
+  },
+  "CategoryPage": {
+    "allProducts": "All products",
+    "empty": {
+      "imgAlt": "No products found",
+      "paragraph1": "We cannot find any products that match the selected filters.",
+      "paragraph2": "Change or <clear>Clear all filters</clear>"
+    }
+  },
+  "CategoryTree": {
+    "allProducts": "All products",
+    "backToParent": "Back to {parent}",
+    "category": "Category",
+    "showLess": "Show less",
+    "showMore": "Show more"
+  },
+  "CheckoutPage": {
+    "BillingAddress": {
+      "change": "Change",
+      "heading": "Billing address",
+      "sameAddress": "Same as shipping address",
+      "selectAddressModalHeading": "Set address"
+    },
+    "CheckoutAddressList": {
+      "addNewAddress": "Add New Address",
+      "emptyAddressList": "You have no addresses saved.",
+      "newAddressModalHeading": "Provide address"
+    },
+    "CheckoutPayment": {
+      "applePayIconAlt": "Apple Pay",
+      "comingSoon": "Coming soon",
+      "creditCard": "Credit Card",
+      "googlePayIconAlt": "Google Pay",
+      "heading": "Payment method",
+      "paypalIconAlt": "PayPal"
+    },
+    "ContactInformation": {
+      "add": "Add Contact Information",
+      "change": "Change",
+      "description": "Add your email and phone number to communicate with the store.",
+      "form": {
+        "cancel": "Cancel",
+        "helpText": "Email cannot be changed ",
+        "label": "Email",
+        "save": "Save"
+      },
+      "heading": "Contact information"
+    },
+    "CreditCard": {
+      "cardNumber": "Card number",
+      "cardNumberPattern": "Please enter a valid card number in the format: 4111 1111 1111 1111",
+      "expiryMonth": "Expiry month",
+      "expiryYear": "Expiry year"
+    },
+    "ShippingAddress": {
+      "add": "Add Shipping Address",
+      "change": "Change",
+      "description": "Add a shipping address to set up shipping details.",
+      "form": {
+        "cancel": "Cancel",
+        "heading": "Provide Address",
+        "save": "Save"
+      },
+      "heading": "Shipping address",
+      "selectAddressModalHeading": "Select Address"
+    },
+    "ShippingMethod": {
+      "description": "Not available until a shipping address is provided.",
+      "heading": "Shipping details"
+    },
+    "backButton": "Back to My Cart",
+    "heading": "Checkout",
+    "metaTitle": "Checkout",
+    "placeOrder": "Place Order And Pay",
+    "termsAndConditions": "I confirm that I have read and agreed with the <link>Terms and Conditions</link> and our <link>Privacy Policy</link>.",
+    "validation": {
+      "heading": "Fill missing data to complete order",
+      "missingBillingAddress": "Add billing address",
+      "missingEmail": "Add contact information",
+      "missingPaymentMethod": "Choose payment method",
+      "missingShippingAddress": "Add shipping address",
+      "missingShippingDetails": "Add shipping details",
+      "missingTermsAndConditions": "Your consent is required"
+    }
+  },
+  "ExpandableList": {
+    "collapse": "Show less",
+    "expand": "Show more"
+  },
+  "Facets": {
+    "colorHeading": "Color",
+    "sizeHeading": "Size"
+  },
+  "FiltersContainer": {
+    "clear": "Clear all filters",
+    "close": "Close",
+    "heading": "List settings",
+    "showProducts": "Show products"
+  },
+  "Footer": {
+    "bottomLinks": {
+      "privacyPolicy": "Privacy policy",
+      "terms": "Terms"
+    },
+    "categories": {
+      "about": {
+        "label": "About",
+        "subcategories": {
+          "aboutUs": "About us",
+          "affiliateProgram": "Affiliate program",
+          "jobs": "Jobs",
+          "pressCenter": "Press Center",
+          "suppliers": "Suppliers"
+        }
+      },
+      "help": {
+        "label": "Help",
+        "subcategories": {
+          "contact": "Contact",
+          "feedback": "Feedback",
+          "helpCenter": "Help center",
+          "securityFraud": "Security & fraud"
+        }
+      },
+      "howToBuy": {
+        "label": "How to buy",
+        "subcategories": {
+          "orderPickup": "Order pickup",
+          "paymentMethods": "Payment methods",
+          "purchaseStatus": "Purchase status",
+          "returns": "Returns",
+          "trackOrders": "Track orders"
+        }
+      },
+      "services": {
+        "label": "Services",
+        "subcategories": {
+          "clickCollect": "Click & Collect",
+          "couponsDiscounts": "Coupons & Discounts",
+          "giftCards": "Gift cards",
+          "newsletter": "Newsletter",
+          "sameDayDelivery": "Same Day Delivery",
+          "shippingDelivery": "Shipping & Delivery",
+          "storeLocator": "Store Locator"
+        }
+      }
+    },
+    "contactOptions": {
+      "helpCenter": {
+        "details": {
+          "description": "Find answers online anytime"
+        },
+        "label": "Help center"
+      },
+      "liveChat": {
+        "details": {
+          "openingHours-1": "Mon–Fri, 5am–10pm PT",
+          "openingHours-2": "Sat–Sun, 6am–9pm PT"
+        },
+        "label": "Live chat"
+      },
+      "phone": {
+        "details": {
+          "openingHours-1": "Mon–Fri, 5am–10pm PT",
+          "openingHours-2": "Sat–Sun, 6am–9pm PT"
+        },
+        "label": "1 234 567 8901"
+      }
+    },
+    "socialLabel": "Go to {label} page"
+  },
+  "Gallery": {
+    "count": "{current, number} of {total, number}",
+    "image": "Slide {index, number}",
+    "next": "Next",
+    "prev": "Previous",
+    "thumb": "Go to slide {index, number}"
+  },
+  "LocationSelectorsModal": {
+    "currencyLabel": "Currency",
+    "heading": "Choose your region preferences",
+    "languageLabel": "Language",
+    "submit": "Submit"
+  },
+  "LoginForm": {
+    "email": "Email",
+    "error": "We could not log you in with these details. Please make sure you are using the right email and password.",
+    "forgotPassword": "Forgot your password?",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "submit": "Log in"
+  },
+  "LoginPage": {
+    "heading": "Log in",
+    "metaTitle": "Log in",
+    "toRegisterAlert": "First time here? <register>Create Account</register>."
+  },
+  "MyAccountLayout": {
+    "accountSettings": "Account Settings",
+    "backButton": "Back",
+    "heading": "My Account",
+    "homeBreadcrumb": "Home",
+    "links": {
+      "logout": "Log Out",
+      "my-orders": "My Orders",
+      "personal-data": "Personal Data",
+      "returns": "Returns",
+      "shipping-details": "Shipping Details"
+    },
+    "ordersAndReturns": "Orders & Returns"
+  },
+  "MyAccountPage": {
+    "heading": "My Account",
+    "heading2": "Welcome to your account",
+    "paragraph": "You can manage your orders, returns and account info right here."
+  },
+  "MyOrdersPage": {
+    "details": "Details",
+    "empty": "You have no orders yet",
+    "heading": "My Orders",
+    "metaTitle": "My Orders",
+    "orderAmount": "Amount",
+    "orderDate": "Order date",
+    "orderId": "Order",
+    "status": "Status"
+  },
+  "Navbar": {
+    "allProductsLinkText": "Categories",
+    "login": "Log in",
+    "search": "Search",
+    "selectLocation": "Select your location"
+  },
+  "NavbarTop": {
+    "homepage": "Alokai Storefront-Homepage"
+  },
+  "NotFound": {
+    "header": "Could not find requested resource",
+    "notFound": "Not Found",
+    "return": "Return Home"
+  },
+  "Notifications": {
+    "AddToCartAlert": {
+      "success": {
+        "cart": {
+          "addToCart": "Product has been added to the cart."
+        },
+        "default": "Operation succeeded."
+      },
+      "viewCart": "View Cart"
+    },
+    "NotificationAlert": {
+      "error": {
+        "cart": {
+          "addToCart": "Product can not be added to the cart.",
+          "applyCartCoupon": "The discount code was not found or can not be applied.",
+          "removeCartCoupon": "The discount code can not be removed.",
+          "updateCart": "Cart can not be updated."
+        },
+        "default": "Something went wrong."
+      },
+      "success": {
+        "address": {
+          "createAddress": "Address successfully created.",
+          "deleteAddress": "Address successfully deleted.",
+          "updateAddress": "Address successfully updated."
+        },
+        "cart": {
+          "addToCart": "Product has been added to the cart.",
+          "applyCartCoupon": "Discount code applied.",
+          "removeCartCoupon": "Discount code removed.",
+          "updateCart": "Cart updated."
+        },
+        "logout": "Successfully logged out.",
+        "passwordChanged": "The password was successfully changed."
+      }
+    }
+  },
+  "OfflinePage": {
+    "headline": "It seems you are currently offline, check your internet connection"
+  },
+  "OrderDetailsPage": {
+    "addToCart": "Add to Cart",
+    "aside": {
+      "contact": "Contact the Seller",
+      "ratePurchase": "Rate Purchase",
+      "ratePurchaseHint": "You can rate your purchase until {rateUntil}",
+      "reorder": "Reorder",
+      "report": "Report Issue",
+      "reportHint": "Report issues within {maxDaysToReport} days of purchase until {reportUntil}",
+      "return": "Return Purchase",
+      "returnHint": "You can return your purchase until {returnUntil}"
+    },
+    "back": "Back to My Orders",
+    "backMobile": "Back",
+    "billingAddress": "Billing address",
+    "heading": "Order Details",
+    "homeBreadcrumb": "Home",
+    "itemsSubtotal": "Items Subtotal",
+    "lineItemsHeading": "Purchased products",
+    "myAccountBreadcrumb": "My Account",
+    "myOrdersBreadcrumb": "My Orders",
+    "orderDate": "Order date",
+    "orderId": "Order",
+    "paymentAmount": "Payment amount",
+    "paymentDetails": "Payment details",
+    "paymentMethod": "Payment method",
+    "product": "Product",
+    "quantity": "Quantity",
+    "shippingAddress": "Shipping address",
+    "shippingDetails": "Shipping details",
+    "shippingPrice": "Delivery",
+    "status": "Status",
+    "subtotal": "Subtotal",
+    "totalPrice": "Total",
+    "totalTax": "Sales Tax",
+    "unitPrice": "Price"
+  },
+  "OrderPage": {
+    "Failed": {
+      "backToCheckout": "Back to Checkout",
+      "continueShopping": "Continue Shopping",
+      "failedInfo": "<h1>We are really sorry.</h1> <span>Your order has not been completed.</span>",
+      "orderErrorMessage": "A payment error has occured.",
+      "somethingWentWrongImageAlt": "something went wrong image"
+    },
+    "Success": {
+      "billingAddress": "Billing address",
+      "continueShopping": "Continue Shopping",
+      "etaDelivery": "Estimated delivery time",
+      "orderDate": "Order date",
+      "orderSuccessfulImageAlt": "order successful image",
+      "orderTitle": "Order",
+      "paymentAmount": "Payment amount",
+      "paymentMethod": "Payment method",
+      "shipTo": "Ship to",
+      "shippingDetails": "Shipping details",
+      "successInfo": "<h1>Thank you!</h1> Your order no. <span>{value}</span> has been accepted and will soon appear on the <sflink>order list</sflink>  in your account",
+      "successInfoNotLoggedIn": "<h1>Thank you!</h1> Your order no. <span>{value}</span> has been accepted."
+    }
+  },
+  "OrderSummary": {
+    "delivery": "Delivery",
+    "estimatedTax": "Estimated Sales Tax",
+    "heading": "Order Summary",
+    "itemsInCart": "(Items: {count, number})",
+    "originalPrice": "Original price",
+    "promoCode": {
+      "apply": "Apply",
+      "inputPlaceholder": "Enter promo code",
+      "label": "Promo code",
+      "remove": "Remove"
+    },
+    "savings": "Savings",
+    "savingsTag": "You are saving {amount} on your order today!",
+    "subtotal": "Subtotal",
+    "total": "Total"
+  },
+  "Pagination": {
+    "lastPageAriaLabel": "Last page",
+    "nextAriaLabel": "Go to next page",
+    "nextButtonLabel": "Next",
+    "prevAriaLabel": "Go to previous page",
+    "prevButtonLabel": "Previous",
+    "secondPageAriaLabel": "Second page"
+  },
+  "PersonalDataPage": {
+    "change": "Change",
+    "changePassword": {
+      "cancel": "Cancel",
+      "confirmPassword": "Repeat new password",
+      "currentPassword": "Current password",
+      "errors": {
+        "passwordComplexity": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+        "wrongPassword": "The current password is incorrect."
+      },
+      "heading": "Password change",
+      "newPassword": "New password",
+      "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
+      "submit": "Change Password"
+    },
+    "contactInformation": "Contact information",
+    "edit": "Edit",
+    "editEmail": {
+      "cancel": "Cancel",
+      "email": "Email",
+      "heading": "Contact information",
+      "submit": "Save"
+    },
+    "editName": {
+      "cancel": "Cancel",
+      "firstName": "First Name",
+      "heading": "Your Name",
+      "lastName": "Last Name",
+      "submit": "Save"
+    },
+    "metaTitle": "Personal Data",
+    "name": "Your Name",
+    "password": "Your password"
+  },
+  "ProductAccordion": {
+    "customerReviews": "Customer Reviews",
+    "descriptionFallback": "Introducing our latest addition, designed with precision and crafted to perfection. Experience unparalleled quality and durability with our product.",
+    "loading": "Loading",
+    "noReviews": "No reviews yet",
+    "productDetails": "Product Details",
+    "readLess": "Read less",
+    "readMore": "Read more"
+  },
+  "ProductAttributes": {
+    "filter": {
+      "color": "Color",
+      "size": "Size"
+    }
+  },
+  "ProductsList": {
+    "imageAltPlaceholder": "Product image"
+  },
+  "ProductsListingPage": {
+    "allProducts": "All Products",
+    "filters": "Filters",
+    "numberOfProducts": "{total, plural, =1 {{total} Product} other {{total} Products}}",
+    "sortBy": "Sort by"
+  },
+  "PurchaseCard": {
+    "additionalInfo": {
+      "pickup": "Pickup not available at Super center. <link>Check availability nearby</link>",
+      "returns": "Free 30-Day returns. <link>Details</link>",
+      "shipping": "Free shipping, arrives by Thu, Apr 7. Want it faster? <link>Add an address</link> to see options"
+    },
+    "outOfStock": "Out of stock",
+    "reviewsCount": "{count, number} reviews",
+    "sale": "Sale"
+  },
+  "PurchaseCardForm": {
+    "numberInStock": "<number>{value, number}</number> in stock"
+  },
+  "QuantitySelector": {
+    "quantitySelector": "Quantity Selector",
+    "quantitySelectorDecrease": "Decrease value",
+    "quantitySelectorIncrease": "Increase value"
+  },
+  "RegisterForm": {
+    "email": "Email",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "markRequired": "* marked fields are required",
+    "newsletter": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
+    "password": "Password",
+    "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
+    "requestError": "Could not register account with given data, please check the input values and try again.",
+    "submit": "Create Account",
+    "successModal": {
+      "button": "Go Shopping",
+      "heading": "Welcome!",
+      "paragraph": "Your account has been created. You can <myAccount>add information</myAccount> to your account now, so you do not have to do this later during your purchase."
+    },
+    "termsAndConditions": "* I declare that I have read and accept the <terms>Terms & Conditions</terms>"
+  },
+  "RegisterPage": {
+    "heading": "Create Account",
+    "metaTitle": "Create Account",
+    "toLoginAlert": "Already have an account? Switch to <login>Log in</login>."
+  },
+  "ReturnsPage": {
+    "heading": "Returns",
+    "heading2": "This feature is not implemented yet",
+    "metaTitle": "Returns"
+  },
+  "ScrollToTopButton": {
+    "scrollTop": "Scroll to top"
+  },
+  "SearchPage": {
+    "empty": {
+      "button": "Browse Products",
+      "imgAlt": "No products found",
+      "paragraph1": "No results found",
+      "paragraph2": "Have not found what you are looking for? Try a different search or browse the categories below",
+      "summary": "Sorry, we couldn’t find any matches."
+    },
+    "heading": "Results for “{search}”",
+    "metaTitle": "Search"
+  },
+  "ShippingDetailsPage": {
+    "addAddressModal": {
+      "cancel": "Cancel",
+      "heading": "Add Address",
+      "submit": "Save"
+    },
+    "delete": "Delete",
+    "deleteModal": {
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "heading": "Are you sure you want to delete this address?",
+      "paragraph": "This action cannot be undone."
+    },
+    "edit": "Edit",
+    "editAddressModal": {
+      "cancel": "Cancel",
+      "heading": "Edit Address",
+      "submit": "Save"
+    },
+    "empty": {
+      "addAddress": "Add Address",
+      "paragraph": "Save an address to make checkout faster."
+    },
+    "metaTitle": "Shipping Details"
+  },
+  "SortByDropdown": {
+    "label": "Sort By",
+    "options": {
+      "price-high-to-low": "Price from high to low",
+      "price-low-to-high": "Price from low to high",
+      "relevance": "Relevance"
+    }
+  }
+}

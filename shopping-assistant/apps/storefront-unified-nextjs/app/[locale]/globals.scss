@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .sf-thumbnail {
+    @apply bg-[var(--color)] bg-[url:var(--color)];
+  }
+
+  .sf-list-item > span {
+    @apply inline-flex;
+  }
+}

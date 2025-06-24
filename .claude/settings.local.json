@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp get:*)",
+      "Bash(claude mcp add context7:*)",
+      "Bash(claude mcp add mcp-toolkit-docker -s user:*)",
+      "Bash(claude mcp:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "Bash(mv:*)",
+      "Bash(mkdir:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(touch:*)",
+      "Bash(ls:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
+}

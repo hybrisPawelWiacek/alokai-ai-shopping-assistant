@@ -1,0 +1,72 @@
+name: Continuous Integration
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "**" # Run on PRs to any branch
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run-ci:
+    name: Run CI
+    runs-on: ubuntu-latest-8core
+    strategy:
+      matrix:
+        node-version: ["18.20.2"]
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout code 🛎️
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Yarn cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn
+          key: storefront-demo-yarn-cache
+
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: starter-turbo-${{ github.sha }}
+          restore-keys: |
+            starter-turbo-
+
+      - name: Configure NPM registry
+        run: |2
+          npm install -g npm-cli-login;
+          npm-cli-login -u ${{ vars.NPM_USER || secrets.NPM_USER }} -p ${{ secrets.NPM_PASS }} -e ${{ vars.NPM_EMAIL || secrets.NPM_EMAIL }} -r https://registrynpm.storefrontcloud.io || exit 1;
+
+      - name: Install dependencies
+        run:  yarn install --frozen-lockfile --cache-folder .yarn && node init.mjs
+
+      - name: Run pipeline
+        if: ${{ github.event_name == 'pull_request' }}
+        run: ./node_modules/.bin/turbo run build lint test:unit --cache-dir=.turbo --filter=\[${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}\]
+
+      - name: Run pipeline
+        if: ${{ github.event_name != 'pull_request' }}
+        run: ./node_modules/.bin/turbo run build lint test:unit --cache-dir=.turbo
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps chromium
+
+      - name: Run integration tests in Playwright
+        run: ./node_modules/.bin/turbo run test:integration --filter=playwright --cache-dir=.turbo

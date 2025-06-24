@@ -1,0 +1,24 @@
+[
+  {
+    "id": "standard-gross",
+    "name": "Standard Delivery",
+    "description": "3-5 business days",
+    "price": {
+      "currency": "USD",
+      "amount": 11.99,
+      "precisionAmount": "11.99"
+    },
+    "estimatedDelivery": null
+  },
+  {
+    "id": "premium-gross",
+    "name": "Premium Delivery",
+    "description": "1-2 business days",
+    "price": {
+      "currency": "USD",
+      "amount": 19.99,
+      "precisionAmount": "19.99"
+    },
+    "estimatedDelivery": null
+  }
+]

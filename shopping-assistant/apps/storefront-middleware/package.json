@@ -1,0 +1,52 @@
+{
+  "name": "storefront-middleware",
+  "private": true,
+  "version": "0.1.0",
+  "main": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tspc",
+    "start": "node lib/src/index.js",
+    "dev": "NODE_ENV=development tsx watch src/index.ts",
+    "multistore:dev": "IS_MULTISTORE_ENABLED=true tsx watch src/index.ts",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@types/body-parser": "1.19.5",
+    "@types/cookie-parser": "1.4.7",
+    "@types/cors": "2.8.17",
+    "@types/express": "4.17.21",
+    "@types/morgan": "1.9.9",
+    "@vsf-enterprise/middleware-headers": "1.0.0",
+    "@vsf-enterprise/sapcc-api": "9.0.1",
+    "@vsf-enterprise/unified-api-mocks": "2.0.0",
+    "@vsf-enterprise/unified-api-sapcc": "4.0.1",
+    "@vue-storefront/middleware": "5.3.2",
+    "@vue-storefront/multistore": "4.1.2",
+    "body-parser": "1.20.2",
+    "express": "4.19.2",
+    "defu": "6.1.4",
+    "morgan": "1.10.0",
+    "node-cache": "5.1.2",
+    "ts-patch": "^3.2.1",
+    "type-fest": "4.21.0",
+    "typescript-transform-paths": "^3.5.2",
+    "@vsf-enterprise/sapcc-types": "3.0.2",
+    "credit-card-type": "^9.1.0",
+    "@vsf-enterprise/contentful-api": "^5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5",
+    "tsx": "4.17.0",
+    "eslint": "9.14.0",
+    "eslint-config-flat-gitignore": "0.3.0",
+    "@vue-storefront/eslint-config": "4.1.0",
+    "prettier": "3.3.2"
+  },
+  "resolutions": {
+    "minimatch": "9.0.5",
+    "axios": "^1.7.4"
+  }
+}

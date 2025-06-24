@@ -1,0 +1,67 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build
+        uses: vuestorefront/storefront-deployment/build-frontend@v4.5.0
+        with:
+          # Change frontend to desired one
+          frontend: ${{ vars.FRONTEND_FRAMEWORK || secrets.FRONTEND_FRAMEWORK || 'next' }}
+          docker_registry_url: ${{ vars.DOCKER_REGISTRY_URL || secrets.DOCKER_REGISTRY_URL }}
+          project_name: ${{ vars.PROJECT_NAME || secrets.PROJECT_NAME }}
+          cloud_username: ${{ vars.CLOUD_USERNAME || secrets.CLOUD_USERNAME }}
+          cloud_password: ${{ secrets.CLOUD_PASSWORD }}
+          npm_email: ${{ vars.NPM_EMAIL || secrets.NPM_EMAIL }}
+          npm_user: ${{ vars.NPM_USER || secrets.NPM_USER }}
+          npm_pass: ${{ secrets.NPM_PASS }}
+
+  build-middleware:
+    name: Build Middleware
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build
+        uses: vuestorefront/storefront-deployment/build-middleware@v4.5.0
+        with:
+          docker_registry_url: ${{ vars.DOCKER_REGISTRY_URL || secrets.DOCKER_REGISTRY_URL }}
+          project_name: ${{ vars.PROJECT_NAME || secrets.PROJECT_NAME }}
+          cloud_username: ${{ vars.CLOUD_USERNAME || secrets.CLOUD_USERNAME }}
+          cloud_password: ${{ secrets.CLOUD_PASSWORD }}
+          npm_email: ${{ vars.NPM_EMAIL || secrets.NPM_EMAIL }}
+          npm_user: ${{ vars.NPM_USER || secrets.NPM_USER }}
+          npm_pass: ${{ secrets.NPM_PASS }}
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    needs: [build-frontend, build-middleware]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy
+        uses: vuestorefront/storefront-deployment/deploy@v4.5.0
+        with:
+          console_api_url: ${{ vars.CONSOLE_API_URL || secrets.CONSOLE_API_URL }}
+          docker_registry_url: ${{ vars.DOCKER_REGISTRY_URL || secrets.DOCKER_REGISTRY_URL }}
+          project_name: ${{ vars.PROJECT_NAME || secrets.PROJECT_NAME }}
+          cloud_username: ${{ vars.CLOUD_USERNAME || secrets.CLOUD_USERNAME }}
+          cloud_password: ${{ secrets.CLOUD_PASSWORD }}
+          cloud_region: ${{ vars.CLOUD_REGION || secrets.CLOUD_REGION }}

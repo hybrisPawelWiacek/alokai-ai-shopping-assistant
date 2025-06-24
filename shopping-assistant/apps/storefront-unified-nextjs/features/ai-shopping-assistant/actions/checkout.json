@@ -1,0 +1,264 @@
+{
+  "checkout": {
+    "id": "checkout",
+    "name": "Checkout",
+    "description": "Initiate checkout process for items in cart",
+    "category": "checkout",
+    "mode": "both",
+    "parameters": {
+      "shippingMethod": {
+        "type": "string",
+        "description": "Selected shipping method",
+        "required": false,
+        "enum": ["standard", "express", "overnight", "pickup"]
+      },
+      "paymentMethod": {
+        "type": "string",
+        "description": "Selected payment method",
+        "required": false,
+        "enum": ["credit_card", "paypal", "apple_pay", "google_pay", "invoice", "purchase_order"]
+      },
+      "couponCode": {
+        "type": "string",
+        "description": "Coupon or promotional code to apply",
+        "required": false
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "checkoutUrl": {
+          "type": "string",
+          "description": "URL to complete checkout"
+        },
+        "orderSummary": {
+          "type": "object",
+          "description": "Summary of the order being placed"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 5,
+      "windowMs": 300000
+    },
+    "security": {
+      "validateInput": true,
+      "requireAuthentication": true
+    },
+    "monitoring": {
+      "trackExecutionTime": true,
+      "trackErrorRate": true,
+      "trackConversionRate": true
+    },
+    "ui": {
+      "component": "CheckoutFlow",
+      "props": {
+        "showOrderSummary": true,
+        "showShippingOptions": true
+      }
+    }
+  },
+  "applyCoupon": {
+    "id": "applyCoupon",
+    "name": "Apply Coupon",
+    "description": "Apply a discount coupon or promotional code to the cart",
+    "category": "checkout",
+    "mode": "both",
+    "parameters": {
+      "couponCode": {
+        "type": "string",
+        "description": "The coupon or promotional code",
+        "required": true,
+        "pattern": "^[A-Z0-9_-]+$"
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "applied": {
+          "type": "boolean",
+          "description": "Whether the coupon was successfully applied"
+        },
+        "discount": {
+          "type": "object",
+          "description": "Discount details if applied"
+        },
+        "updatedCart": {
+          "type": "object",
+          "description": "Updated cart with discount applied"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 60000
+    },
+    "security": {
+      "validateInput": true,
+      "blockSuspiciousCodes": true
+    }
+  },
+  "calculateShipping": {
+    "id": "calculateShipping",
+    "name": "Calculate Shipping",
+    "description": "Calculate shipping costs for available shipping methods",
+    "category": "checkout",
+    "mode": "both",
+    "parameters": {
+      "address": {
+        "type": "object",
+        "description": "Shipping address",
+        "required": true,
+        "properties": {
+          "country": {
+            "type": "string",
+            "description": "Country code",
+            "required": true
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal/ZIP code",
+            "required": true
+          },
+          "state": {
+            "type": "string",
+            "description": "State/Province",
+            "required": false
+          }
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "shippingOptions": {
+          "type": "array",
+          "description": "Available shipping methods with costs"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    }
+  },
+  "createQuote": {
+    "id": "createQuote",
+    "name": "Create Quote",
+    "description": "Generate a quote for B2B customers",
+    "category": "checkout",
+    "mode": "b2b",
+    "parameters": {
+      "companyInfo": {
+        "type": "object",
+        "description": "Company information for the quote",
+        "required": true,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Company name",
+            "required": true
+          },
+          "taxId": {
+            "type": "string",
+            "description": "Tax identification number",
+            "required": false
+          },
+          "contactEmail": {
+            "type": "string",
+            "description": "Contact email for the quote",
+            "required": true
+          }
+        }
+      },
+      "validityDays": {
+        "type": "number",
+        "description": "Number of days the quote is valid",
+        "default": 30,
+        "min": 7,
+        "max": 90
+      },
+      "notes": {
+        "type": "string",
+        "description": "Additional notes for the quote",
+        "required": false
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "quoteId": {
+          "type": "string",
+          "description": "Unique identifier for the quote"
+        },
+        "quoteDocument": {
+          "type": "object",
+          "description": "Generated quote document details"
+        },
+        "downloadUrl": {
+          "type": "string",
+          "description": "URL to download the quote PDF"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 300000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "requireB2BAccount": true
+    }
+  },
+  "createPurchaseOrder": {
+    "id": "createPurchaseOrder",
+    "name": "Create Purchase Order",
+    "description": "Create a purchase order for B2B checkout",
+    "category": "checkout",
+    "mode": "b2b",
+    "parameters": {
+      "poNumber": {
+        "type": "string",
+        "description": "Purchase order number",
+        "required": true
+      },
+      "paymentTerms": {
+        "type": "string",
+        "description": "Payment terms",
+        "required": true,
+        "enum": ["net_15", "net_30", "net_45", "net_60", "prepaid"]
+      },
+      "approverEmail": {
+        "type": "string",
+        "description": "Email of the approver",
+        "required": false
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "description": "Created order ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "Order status"
+        },
+        "paymentInstructions": {
+          "type": "object",
+          "description": "Instructions for payment"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 5,
+      "windowMs": 300000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "requireB2BAccount": true,
+      "validatePONumber": true
+    }
+  }
+}

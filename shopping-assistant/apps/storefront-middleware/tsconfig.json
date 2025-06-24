@@ -1,0 +1,43 @@
+{
+  "display": "Default",
+  "ts-node": {
+    "transpileOnly": true,
+    "require": ["typescript-transform-paths/register"]
+  },
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "types": [
+      "@types/body-parser",
+      "@types/cookie-parser",
+      "@types/express",
+      "@types/cors",
+      "@types/morgan"
+    ],
+    "rootDir": ".",
+    "outDir": "lib",
+    "paths": {
+      "@sf-modules-middleware/*": ["./sf-modules/*"]
+    },
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["dist", "lib", "node_modules", ".turbo"]
+}

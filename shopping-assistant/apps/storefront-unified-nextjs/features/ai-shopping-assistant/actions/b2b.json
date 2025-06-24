@@ -1,0 +1,313 @@
+{
+  "requestBulkPricing": {
+    "id": "requestBulkPricing",
+    "name": "Request Bulk Pricing",
+    "description": "Request volume-based pricing for large quantity orders",
+    "category": "b2b",
+    "mode": "b2b",
+    "parameters": {
+      "productId": {
+        "type": "string",
+        "description": "Product ID for bulk pricing request",
+        "required": true
+      },
+      "quantities": {
+        "type": "array",
+        "description": "Quantity tiers to get pricing for",
+        "required": true,
+        "items": {
+          "type": "number",
+          "description": "Quantity tier",
+          "min": 50
+        },
+        "min": 1,
+        "max": 5
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "pricingTiers": {
+          "type": "array",
+          "description": "Pricing for each quantity tier"
+        },
+        "minimumOrderQuantity": {
+          "type": "number",
+          "description": "Minimum quantity for bulk pricing"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    }
+  },
+  "checkBulkAvailability": {
+    "id": "checkBulkAvailability",
+    "name": "Check Bulk Availability",
+    "description": "Check product availability for large quantity orders",
+    "category": "b2b",
+    "mode": "b2b",
+    "parameters": {
+      "productId": {
+        "type": "string",
+        "description": "Product ID to check availability",
+        "required": true
+      },
+      "quantity": {
+        "type": "number",
+        "description": "Desired quantity",
+        "required": true,
+        "min": 1
+      },
+      "deliveryDate": {
+        "type": "string",
+        "description": "Desired delivery date (ISO format)",
+        "required": false
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "boolean",
+          "description": "Whether the quantity is available"
+        },
+        "inStockQuantity": {
+          "type": "number",
+          "description": "Current stock level"
+        },
+        "leadTime": {
+          "type": "object",
+          "description": "Lead time for the requested quantity"
+        },
+        "alternativeOptions": {
+          "type": "array",
+          "description": "Alternative fulfillment options"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 30,
+      "windowMs": 60000
+    }
+  },
+  "requestSample": {
+    "id": "requestSample",
+    "name": "Request Product Sample",
+    "description": "Request product samples for evaluation before bulk purchase",
+    "category": "b2b",
+    "mode": "b2b",
+    "parameters": {
+      "productIds": {
+        "type": "array",
+        "description": "Products to request samples for",
+        "required": true,
+        "items": {
+          "type": "string",
+          "description": "Product ID"
+        },
+        "min": 1,
+        "max": 5
+      },
+      "shippingAddress": {
+        "type": "object",
+        "description": "Address to ship samples to",
+        "required": true,
+        "properties": {
+          "company": {
+            "type": "string",
+            "required": true
+          },
+          "address": {
+            "type": "string",
+            "required": true
+          },
+          "city": {
+            "type": "string",
+            "required": true
+          },
+          "postalCode": {
+            "type": "string",
+            "required": true
+          },
+          "country": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "description": "Sample request ID"
+        },
+        "status": {
+          "type": "string",
+          "description": "Request status"
+        },
+        "estimatedDelivery": {
+          "type": "string",
+          "description": "Estimated sample delivery date"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 5,
+      "windowMs": 86400000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "requireB2BAccount": true
+    }
+  },
+  "getAccountCredit": {
+    "id": "getAccountCredit",
+    "name": "Get Account Credit",
+    "description": "Check available credit and payment terms for the B2B account",
+    "category": "b2b",
+    "mode": "b2b",
+    "parameters": {},
+    "returns": {
+      "type": "object",
+      "properties": {
+        "creditLimit": {
+          "type": "number",
+          "description": "Total credit limit"
+        },
+        "availableCredit": {
+          "type": "number",
+          "description": "Currently available credit"
+        },
+        "paymentTerms": {
+          "type": "string",
+          "description": "Default payment terms"
+        },
+        "outstandingBalance": {
+          "type": "number",
+          "description": "Current outstanding balance"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "requireB2BAccount": true
+    }
+  },
+  "scheduleProductDemo": {
+    "id": "scheduleProductDemo",
+    "name": "Schedule Product Demo",
+    "description": "Schedule a live product demonstration with a sales representative",
+    "category": "b2b",
+    "mode": "b2b",
+    "parameters": {
+      "productIds": {
+        "type": "array",
+        "description": "Products to demo",
+        "required": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "preferredTimes": {
+        "type": "array",
+        "description": "Preferred demo time slots",
+        "required": true,
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Date (ISO format)"
+            },
+            "time": {
+              "type": "string",
+              "description": "Time slot"
+            }
+          }
+        },
+        "min": 1,
+        "max": 3
+      },
+      "attendeeCount": {
+        "type": "number",
+        "description": "Number of attendees",
+        "required": false,
+        "default": 1
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "demoId": {
+          "type": "string",
+          "description": "Demo booking ID"
+        },
+        "scheduledTime": {
+          "type": "object",
+          "description": "Confirmed demo time"
+        },
+        "meetingLink": {
+          "type": "string",
+          "description": "Link to join the demo"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 3,
+      "windowMs": 86400000
+    }
+  },
+  "getTaxExemption": {
+    "id": "getTaxExemption",
+    "name": "Get Tax Exemption",
+    "description": "Apply tax exemption status to the current order",
+    "category": "b2b",
+    "mode": "b2b",
+    "parameters": {
+      "exemptionCertificate": {
+        "type": "string",
+        "description": "Tax exemption certificate number",
+        "required": true
+      },
+      "state": {
+        "type": "string",
+        "description": "State for which exemption applies",
+        "required": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "applied": {
+          "type": "boolean",
+          "description": "Whether exemption was applied"
+        },
+        "taxSavings": {
+          "type": "number",
+          "description": "Amount saved in taxes"
+        },
+        "updatedTotal": {
+          "type": "number",
+          "description": "New order total without tax"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 5,
+      "windowMs": 300000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "requireB2BAccount": true,
+      "validateTaxExemption": true
+    }
+  }
+}

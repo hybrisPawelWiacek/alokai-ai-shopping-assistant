@@ -1,0 +1,57 @@
+.editorial {
+  p {
+    @apply typography-text-base;
+  }
+
+  h1 {
+    @apply typography-headline-2 md:typography-headline-1;
+  }
+
+  h2 {
+    @apply typography-headline-3 md:typography-headline-2;
+  }
+
+  h3 {
+    @apply typography-headline-4 md:typography-headline-3;
+  }
+
+  h4 {
+    @apply typography-headline-5 md:typography-headline-4;
+  }
+
+  h5 {
+    @apply typography-headline-6 md:typography-headline-5;
+  }
+
+  h6 {
+    @apply typography-headline-6 md:typography-headline-6;
+  }
+
+  ul {
+    @apply list-inside list-disc;
+  }
+
+  ol {
+    @apply list-inside list-decimal;
+  }
+
+  a {
+    @apply text-primary-700 underline;
+  }
+
+  th {
+    @apply border bg-primary-700 px-4 py-2 text-left font-medium text-white;
+  }
+
+  td {
+    @apply border px-4 py-2 text-left;
+  }
+
+  img {
+    @apply inline-block;
+  }
+
+  blockquote {
+    @apply border-l-4 border-primary-700 italic;
+  }
+}

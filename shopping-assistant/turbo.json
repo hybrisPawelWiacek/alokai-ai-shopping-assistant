@@ -1,0 +1,90 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "storefront-middleware#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "lib/**"
+      ]
+    },
+    "unified-storefront-nextjs#build": {
+      "dependsOn": [
+        "^build",
+        "storefront-middleware#build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "test:unit": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "storefront-unified-nextjs#test:unit": {
+      "dependsOn": [
+        "^build",
+        "storefront-middleware#build"
+      ],
+      "inputs": [
+        "{components,config,helpers,hooks,layouts,pages,sdk,types}/**/*.{ts?x}",
+        "__tests__/**/*.ts",
+        "middleware.ts",
+        "jest.*.{ts?x}",
+        "*.config.js"
+      ]
+    },
+    "playwright#test:integration": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "tests/**/*.ts",
+        "mocks/**/*.ts",
+        "setup/**/*.ts"
+      ],
+      "outputs": [
+        "test-results/**",
+        "playwright-report/**"
+      ]
+    },
+    "start": {
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": []
+    },
+    "lint:fix": {
+      "dependsOn": []
+    },
+    "format": {},
+    "typecheck": {
+      "dependsOn": []
+    },
+    "publish": {
+      "dependsOn": [
+        "build",
+        "test",
+        "lint"
+      ]
+    },
+    "dev": {
+      "cache": false
+    },
+    "multistore:dev": {
+      "cache": false
+    },
+    "prepare": {
+      "dependsOn": [],
+      "cache": false
+    }
+  }
+}

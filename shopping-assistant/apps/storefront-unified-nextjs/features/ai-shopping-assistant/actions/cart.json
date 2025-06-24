@@ -1,0 +1,201 @@
+{
+  "addToCart": {
+    "id": "addToCart",
+    "name": "Add to Cart",
+    "description": "Add a product to the shopping cart with specified quantity",
+    "category": "cart",
+    "mode": "both",
+    "parameters": {
+      "productId": {
+        "type": "string",
+        "description": "ID of the product to add",
+        "required": true
+      },
+      "variantId": {
+        "type": "string",
+        "description": "ID of the product variant (size, color, etc)",
+        "required": false
+      },
+      "quantity": {
+        "type": "number",
+        "description": "Number of items to add",
+        "required": false,
+        "default": 1,
+        "min": 1,
+        "max": 999
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "cart": {
+          "type": "object",
+          "description": "Updated cart state"
+        },
+        "addedItem": {
+          "type": "object",
+          "description": "Details of the item that was added"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    },
+    "security": {
+      "validateInput": true
+    },
+    "monitoring": {
+      "trackExecutionTime": true,
+      "trackErrorRate": true
+    },
+    "ui": {
+      "component": "CartUpdate",
+      "props": {
+        "showNotification": true,
+        "notificationType": "success"
+      }
+    }
+  },
+  "updateCartItem": {
+    "id": "updateCartItem",
+    "name": "Update Cart Item",
+    "description": "Update the quantity of an item already in the cart",
+    "category": "cart",
+    "mode": "both",
+    "parameters": {
+      "lineItemId": {
+        "type": "string",
+        "description": "ID of the cart line item to update",
+        "required": true
+      },
+      "quantity": {
+        "type": "number",
+        "description": "New quantity for the item",
+        "required": true,
+        "min": 0,
+        "max": 999
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "cart": {
+          "type": "object",
+          "description": "Updated cart state"
+        },
+        "updatedItem": {
+          "type": "object",
+          "description": "Details of the updated item"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 30,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "CartUpdate"
+    }
+  },
+  "removeFromCart": {
+    "id": "removeFromCart",
+    "name": "Remove from Cart",
+    "description": "Remove an item from the shopping cart",
+    "category": "cart",
+    "mode": "both",
+    "parameters": {
+      "lineItemId": {
+        "type": "string",
+        "description": "ID of the cart line item to remove",
+        "required": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "cart": {
+          "type": "object",
+          "description": "Updated cart state"
+        },
+        "removedItem": {
+          "type": "object",
+          "description": "Details of the removed item"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "CartUpdate",
+      "props": {
+        "showNotification": true,
+        "notificationType": "info"
+      }
+    }
+  },
+  "getCart": {
+    "id": "getCart",
+    "name": "Get Cart",
+    "description": "Retrieve the current state of the shopping cart",
+    "category": "cart",
+    "mode": "both",
+    "parameters": {},
+    "returns": {
+      "type": "object",
+      "properties": {
+        "cart": {
+          "type": "object",
+          "description": "Current cart state with items, totals, and applied discounts"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 60,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "CartSummary"
+    }
+  },
+  "clearCart": {
+    "id": "clearCart",
+    "name": "Clear Cart",
+    "description": "Remove all items from the shopping cart",
+    "category": "cart",
+    "mode": "both",
+    "parameters": {
+      "confirm": {
+        "type": "boolean",
+        "description": "Confirmation flag to prevent accidental clearing",
+        "required": false,
+        "default": false
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "cart": {
+          "type": "object",
+          "description": "Empty cart state"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 5,
+      "windowMs": 60000
+    },
+    "security": {
+      "validateInput": true
+    },
+    "ui": {
+      "component": "CartUpdate",
+      "props": {
+        "showNotification": true,
+        "notificationType": "warning"
+      }
+    }
+  }
+}

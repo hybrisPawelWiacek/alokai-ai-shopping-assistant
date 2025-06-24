@@ -1,0 +1,361 @@
+{
+  "version": "1.0.0",
+  "environment": "development",
+  "globals": {
+    "security": {
+      "rateLimit": {
+        "requests": 100,
+        "windowMs": 60000
+      }
+    },
+    "performance": {
+      "timeoutMs": 30000,
+      "retries": 1
+    },
+    "observability": {
+      "logging": {
+        "level": "info",
+        "includeParams": false,
+        "includeResult": false
+      },
+      "metrics": {
+        "enabled": true
+      },
+      "tracing": {
+        "enabled": true,
+        "propagateContext": true
+      }
+    },
+    "udl": {
+      "defaultTimeout": 10000,
+      "retryPolicy": {
+        "maxRetries": 2,
+        "backoffMs": 1000
+      }
+    }
+  },
+  "actions": [
+    {
+      "id": "search",
+      "name": "Search Products",
+      "description": "Search for products using keywords, filters, and sorting options",
+      "category": "search",
+      "enabled": true,
+      "parameters": {
+        "query": {
+          "type": "string",
+          "required": true,
+          "description": "Search query keywords",
+          "min": 2,
+          "max": 100
+        },
+        "filters": {
+          "type": "object",
+          "required": false,
+          "description": "Filter criteria",
+          "properties": {
+            "category": { "type": "string" },
+            "priceRange": {
+              "type": "object",
+              "properties": {
+                "min": { "type": "number", "min": 0 },
+                "max": { "type": "number", "min": 0 }
+              }
+            },
+            "brands": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "inStock": { "type": "boolean" }
+          }
+        },
+        "sortBy": {
+          "type": "string",
+          "required": false,
+          "enum": ["relevance", "price_asc", "price_desc", "newest", "rating"],
+          "default": "relevance"
+        },
+        "pagination": {
+          "type": "object",
+          "required": false,
+          "properties": {
+            "limit": { "type": "number", "default": 20, "min": 1, "max": 100 },
+            "offset": { "type": "number", "default": 0, "min": 0 }
+          }
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "searchImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": true },
+        "b2b": { "enabled": true }
+      },
+      "udl": {
+        "methods": ["sdk.unified.searchProducts"],
+        "dataFlow": "read",
+        "caching": {
+          "enabled": true,
+          "ttlSeconds": 300
+        }
+      },
+      "performance": {
+        "timeoutMs": 5000
+      },
+      "response": {
+        "format": "markdown",
+        "includeMetadata": true
+      }
+    },
+    {
+      "id": "search_bulk",
+      "name": "Bulk Product Search",
+      "description": "Search for products in bulk with B2B-specific options",
+      "category": "b2b",
+      "enabled": true,
+      "parameters": {
+        "queries": {
+          "type": "array",
+          "required": true,
+          "description": "List of search queries or SKUs",
+          "items": { "type": "string" }
+        },
+        "bulkOptions": {
+          "type": "object",
+          "required": false,
+          "properties": {
+            "minQuantity": { "type": "number", "min": 1 },
+            "includeVolumePricing": { "type": "boolean", "default": true }
+          }
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "searchBulkImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": false },
+        "b2b": { "enabled": true }
+      },
+      "security": {
+        "requiresAuth": true
+      },
+      "udl": {
+        "methods": ["sdk.unified.searchProducts", "sdk.customExtension.getBulkPricing"],
+        "dataFlow": "read"
+      }
+    },
+    {
+      "id": "add_to_cart",
+      "name": "Add to Cart",
+      "description": "Add a product to the shopping cart with specified quantity",
+      "category": "cart",
+      "enabled": true,
+      "parameters": {
+        "productId": {
+          "type": "string",
+          "required": true,
+          "description": "Product ID or SKU"
+        },
+        "quantity": {
+          "type": "number",
+          "required": false,
+          "description": "Quantity to add",
+          "default": 1,
+          "min": 1,
+          "max": 9999
+        },
+        "variantId": {
+          "type": "string",
+          "required": false,
+          "description": "Variant ID for products with options"
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "addToCartImplementation"
+      },
+      "modes": {
+        "b2c": { 
+          "enabled": true,
+          "overrides": {
+            "parameters": {
+              "quantity": { "max": 99 }
+            }
+          }
+        },
+        "b2b": { 
+          "enabled": true,
+          "overrides": {
+            "parameters": {
+              "quantity": { "max": 9999 }
+            }
+          }
+        }
+      },
+      "security": {
+        "inputValidation": {
+          "maxLength": 50
+        }
+      },
+      "udl": {
+        "methods": ["sdk.unified.addCartLineItem"],
+        "dataFlow": "write",
+        "caching": {
+          "invalidateOn": ["cart"]
+        }
+      }
+    },
+    {
+      "id": "checkout",
+      "name": "Checkout",
+      "description": "Proceed to checkout with current cart items",
+      "category": "checkout",
+      "enabled": true,
+      "parameters": {
+        "shippingMethod": {
+          "type": "string",
+          "required": false,
+          "enum": ["standard", "express", "overnight", "pickup"]
+        },
+        "paymentMethod": {
+          "type": "string",
+          "required": false,
+          "enum": ["credit_card", "paypal", "apple_pay", "google_pay", "invoice", "purchase_order"]
+        },
+        "couponCode": {
+          "type": "string",
+          "required": false,
+          "pattern": "^[A-Z0-9_-]+$"
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "checkoutImplementation"
+      },
+      "modes": {
+        "b2c": {
+          "enabled": true,
+          "overrides": {
+            "parameters": {
+              "paymentMethod": {
+                "enum": ["credit_card", "paypal", "apple_pay", "google_pay"]
+              }
+            }
+          }
+        },
+        "b2b": {
+          "enabled": true,
+          "overrides": {
+            "parameters": {
+              "paymentMethod": {
+                "enum": ["invoice", "purchase_order"]
+              }
+            }
+          }
+        }
+      },
+      "security": {
+        "requiresAuth": false,
+        "inputValidation": {
+          "bannedPatterns": ["ADMIN", "TEST", "DEBUG", "STAFF", "FREE", "100OFF"]
+        }
+      },
+      "udl": {
+        "methods": ["sdk.unified.createCheckout", "sdk.unified.applyCoupon"],
+        "dataFlow": "write"
+      },
+      "performance": {
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "id": "create_quote",
+      "name": "Create Quote",
+      "description": "Generate a B2B quote for current cart items",
+      "category": "b2b",
+      "enabled": true,
+      "parameters": {
+        "companyInfo": {
+          "type": "object",
+          "required": true,
+          "properties": {
+            "name": { "type": "string", "required": true },
+            "taxId": { "type": "string", "required": false },
+            "contactEmail": { 
+              "type": "string", 
+              "required": true,
+              "pattern": "^[\\w.-]+@[\\w.-]+\\.\\w+$"
+            }
+          }
+        },
+        "validityDays": {
+          "type": "number",
+          "required": false,
+          "default": 30,
+          "min": 7,
+          "max": 90
+        },
+        "notes": {
+          "type": "string",
+          "required": false,
+          "max": 500
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "createQuoteImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": false },
+        "b2b": { 
+          "enabled": true,
+          "requiredFields": ["companyInfo.taxId"]
+        }
+      },
+      "security": {
+        "requiresAuth": true,
+        "requiredPermissions": ["create_quote"]
+      },
+      "udl": {
+        "methods": ["sdk.customExtension.createQuote"],
+        "dataFlow": "write"
+      }
+    },
+    {
+      "id": "ask_question",
+      "name": "Ask Question",
+      "description": "Ask a general question about products, policies, or services",
+      "category": "support",
+      "enabled": true,
+      "parameters": {
+        "question": {
+          "type": "string",
+          "required": true,
+          "min": 5,
+          "max": 500
+        },
+        "context": {
+          "type": "string",
+          "required": false,
+          "enum": ["product", "order", "shipping", "returns", "general"]
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "askQuestionImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": true },
+        "b2b": { "enabled": true }
+      },
+      "response": {
+        "format": "markdown"
+      },
+      "performance": {
+        "timeoutMs": 15000
+      }
+    }
+  ]
+}

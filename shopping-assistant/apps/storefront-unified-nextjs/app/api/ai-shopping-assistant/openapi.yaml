@@ -1,0 +1,308 @@
+openapi: 3.1.0
+info:
+  title: AI Shopping Assistant API
+  description: |
+    Alokai AI Shopping Assistant API powered by LangGraph.js
+    
+    This API provides intelligent shopping assistance with B2C/B2B mode detection,
+    streaming responses, and rich UI component integration.
+  version: 1.0.0
+  contact:
+    name: Alokai Team
+    email: support@vuestorefront.io
+servers:
+  - url: https://api.example.com
+    description: Production server
+  - url: http://localhost:3000
+    description: Development server
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []
+paths:
+  /api/ai-shopping-assistant:
+    post:
+      summary: Process a chat message
+      description: |
+        Send a message to the AI Shopping Assistant and receive an intelligent response
+        with optional actions and UI components.
+      operationId: chat
+      tags:
+        - Chat
+      security:
+        - ApiKeyAuth: []
+        - BearerAuth: []
+        - {} # Allow anonymous in development
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+            examples:
+              search:
+                summary: Product search
+                value:
+                  message: "Show me blue running shoes under $100"
+                  sessionId: "550e8400-e29b-41d4-a716-446655440000"
+                  stream: true
+              b2b:
+                summary: B2B bulk order
+                value:
+                  message: "I need to order 100 office chairs for our new location"
+                  mode: "b2b"
+                  context:
+                    customerId: "B2B-12345"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/StreamingResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                validation:
+                  value:
+                    error: "Invalid request"
+                    code: "VALIDATION_ERROR"
+                    details:
+                      - field: "message"
+                        error: "Message is required"
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Origin not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: Seconds until rate limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    options:
+      summary: CORS preflight
+      description: Handle CORS preflight requests
+      operationId: corsOptions
+      tags:
+        - CORS
+      responses:
+        '200':
+          description: CORS headers returned
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+  /api/ai-shopping-assistant/health:
+    get:
+      summary: Health check
+      description: Check if the AI Shopping Assistant service is healthy
+      operationId: healthCheck
+      tags:
+        - Health
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '503':
+          description: Service unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key for service-to-service authentication
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for user authentication
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: The user's message to the assistant
+        sessionId:
+          type: string
+          format: uuid
+          description: Optional session ID to maintain conversation context
+        mode:
+          type: string
+          enum: [b2c, b2b]
+          description: Shopping mode (defaults to auto-detection)
+        context:
+          type: object
+          description: Additional context for the request
+          properties:
+            cartId:
+              type: string
+              description: Current cart ID
+            customerId:
+              type: string
+              description: Customer ID for personalization
+            locale:
+              type: string
+              description: User's locale (e.g., en-US)
+            currency:
+              type: string
+              description: User's currency (e.g., USD)
+        stream:
+          type: boolean
+          default: true
+          description: Whether to stream the response
+    ChatResponse:
+      type: object
+      required:
+        - message
+        - metadata
+      properties:
+        message:
+          type: string
+          description: The assistant's response
+        actions:
+          type: array
+          description: Actions performed by the assistant
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: Action type (e.g., search, add_to_cart)
+              data:
+                type: object
+                description: Action-specific data
+        ui:
+          type: object
+          description: UI component to display
+          properties:
+            component:
+              type: string
+              description: Component name (e.g., ProductGrid, CartPreview)
+            data:
+              type: object
+              description: Component-specific data
+        metadata:
+          type: object
+          required:
+            - sessionId
+            - mode
+            - processingTime
+            - version
+          properties:
+            sessionId:
+              type: string
+              description: Session ID for this conversation
+            mode:
+              type: string
+              enum: [b2c, b2b]
+              description: Detected shopping mode
+            processingTime:
+              type: number
+              description: Processing time in milliseconds
+            version:
+              type: string
+              description: API version
+    StreamingResponse:
+      type: object
+      description: Server-sent event format for streaming responses
+      properties:
+        type:
+          type: string
+          enum: [metadata, content, actions, ui, done, error]
+          description: Event type
+        data:
+          type: object
+          description: Event-specific data
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
+        code:
+          type: string
+          description: Machine-readable error code
+        details:
+          type: object
+          description: Additional error details
+        retryAfter:
+          type: integer
+          description: Seconds until retry (for rate limits)
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [healthy, unhealthy]
+          description: Service health status
+        timestamp:
+          type: string
+          format: date-time
+          description: Health check timestamp
+        version:
+          type: string
+          description: Service version
+        dependencies:
+          type: object
+          description: Health status of dependencies
+          properties:
+            openai:
+              type: boolean
+              description: OpenAI API connectivity
+            database:
+              type: boolean
+              description: Database connectivity
+            cache:
+              type: boolean
+              description: Cache service status

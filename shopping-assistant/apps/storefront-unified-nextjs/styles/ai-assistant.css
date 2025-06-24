@@ -1,0 +1,138 @@
+/* AI Shopping Assistant Custom Styles */
+
+/* Animations */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Utility Classes */
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Message Bubbles */
+.ai-message-bubble {
+  @apply rounded-lg px-4 py-2 max-w-[70%];
+}
+
+.ai-message-user {
+  @apply bg-primary-600 text-white ml-auto;
+}
+
+.ai-message-assistant {
+  @apply bg-white border border-neutral-200;
+}
+
+.ai-message-error {
+  @apply bg-negative-100 border-negative-200 text-negative-700;
+}
+
+/* Chat Interface */
+.ai-chat-container {
+  @apply flex flex-col bg-neutral-50 rounded-lg shadow-lg overflow-hidden;
+}
+
+.ai-chat-header {
+  @apply flex items-center justify-between px-4 py-3 bg-primary-700 text-white;
+}
+
+.ai-chat-messages {
+  @apply flex-1 overflow-y-auto p-4 space-y-4;
+}
+
+.ai-chat-input {
+  @apply p-4 border-t border-neutral-200 bg-white;
+}
+
+/* Typing Indicator */
+.ai-typing-dot {
+  @apply block w-2 h-2 bg-neutral-400 rounded-full;
+}
+
+/* Product Grid */
+.ai-product-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4;
+}
+
+.ai-product-card {
+  @apply bg-white rounded-lg border border-neutral-200 overflow-hidden hover:shadow-md transition-shadow;
+}
+
+/* Comparison Table */
+.ai-comparison-table {
+  @apply w-full min-w-[600px] border-collapse;
+}
+
+.ai-comparison-header {
+  @apply text-left p-2 border-b border-neutral-200;
+}
+
+.ai-comparison-cell {
+  @apply p-2 border-b border-neutral-200;
+}
+
+/* B2B Components */
+.ai-bulk-upload-zone {
+  @apply border-2 border-dashed rounded-lg p-8 text-center transition-colors;
+}
+
+.ai-bulk-upload-zone-active {
+  @apply border-primary-500 bg-primary-50;
+}
+
+.ai-quote-summary {
+  @apply bg-white rounded-lg border border-neutral-200 overflow-hidden;
+}
+
+/* Widget */
+.ai-widget-button {
+  @apply shadow-lg hover:shadow-xl transition-shadow;
+}
+
+.ai-widget-button-active {
+  @apply ring-2 ring-primary-500;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .ai-chat-container {
+    @apply h-full;
+  }
+  
+  .ai-message-bubble {
+    @apply max-w-[85%];
+  }
+}

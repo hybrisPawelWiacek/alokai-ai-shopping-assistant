@@ -1,0 +1,2133 @@
+[
+  {
+    "id": "categories",
+    "name": "Categories",
+    "slug": "categories",
+    "subcategories": [
+      {
+        "id": "220000",
+        "name": "Accessories",
+        "slug": "220000",
+        "subcategories": [
+          {
+            "id": "221600",
+            "name": "Bandanas",
+            "slug": "221600",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "220500",
+            "name": "Beanies",
+            "slug": "220500",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221200",
+            "name": "Beach Towels",
+            "slug": "221200",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "251100",
+            "name": "Belts",
+            "slug": "251100",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221900",
+            "name": "Cameras",
+            "slug": "221900",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "220600",
+            "name": "Caps",
+            "slug": "220600",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221800",
+            "name": "Electronic Accessories",
+            "slug": "221800",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "190700",
+            "name": "Gloves",
+            "slug": "190700",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221300",
+            "name": "Headphones",
+            "slug": "221300",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221500",
+            "name": "Jewellery",
+            "slug": "221500",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221000",
+            "name": "Others",
+            "slug": "221000",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221100",
+            "name": "Socks",
+            "slug": "221100",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "221400",
+            "name": "Sticker",
+            "slug": "221400",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "222000",
+            "name": "Videocamera",
+            "slug": "222000",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "220700",
+            "name": "Wallets",
+            "slug": "220700",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          },
+          {
+            "id": "340000",
+            "name": "Watches",
+            "slug": "340000",
+            "subcategories": [],
+            "parentCategoryId": "220000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "370000",
+        "name": "Accessories women",
+        "slug": "370000",
+        "subcategories": [
+          {
+            "id": "160400",
+            "name": "Bags women",
+            "slug": "160400",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "371600",
+            "name": "Bandanas women",
+            "slug": "371600",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "370800",
+            "name": "Beach towels women",
+            "slug": "370800",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "370200",
+            "name": "Beanies women",
+            "slug": "370200",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "370900",
+            "name": "Belts women",
+            "slug": "370900",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "370100",
+            "name": "Caps women",
+            "slug": "370100",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "371100",
+            "name": "Gloves women",
+            "slug": "371100",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "221300",
+            "name": "Headphones",
+            "slug": "221300",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "221500",
+            "name": "Jewellery",
+            "slug": "221500",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "371200",
+            "name": "Others women",
+            "slug": "371200",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "371800",
+            "name": "Jewellery women",
+            "slug": "371800",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "371700",
+            "name": "Scarves women",
+            "slug": "371700",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "370600",
+            "name": "Socks women",
+            "slug": "370600",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "371000",
+            "name": "Underwear technical women",
+            "slug": "371000",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "370300",
+            "name": "Wallets women",
+            "slug": "370300",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          },
+          {
+            "id": "370700",
+            "name": "Watches women",
+            "slug": "370700",
+            "subcategories": [],
+            "parentCategoryId": "370000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "380000",
+        "name": "Accessories youth",
+        "slug": "380000",
+        "subcategories": [
+          {
+            "id": "380200",
+            "name": "Beanies youth",
+            "slug": "380200",
+            "subcategories": [],
+            "parentCategoryId": "380000"
+          },
+          {
+            "id": "380300",
+            "name": "Belts youth",
+            "slug": "380300",
+            "subcategories": [],
+            "parentCategoryId": "380000"
+          },
+          {
+            "id": "380100",
+            "name": "Caps youth",
+            "slug": "380100",
+            "subcategories": [],
+            "parentCategoryId": "380000"
+          },
+          {
+            "id": "330800",
+            "name": "Gloves youth",
+            "slug": "330800",
+            "subcategories": [],
+            "parentCategoryId": "380000"
+          },
+          {
+            "id": "380400",
+            "name": "Socks youth",
+            "slug": "380400",
+            "subcategories": [],
+            "parentCategoryId": "380000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "160000",
+        "name": "Bags+Boardbags",
+        "slug": "160000",
+        "subcategories": [
+          {
+            "id": "160300",
+            "name": "Backpacks",
+            "slug": "160300",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          },
+          {
+            "id": "160900",
+            "name": "Backpacks Women",
+            "slug": "160900",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          },
+          {
+            "id": "160700",
+            "name": "Bags",
+            "slug": "160700",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          },
+          {
+            "id": "160400",
+            "name": "Bags women",
+            "slug": "160400",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          },
+          {
+            "id": "160100",
+            "name": "Board Bags",
+            "slug": "160100",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          },
+          {
+            "id": "170300",
+            "name": "Touring Bags",
+            "slug": "170300",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          },
+          {
+            "id": "160500",
+            "name": "Travelbags",
+            "slug": "160500",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          },
+          {
+            "id": "160600",
+            "name": "Travelbags women",
+            "slug": "160600",
+            "subcategories": [],
+            "parentCategoryId": "160000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "320000",
+        "name": "Bikewear",
+        "slug": "320000",
+        "subcategories": [
+          {
+            "id": "321000",
+            "name": "MTB Gloves wmn",
+            "slug": "321000",
+            "subcategories": [],
+            "parentCategoryId": "320000"
+          },
+          {
+            "id": "321100",
+            "name": "MTB Jackets wmn",
+            "slug": "321100",
+            "subcategories": [],
+            "parentCategoryId": "320000"
+          },
+          {
+            "id": "320500",
+            "name": "MTB Jackets",
+            "slug": "320500",
+            "subcategories": [],
+            "parentCategoryId": "320000"
+          },
+          {
+            "id": "320700",
+            "name": "MTB Shirt wmn",
+            "slug": "320700",
+            "subcategories": [],
+            "parentCategoryId": "320000"
+          },
+          {
+            "id": "320100",
+            "name": "MTB Shirts",
+            "slug": "320100",
+            "subcategories": [],
+            "parentCategoryId": "320000"
+          },
+          {
+            "id": "320800",
+            "name": "MTB Shorts wmn",
+            "slug": "320800",
+            "subcategories": [],
+            "parentCategoryId": "320000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "50000",
+        "name": "Bindings",
+        "slug": "50000",
+        "subcategories": [
+          {
+            "id": "50300",
+            "name": "Hard Bindings",
+            "slug": "50300",
+            "subcategories": [],
+            "parentCategoryId": "50000"
+          },
+          {
+            "id": "50400",
+            "name": "Hard Bindings Step In",
+            "slug": "50400",
+            "subcategories": [],
+            "parentCategoryId": "50000"
+          },
+          {
+            "id": "50100",
+            "name": "Soft Bindings",
+            "slug": "50100",
+            "subcategories": [],
+            "parentCategoryId": "50000"
+          },
+          {
+            "id": "50500",
+            "name": "Soft Bindings Accessories",
+            "slug": "50500",
+            "subcategories": [],
+            "parentCategoryId": "50000"
+          },
+          {
+            "id": "50600",
+            "name": "Soft Bindings women",
+            "slug": "50600",
+            "subcategories": [],
+            "parentCategoryId": "50000"
+          },
+          {
+            "id": "51700",
+            "name": "Soft Bindings youth",
+            "slug": "51700",
+            "subcategories": [],
+            "parentCategoryId": "50000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "210000",
+        "name": "Eyewear",
+        "slug": "210000",
+        "subcategories": [
+          {
+            "id": "210200",
+            "name": "Goggles",
+            "slug": "210200",
+            "subcategories": [],
+            "parentCategoryId": "210000"
+          },
+          {
+            "id": "210100",
+            "name": "Shades",
+            "slug": "210100",
+            "subcategories": [],
+            "parentCategoryId": "210000"
+          },
+          {
+            "id": "210300",
+            "name": "Eyewear Accessories",
+            "slug": "210300",
+            "subcategories": [],
+            "parentCategoryId": "210000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "240000",
+        "name": "Eyewear Women",
+        "slug": "240000",
+        "subcategories": [
+          {
+            "id": "210300",
+            "name": "Eyewear Accessories",
+            "slug": "210300",
+            "subcategories": [],
+            "parentCategoryId": "240000"
+          },
+          {
+            "id": "240200",
+            "name": "Goggles Women",
+            "slug": "240200",
+            "subcategories": [],
+            "parentCategoryId": "240000"
+          },
+          {
+            "id": "240100",
+            "name": "Shades Women",
+            "slug": "240100",
+            "subcategories": [],
+            "parentCategoryId": "240000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "290000",
+        "name": "Eyewear youth",
+        "slug": "290000",
+        "subcategories": [
+          {
+            "id": "290100",
+            "name": "Goggles youth",
+            "slug": "290100",
+            "subcategories": [],
+            "parentCategoryId": "290000"
+          },
+          {
+            "id": "290200",
+            "name": "Shades youth",
+            "slug": "290200",
+            "subcategories": [],
+            "parentCategoryId": "290000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "110000",
+        "name": "Freeski",
+        "slug": "110000",
+        "subcategories": [
+          {
+            "id": "111700",
+            "name": "Freeride Ski",
+            "slug": "111700",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "111900",
+            "name": "Freeride Ski women",
+            "slug": "111900",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110100",
+            "name": "Freestyle Ski",
+            "slug": "110100",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110200",
+            "name": "Freestyle Ski women",
+            "slug": "110200",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110300",
+            "name": "Freestyle+Freeride Ski youth",
+            "slug": "110300",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110800",
+            "name": "Sets Freeski",
+            "slug": "110800",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110900",
+            "name": "Ski Bag",
+            "slug": "110900",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "111300",
+            "name": "Ski Bag women",
+            "slug": "111300",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110500",
+            "name": "Ski Bindings",
+            "slug": "110500",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110600",
+            "name": "Ski Boots",
+            "slug": "110600",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "111000",
+            "name": "Ski Boots women",
+            "slug": "111000",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "111500",
+            "name": "Ski Boots youth",
+            "slug": "111500",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "110700",
+            "name": "Ski poles",
+            "slug": "110700",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "111100",
+            "name": "Ski Poles women",
+            "slug": "111100",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "111800",
+            "name": "Ski Poles youth",
+            "slug": "111800",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          },
+          {
+            "id": "111600",
+            "name": "Ski Set youth",
+            "slug": "111600",
+            "subcategories": [],
+            "parentCategoryId": "110000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "450000",
+        "name": "Helmets",
+        "slug": "450000",
+        "subcategories": [
+          {
+            "id": "450500",
+            "name": "Helmets Bike/Skate",
+            "slug": "450500",
+            "subcategories": [],
+            "parentCategoryId": "450000"
+          },
+          {
+            "id": "450600",
+            "name": "Helmets Wakeboard",
+            "slug": "450600",
+            "subcategories": [],
+            "parentCategoryId": "450000"
+          },
+          {
+            "id": "450100",
+            "name": "Helmets Snow",
+            "slug": "450100",
+            "subcategories": [],
+            "parentCategoryId": "450000"
+          },
+          {
+            "id": "450300",
+            "name": "Helmets women",
+            "slug": "450300",
+            "subcategories": [],
+            "parentCategoryId": "450000"
+          },
+          {
+            "id": "450200",
+            "name": "Helmets youth",
+            "slug": "450200",
+            "subcategories": [],
+            "parentCategoryId": "450000"
+          },
+          {
+            "id": "450700",
+            "name": "Helmets youth Girls",
+            "slug": "450700",
+            "subcategories": [],
+            "parentCategoryId": "450000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "70000",
+        "name": "Protection",
+        "slug": "70000",
+        "subcategories": [
+          {
+            "id": "450500",
+            "name": "Helmets Bike/Skate",
+            "slug": "450500",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "450100",
+            "name": "Helmets Snow",
+            "slug": "450100",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "450300",
+            "name": "Helmets women",
+            "slug": "450300",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "450600",
+            "name": "Helmets Wakeboard",
+            "slug": "450600",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "450200",
+            "name": "Helmets youth",
+            "slug": "450200",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "70500",
+            "name": "Protection women",
+            "slug": "70500",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "70200",
+            "name": "Protectors",
+            "slug": "70200",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "70700",
+            "name": "Protectors Bike",
+            "slug": "70700",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          },
+          {
+            "id": "70600",
+            "name": "Protection youth",
+            "slug": "70600",
+            "subcategories": [],
+            "parentCategoryId": "70000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "20000",
+        "name": "Race+Freecarveboards",
+        "slug": "20000",
+        "subcategories": [
+          {
+            "id": "20100",
+            "name": "Raceboards",
+            "slug": "20100",
+            "subcategories": [],
+            "parentCategoryId": "20000"
+          },
+          {
+            "id": "20400",
+            "name": "Raceboards women",
+            "slug": "20400",
+            "subcategories": [],
+            "parentCategoryId": "20000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "230000",
+        "name": "Shoes",
+        "slug": "230000",
+        "subcategories": [
+          {
+            "id": "230400",
+            "name": "Sandals men",
+            "slug": "230400",
+            "subcategories": [],
+            "parentCategoryId": "230000"
+          },
+          {
+            "id": "230200",
+            "name": "Skate Shoes",
+            "slug": "230200",
+            "subcategories": [],
+            "parentCategoryId": "230000"
+          },
+          {
+            "id": "230100",
+            "name": "Sneakers",
+            "slug": "230100",
+            "subcategories": [],
+            "parentCategoryId": "230000"
+          },
+          {
+            "id": "230600",
+            "name": "Winter Shoes",
+            "slug": "230600",
+            "subcategories": [],
+            "parentCategoryId": "230000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "400000",
+        "name": "Shoes women",
+        "slug": "400000",
+        "subcategories": [
+          {
+            "id": "400400",
+            "name": "Ballerinas women",
+            "slug": "400400",
+            "subcategories": [],
+            "parentCategoryId": "400000"
+          },
+          {
+            "id": "400600",
+            "name": "Boots Women",
+            "slug": "400600",
+            "subcategories": [],
+            "parentCategoryId": "400000"
+          },
+          {
+            "id": "400500",
+            "name": "Fashion Shoes Women",
+            "slug": "400500",
+            "subcategories": [],
+            "parentCategoryId": "400000"
+          },
+          {
+            "id": "400300",
+            "name": "Sandals women",
+            "slug": "400300",
+            "subcategories": [],
+            "parentCategoryId": "400000"
+          },
+          {
+            "id": "400100",
+            "name": "Sneakers women",
+            "slug": "400100",
+            "subcategories": [],
+            "parentCategoryId": "400000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "390000",
+        "name": "Shoes youth",
+        "slug": "390000",
+        "subcategories": [
+          {
+            "id": "390200",
+            "name": "Sandals youth",
+            "slug": "390200",
+            "subcategories": [],
+            "parentCategoryId": "390000"
+          },
+          {
+            "id": "390300",
+            "name": "Skateshoes youth",
+            "slug": "390300",
+            "subcategories": [],
+            "parentCategoryId": "390000"
+          },
+          {
+            "id": "390100",
+            "name": "Sneakers youth",
+            "slug": "390100",
+            "subcategories": [],
+            "parentCategoryId": "390000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "280000",
+        "name": "Skate",
+        "slug": "280000",
+        "subcategories": [
+          {
+            "id": "280500",
+            "name": "Bearings",
+            "slug": "280500",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280700",
+            "name": "Complete Decks",
+            "slug": "280700",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "180300",
+            "name": "DVD Skate",
+            "slug": "180300",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280900",
+            "name": "Cruisers",
+            "slug": "280900",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280800",
+            "name": "Grip Tape",
+            "slug": "280800",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280100",
+            "name": "Longboards",
+            "slug": "280100",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280300",
+            "name": "Skate Accessories",
+            "slug": "280300",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280200",
+            "name": "Skate Decks",
+            "slug": "280200",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280400",
+            "name": "Trucks",
+            "slug": "280400",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          },
+          {
+            "id": "280600",
+            "name": "Wheels",
+            "slug": "280600",
+            "subcategories": [],
+            "parentCategoryId": "280000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "40000",
+        "name": "Snowboard Boots",
+        "slug": "40000",
+        "subcategories": [
+          {
+            "id": "40500",
+            "name": "Boots Accessories",
+            "slug": "40500",
+            "subcategories": [],
+            "parentCategoryId": "40000"
+          },
+          {
+            "id": "40300",
+            "name": "Hardboots",
+            "slug": "40300",
+            "subcategories": [],
+            "parentCategoryId": "40000"
+          },
+          {
+            "id": "40100",
+            "name": "Softboots",
+            "slug": "40100",
+            "subcategories": [],
+            "parentCategoryId": "40000"
+          },
+          {
+            "id": "40400",
+            "name": "Softboots women",
+            "slug": "40400",
+            "subcategories": [],
+            "parentCategoryId": "40000"
+          },
+          {
+            "id": "40600",
+            "name": "Softboots youth",
+            "slug": "40600",
+            "subcategories": [],
+            "parentCategoryId": "40000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "10000",
+        "name": "Snowboards",
+        "slug": "10000",
+        "subcategories": [
+          {
+            "id": "10100",
+            "name": "Freestyle+Freeride",
+            "slug": "10100",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "30300",
+            "name": "Freestyle+Freeride youth",
+            "slug": "30300",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "20000",
+            "name": "Race+Freecarveboards",
+            "slug": "20000",
+            "subcategories": [
+              {
+                "id": "20100",
+                "name": "Raceboards",
+                "slug": "20100",
+                "subcategories": [],
+                "parentCategoryId": "20000"
+              },
+              {
+                "id": "20400",
+                "name": "Raceboards women",
+                "slug": "20400",
+                "subcategories": [],
+                "parentCategoryId": "20000"
+              }
+            ],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "20400",
+            "name": "Raceboards women",
+            "slug": "20400",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "10200",
+            "name": "Sets Freestyle+Freeride",
+            "slug": "10200",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "10500",
+            "name": "Snowboards women",
+            "slug": "10500",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "10400",
+            "name": "Splitboard",
+            "slug": "10400",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "30200",
+            "name": "Testboard youth",
+            "slug": "30200",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          },
+          {
+            "id": "10600",
+            "name": "Test Freestyle+Freeride women",
+            "slug": "10600",
+            "subcategories": [],
+            "parentCategoryId": "10000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "30000",
+        "name": "Snowboards youth",
+        "slug": "30000",
+        "subcategories": [
+          {
+            "id": "30300",
+            "name": "Freestyle+Freeride youth",
+            "slug": "30300",
+            "subcategories": [],
+            "parentCategoryId": "30000"
+          },
+          {
+            "id": "30200",
+            "name": "Testboard youth",
+            "slug": "30200",
+            "subcategories": [],
+            "parentCategoryId": "30000"
+          },
+          {
+            "id": "30400",
+            "name": "Raceboards youth",
+            "slug": "30400",
+            "subcategories": [],
+            "parentCategoryId": "30000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "190000",
+        "name": "Snowwear men",
+        "slug": "190000",
+        "subcategories": [
+          {
+            "id": "190400",
+            "name": "Fleece",
+            "slug": "190400",
+            "subcategories": [],
+            "parentCategoryId": "190000"
+          },
+          {
+            "id": "190700",
+            "name": "Gloves",
+            "slug": "190700",
+            "subcategories": [],
+            "parentCategoryId": "190000"
+          },
+          {
+            "id": "190100",
+            "name": "Snow Jackets",
+            "slug": "190100",
+            "subcategories": [],
+            "parentCategoryId": "190000"
+          },
+          {
+            "id": "190300",
+            "name": "Snow Pants",
+            "slug": "190300",
+            "subcategories": [],
+            "parentCategoryId": "190000"
+          },
+          {
+            "id": "190800",
+            "name": "Softshell",
+            "slug": "190800",
+            "subcategories": [],
+            "parentCategoryId": "190000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "200000",
+        "name": "Snowwear women",
+        "slug": "200000",
+        "subcategories": [
+          {
+            "id": "200400",
+            "name": "Fleece women",
+            "slug": "200400",
+            "subcategories": [],
+            "parentCategoryId": "200000"
+          },
+          {
+            "id": "371100",
+            "name": "Gloves women",
+            "slug": "371100",
+            "subcategories": [],
+            "parentCategoryId": "200000"
+          },
+          {
+            "id": "200100",
+            "name": "Snow Jackets women",
+            "slug": "200100",
+            "subcategories": [],
+            "parentCategoryId": "200000"
+          },
+          {
+            "id": "200300",
+            "name": "Snow Pants women",
+            "slug": "200300",
+            "subcategories": [],
+            "parentCategoryId": "200000"
+          },
+          {
+            "id": "200200",
+            "name": "Snow Vests women",
+            "slug": "200200",
+            "subcategories": [],
+            "parentCategoryId": "200000"
+          },
+          {
+            "id": "200800",
+            "name": "Softshell women",
+            "slug": "200800",
+            "subcategories": [],
+            "parentCategoryId": "200000"
+          },
+          {
+            "id": "371000",
+            "name": "Underwear technical women",
+            "slug": "371000",
+            "subcategories": [],
+            "parentCategoryId": "200000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "330000",
+        "name": "Snowwear youth",
+        "slug": "330000",
+        "subcategories": [
+          {
+            "id": "270900",
+            "name": "Fleece youth",
+            "slug": "270900",
+            "subcategories": [],
+            "parentCategoryId": "330000"
+          },
+          {
+            "id": "330800",
+            "name": "Gloves youth",
+            "slug": "330800",
+            "subcategories": [],
+            "parentCategoryId": "330000"
+          },
+          {
+            "id": "330100",
+            "name": "Snow Jackets youth",
+            "slug": "330100",
+            "subcategories": [],
+            "parentCategoryId": "330000"
+          },
+          {
+            "id": "330700",
+            "name": "Snow Pants youth",
+            "slug": "330700",
+            "subcategories": [],
+            "parentCategoryId": "330000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "250000",
+        "name": "Streetwear men",
+        "slug": "250000",
+        "subcategories": [
+          {
+            "id": "251100",
+            "name": "Belts",
+            "slug": "251100",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250800",
+            "name": "Boardshorts",
+            "slug": "250800",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "251200",
+            "name": "Coats",
+            "slug": "251200",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "190400",
+            "name": "Fleece",
+            "slug": "190400",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250500",
+            "name": "Denim Pants",
+            "slug": "250500",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250400",
+            "name": "Jackets",
+            "slug": "250400",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "251500",
+            "name": "Long Sleeve",
+            "slug": "251500",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250900",
+            "name": "Pants",
+            "slug": "250900",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250700",
+            "name": "Polos",
+            "slug": "250700",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250300",
+            "name": "Shirts",
+            "slug": "250300",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "251300",
+            "name": "Suit",
+            "slug": "251300",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250600",
+            "name": "Shorts",
+            "slug": "250600",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "250200",
+            "name": "Sweater",
+            "slug": "250200",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "252000",
+            "name": "Sweater Hooded",
+            "slug": "252000",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "252100",
+            "name": "Sweater Hooded Zip",
+            "slug": "252100",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "251600",
+            "name": "Tank Top",
+            "slug": "251600",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "252300",
+            "name": "Underwear",
+            "slug": "252300",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "251000",
+            "name": "Vests",
+            "slug": "251000",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          },
+          {
+            "id": "251400",
+            "name": "Windbreaker",
+            "slug": "251400",
+            "subcategories": [],
+            "parentCategoryId": "250000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "260000",
+        "name": "Streetwear women",
+        "slug": "260000",
+        "subcategories": [
+          {
+            "id": "260800",
+            "name": "Bikinis women",
+            "slug": "260800",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "262300",
+            "name": "Boardshorts women",
+            "slug": "262300",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "262400",
+            "name": "Cardigan women",
+            "slug": "262400",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260500",
+            "name": "Denim Pants women",
+            "slug": "260500",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261200",
+            "name": "Coats women",
+            "slug": "261200",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "262600",
+            "name": "Fashion Shirt LS Women",
+            "slug": "262600",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "262500",
+            "name": "Fashion Shirt SS Women",
+            "slug": "262500",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "200400",
+            "name": "Fleece women",
+            "slug": "200400",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260400",
+            "name": "Jackets women",
+            "slug": "260400",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261700",
+            "name": "Longsleeves women",
+            "slug": "261700",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261400",
+            "name": "Overall women",
+            "slug": "261400",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260900",
+            "name": "Pants women",
+            "slug": "260900",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261600",
+            "name": "Polos women",
+            "slug": "261600",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260300",
+            "name": "Shirts women",
+            "slug": "260300",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260700",
+            "name": "Skirts and Dresses women",
+            "slug": "260700",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260600",
+            "name": "Shorts women",
+            "slug": "260600",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "262000",
+            "name": "Sweater Hooded women",
+            "slug": "262000",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "262100",
+            "name": "Sweater Hooded Zip women",
+            "slug": "262100",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260200",
+            "name": "Sweater women",
+            "slug": "260200",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "260100",
+            "name": "T-Shirts women",
+            "slug": "260100",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261800",
+            "name": "Tops",
+            "slug": "261800",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261300",
+            "name": "Underwear women",
+            "slug": "261300",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261000",
+            "name": "Vests women",
+            "slug": "261000",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          },
+          {
+            "id": "261500",
+            "name": "Windbreaker women",
+            "slug": "261500",
+            "subcategories": [],
+            "parentCategoryId": "260000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "270000",
+        "name": "Streetwear youth",
+        "slug": "270000",
+        "subcategories": [
+          {
+            "id": "460000",
+            "name": "Babies",
+            "slug": "460000",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270600",
+            "name": "Boardshorts youth",
+            "slug": "270600",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270500",
+            "name": "Denim Pants youth",
+            "slug": "270500",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270900",
+            "name": "Fleece youth",
+            "slug": "270900",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270700",
+            "name": "Jackets youth",
+            "slug": "270700",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270300",
+            "name": "Pants youth",
+            "slug": "270300",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270800",
+            "name": "Shorts youth",
+            "slug": "270800",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270200",
+            "name": "Sweater+Pullover youth",
+            "slug": "270200",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "270100",
+            "name": "T-Shirts youth",
+            "slug": "270100",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          },
+          {
+            "id": "271000",
+            "name": "Underwear youth",
+            "slug": "271000",
+            "subcategories": [],
+            "parentCategoryId": "270000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "350000",
+        "name": "Surf",
+        "slug": "350000",
+        "subcategories": [
+          {
+            "id": "350400",
+            "name": "Bodyboards",
+            "slug": "350400",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "360500",
+            "name": "Booties",
+            "slug": "360500",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "180400",
+            "name": "DVD Surf",
+            "slug": "180400",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "350800",
+            "name": "Fins Surf",
+            "slug": "350800",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "350600",
+            "name": "Leash Surf",
+            "slug": "350600",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "350500",
+            "name": "Grip Pad Surf",
+            "slug": "350500",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "350200",
+            "name": "Long + Funboards",
+            "slug": "350200",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "360300",
+            "name": "Lycras",
+            "slug": "360300",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "350100",
+            "name": "Shortboards + Fish",
+            "slug": "350100",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "350900",
+            "name": "Repair Surf",
+            "slug": "350900",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "351200",
+            "name": "Skimboard",
+            "slug": "351200",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "355000",
+            "name": "SUP - Stand Up Paddle",
+            "slug": "355000",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "351000",
+            "name": "Surf Accessories",
+            "slug": "351000",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "351100",
+            "name": "Surfboard Bags",
+            "slug": "351100",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "360400",
+            "name": "Lycras women",
+            "slug": "360400",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "360200",
+            "name": "Wetsuits women",
+            "slug": "360200",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "181200",
+            "name": "Surfbooks",
+            "slug": "181200",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "360100",
+            "name": "Wetsuits",
+            "slug": "360100",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          },
+          {
+            "id": "350700",
+            "name": "Wax Surf",
+            "slug": "350700",
+            "subcategories": [],
+            "parentCategoryId": "350000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "170000",
+        "name": "Touring Equipment",
+        "slug": "170000",
+        "subcategories": [
+          {
+            "id": "170100",
+            "name": "Avalanche Transceiver",
+            "slug": "170100",
+            "subcategories": [],
+            "parentCategoryId": "170000"
+          },
+          {
+            "id": "170200",
+            "name": "Climbing Systems",
+            "slug": "170200",
+            "subcategories": [],
+            "parentCategoryId": "170000"
+          },
+          {
+            "id": "170300",
+            "name": "Touring Bags",
+            "slug": "170300",
+            "subcategories": [],
+            "parentCategoryId": "170000"
+          },
+          {
+            "id": "170400",
+            "name": "Shovel and Probes",
+            "slug": "170400",
+            "subcategories": [],
+            "parentCategoryId": "170000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "100000",
+        "name": "Tuning",
+        "slug": "100000",
+        "subcategories": [
+          {
+            "id": "100300",
+            "name": "Gear",
+            "slug": "100300",
+            "subcategories": [],
+            "parentCategoryId": "100000"
+          },
+          {
+            "id": "100400",
+            "name": "Technical accessories",
+            "slug": "100400",
+            "subcategories": [],
+            "parentCategoryId": "100000"
+          },
+          {
+            "id": "100200",
+            "name": "Tools",
+            "slug": "100200",
+            "subcategories": [],
+            "parentCategoryId": "100000"
+          },
+          {
+            "id": "100100",
+            "name": "Wax",
+            "slug": "100100",
+            "subcategories": [],
+            "parentCategoryId": "100000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "420000",
+        "name": "Wakeboard",
+        "slug": "420000",
+        "subcategories": [
+          {
+            "id": "450600",
+            "name": "Helmets Wakeboard",
+            "slug": "450600",
+            "subcategories": [],
+            "parentCategoryId": "420000"
+          },
+          {
+            "id": "420300",
+            "name": "Wakeboard Bindings",
+            "slug": "420300",
+            "subcategories": [],
+            "parentCategoryId": "420000"
+          },
+          {
+            "id": "420200",
+            "name": "Wakeboard Set",
+            "slug": "420200",
+            "subcategories": [],
+            "parentCategoryId": "420000"
+          },
+          {
+            "id": "420600",
+            "name": "Wakeboard Set women",
+            "slug": "420600",
+            "subcategories": [],
+            "parentCategoryId": "420000"
+          },
+          {
+            "id": "420100",
+            "name": "Wakeboard",
+            "slug": "420100",
+            "subcategories": [],
+            "parentCategoryId": "420000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "360000",
+        "name": "Wetsuits + Lycras",
+        "slug": "360000",
+        "subcategories": [
+          {
+            "id": "360500",
+            "name": "Booties",
+            "slug": "360500",
+            "subcategories": [],
+            "parentCategoryId": "360000"
+          },
+          {
+            "id": "360300",
+            "name": "Lycras",
+            "slug": "360300",
+            "subcategories": [],
+            "parentCategoryId": "360000"
+          },
+          {
+            "id": "360400",
+            "name": "Lycras women",
+            "slug": "360400",
+            "subcategories": [],
+            "parentCategoryId": "360000"
+          },
+          {
+            "id": "360600",
+            "name": "Lycras youth",
+            "slug": "360600",
+            "subcategories": [],
+            "parentCategoryId": "360000"
+          },
+          {
+            "id": "360100",
+            "name": "Wetsuits",
+            "slug": "360100",
+            "subcategories": [],
+            "parentCategoryId": "360000"
+          },
+          {
+            "id": "360200",
+            "name": "Wetsuits women",
+            "slug": "360200",
+            "subcategories": [],
+            "parentCategoryId": "360000"
+          },
+          {
+            "id": "360700",
+            "name": "Wetsuits youth",
+            "slug": "360700",
+            "subcategories": [],
+            "parentCategoryId": "360000"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "others",
+        "name": "Others",
+        "slug": "others",
+        "subcategories": [
+          {
+            "id": "backpack",
+            "name": "Backpacks",
+            "slug": "backpack",
+            "subcategories": [],
+            "parentCategoryId": "others"
+          },
+          {
+            "id": "skigear",
+            "name": "Ski Gear",
+            "slug": "skigear",
+            "subcategories": [],
+            "parentCategoryId": "others"
+          },
+          {
+            "id": "tools",
+            "name": "Tools",
+            "slug": "tools",
+            "subcategories": [],
+            "parentCategoryId": "others"
+          },
+          {
+            "id": "guides",
+            "name": "Guides",
+            "slug": "guides",
+            "subcategories": [],
+            "parentCategoryId": "others"
+          },
+          {
+            "id": "goggles",
+            "name": "Goggles",
+            "slug": "goggles",
+            "subcategories": [],
+            "parentCategoryId": "others"
+          }
+        ],
+        "parentCategoryId": "categories"
+      },
+      {
+        "id": "clothes",
+        "name": "Clothes",
+        "slug": "clothes",
+        "subcategories": [
+          {
+            "id": "helmet",
+            "name": "Helmets",
+            "slug": "helmet",
+            "subcategories": [],
+            "parentCategoryId": "clothes"
+          },
+          {
+            "id": "shoes",
+            "name": "Shoes",
+            "slug": "shoes",
+            "subcategories": [
+              {
+                "id": "sandals",
+                "name": "Sandals",
+                "slug": "sandals",
+                "subcategories": [
+                  {
+                    "id": "230400",
+                    "name": "Sandals men",
+                    "slug": "230400",
+                    "subcategories": [],
+                    "parentCategoryId": "sandals"
+                  },
+                  {
+                    "id": "400300",
+                    "name": "Sandals women",
+                    "slug": "400300",
+                    "subcategories": [],
+                    "parentCategoryId": "sandals"
+                  },
+                  {
+                    "id": "390200",
+                    "name": "Sandals youth",
+                    "slug": "390200",
+                    "subcategories": [],
+                    "parentCategoryId": "sandals"
+                  }
+                ],
+                "parentCategoryId": "shoes"
+              }
+            ],
+            "parentCategoryId": "clothes"
+          },
+          {
+            "id": "caps",
+            "name": "Caps",
+            "slug": "caps",
+            "subcategories": [],
+            "parentCategoryId": "clothes"
+          },
+          {
+            "id": "sunglasses",
+            "name": "Sunglasses",
+            "slug": "sunglasses",
+            "subcategories": [],
+            "parentCategoryId": "clothes"
+          },
+          {
+            "id": "shirts",
+            "name": "Shirts",
+            "slug": "shirts",
+            "subcategories": [],
+            "parentCategoryId": "clothes"
+          },
+          {
+            "id": "tshirts",
+            "name": "T-Shirts",
+            "slug": "tshirts",
+            "subcategories": [
+              {
+                "id": "250100",
+                "name": "T-Shirts men",
+                "slug": "250100",
+                "subcategories": [],
+                "parentCategoryId": "tshirts"
+              },
+              {
+                "id": "260100",
+                "name": "T-Shirts women",
+                "slug": "260100",
+                "subcategories": [],
+                "parentCategoryId": "tshirts"
+              },
+              {
+                "id": "270100",
+                "name": "T-Shirts youth",
+                "slug": "270100",
+                "subcategories": [],
+                "parentCategoryId": "tshirts"
+              }
+            ],
+            "parentCategoryId": "clothes"
+          }
+        ],
+        "parentCategoryId": "categories"
+      }
+    ],
+    "parentCategoryId": null
+  }
+]

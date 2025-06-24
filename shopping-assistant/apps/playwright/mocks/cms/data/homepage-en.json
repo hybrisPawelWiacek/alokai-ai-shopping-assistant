@@ -1,0 +1,151 @@
+{
+  "componentsAboveFold": [
+    {
+      "buttonA": {
+        "label": "Order now",
+        "link": "/product/300026688-slip-on-vans-classic-slip-on-black-white-checker-white-13-0/300026688?sku=300026688"
+      },
+      "buttonB": {
+        "label": "Show more",
+        "link": "/category"
+      },
+      "component": "Hero",
+      "description": "This fashionable sneaker collection features various colors, comfort and style.",
+      "id": "0c321f37-6785-4059-86bc-e470848360cb",
+      "image": {
+        "alt": "sneakers",
+        "desktop": "cms-mock/sneakers.avif",
+        "mobile": "cms-mock/sneakers.avif",
+        "thumbnail": "cms-mock/sneakers.avif"
+      },
+      "styles": "",
+      "subtitle": "SPECIAL OFFER",
+      "title": "Sneaker hot drops",
+      "uniqueClass": "cms-component-0c321f37-6785-4059-86bc-e470848360cb"
+    },
+    {
+      "component": "Editorial",
+      "content": "<h2 style=\"text-align: center;\"><strong>Shop by category</strong></h2>",
+      "id": "340b1f1b-9ead-48fd-9e46-2833381ac527",
+      "styles": "\n    .cms-component-340b1f1b-9ead-48fd-9e46-2833381ac527 { display: flex !important;flex-direction: row !important;justify-content: center !important;align-items: stretch !important;margin-top: 3.625rem !important;margin-bottom: 2.5rem !important;margin-left: 1rem !important;margin-right: 1rem !important; }\n  ",
+      "uniqueClass": "cms-component-340b1f1b-9ead-48fd-9e46-2833381ac527"
+    },
+    {
+      "component": "Grid",
+      "id": "eb48743b-ed92-4a63-9abe-e7c1bc840664",
+      "items": [
+        {
+          "categoryId": "260000",
+          "component": "CategoryCard",
+          "id": "76854c51-2421-405c-a61b-2d40df310e11",
+          "image": {
+            "alt": "woman",
+            "desktop": "cms-mock/woman.avif",
+            "mobile": "cms-mock/woman.avif",
+            "thumbnail": "cms-mock/woman.avif"
+          },
+          "styles": "",
+          "uniqueClass": "cms-component-76854c51-2421-405c-a61b-2d40df310e11"
+        },
+        {
+          "categoryId": "250000",
+          "component": "CategoryCard",
+          "id": "35854452-0008-4181-962e-64bb011a0fb3",
+          "image": {
+            "alt": "man",
+            "desktop": "cms-mock/man.avif",
+            "mobile": "cms-mock/man.avif",
+            "thumbnail": "cms-mock/man.avif"
+          },
+          "styles": "",
+          "uniqueClass": "cms-component-35854452-0008-4181-962e-64bb011a0fb3"
+        },
+        {
+          "categoryId": "clothes",
+          "component": "CategoryCard",
+          "id": "65ff3350-5f32-4954-87f3-ecc894601dc3",
+          "image": {
+            "alt": "clothes",
+            "desktop": "cms-mock/clothes.avif",
+            "mobile": "cms-mock/clothes.avif",
+            "thumbnail": "cms-mock/clothes.avif"
+          },
+          "styles": "",
+          "uniqueClass": "cms-component-65ff3350-5f32-4954-87f3-ecc894601dc3"
+        }
+      ],
+      "styles": "@media (min-width: 816px) { \n    .cms-component-eb48743b-ed92-4a63-9abe-e7c1bc840664 { display: flex !important;flex-direction: row !important;justify-content: space-between !important;align-items: stretch !important;column-gap: 24px !important;max-width: 800px !important;margin-bottom: 2.5rem !important;margin-left: auto !important;margin-right: auto !important; }\n   }@media (max-width: 815px) { \n    .cms-component-eb48743b-ed92-4a63-9abe-e7c1bc840664 { display: flex !important;flex-direction: column !important;justify-content: flex-start !important;align-items: center !important;row-gap: 24px !important;margin-bottom: 2.5rem !important; }\n   }",
+      "uniqueClass": "cms-component-eb48743b-ed92-4a63-9abe-e7c1bc840664"
+    }
+  ],
+  "componentsBelowFold": [
+    {
+      "component": "Grid",
+      "id": "a98da7f3-dcfd-4e29-b5d3-762d6ccb64cd",
+      "items": [
+        {
+          "backgroundColor": "#e1daf6",
+          "button": {
+            "label": "Discover now",
+            "link": "/category"
+          },
+          "component": "Banner",
+          "description": "Add a pop up color to your outfit.",
+          "id": "7145fbcd-e4ae-458e-bb23-23acbb867d67",
+          "image": {
+            "alt": "fresh and bold",
+            "desktop": "cms-mock/fresh_and_bold.avif",
+            "mobile": "cms-mock/fresh_and_bold.avif",
+            "thumbnail": "cms-mock/fresh_and_bold.avif"
+          },
+          "styles": "",
+          "subtitle": "New collection",
+          "title": "Fresh and bold",
+          "uniqueClass": "cms-component-7145fbcd-e4ae-458e-bb23-23acbb867d67"
+        },
+        {
+          "backgroundColor": "#fed3db",
+          "button": {
+            "label": "Discover now",
+            "link": "/category"
+          },
+          "component": "Banner",
+          "description": "Step out in style with our sunglasses collection",
+          "id": "7ae3b037-7fee-4bf0-b6ea-995de0494806",
+          "image": {
+            "alt": "sunny days ahead",
+            "desktop": "cms-mock/sunny_days_ahead.avif",
+            "mobile": "cms-mock/sunny_days_ahead.avif",
+            "thumbnail": "cms-mock/sunny_days_ahead.avif"
+          },
+          "styles": "",
+          "subtitle": "Be inspired",
+          "title": "Sunny days ahead",
+          "uniqueClass": "cms-component-7ae3b037-7fee-4bf0-b6ea-995de0494806"
+        },
+        {
+          "backgroundColor": "#fddca5",
+          "button": {
+            "label": "Discover now",
+            "link": "/category"
+          },
+          "component": "Banner",
+          "description": "Explore the great outdoors with our backpacks",
+          "id": "121b6342-ddfa-4286-b88e-29b296ce0a3b",
+          "image": {
+            "alt": "pack it up",
+            "desktop": "cms-mock/pack_it_up.avif",
+            "mobile": "cms-mock/pack_it_up.avif",
+            "thumbnail": "cms-mock/pack_it_up.avif"
+          },
+          "styles": "",
+          "subtitle": "Explore the great outdoors",
+          "title": "Pack it up",
+          "uniqueClass": "cms-component-121b6342-ddfa-4286-b88e-29b296ce0a3b"
+        }
+      ],
+      "styles": "@media (min-width: 769px) { \n    .cms-component-a98da7f3-dcfd-4e29-b5d3-762d6ccb64cd { flex-direction: row !important;justify-content: flex-start !important;align-items: stretch !important;display: grid !important;grid-template-areas: \"a b c\" !important;column-gap: 1rem !important;row-gap: 1rem !important;max-width: 1366px !important;margin-left: auto !important;margin-right: auto !important; }\n   }@media (max-width: 768px) { \n    .cms-component-a98da7f3-dcfd-4e29-b5d3-762d6ccb64cd { display: flex !important;flex-direction: column !important;justify-content: flex-start !important;align-items: stretch !important;row-gap: 1rem !important;margin-bottom: 2.5rem !important;padding-left: 1rem !important;padding-right: 1rem !important; }\n   }",
+      "uniqueClass": "cms-component-a98da7f3-dcfd-4e29-b5d3-762d6ccb64cd"
+    }
+  ]
+}

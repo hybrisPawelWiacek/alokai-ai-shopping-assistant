@@ -1,0 +1,30 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "8.4.1",
+    "@playwright/test": "1.45.0",
+    "@types/node": "^18.17.17",
+    "@vue-storefront/unified-data-model": "3.0.0",
+    "eslint": "9.14.0",
+    "eslint-config-flat-gitignore": "0.3.0",
+    "@vue-storefront/eslint-config": "4.1.0",
+    "execa": "9.3.0",
+    "get-port-please": "3.1.2",
+    "h3": "1.12.0",
+    "prettier": "3.3.2",
+    "unstorage": "1.10.2",
+    "wait-on": "8.0.1",
+    "@types/wait-on": "5.3.4"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "test:integration:dev": "PW_IS_B2B=true playwright test --ui",
+    "test:integration": "PW_IS_B2B=true playwright test"
+  }
+}

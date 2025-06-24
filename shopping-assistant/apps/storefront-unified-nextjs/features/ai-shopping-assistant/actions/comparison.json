@@ -1,0 +1,182 @@
+{
+  "compareProducts": {
+    "id": "compareProducts",
+    "name": "Compare Products",
+    "description": "Compare multiple products side by side to help make purchasing decisions",
+    "category": "comparison",
+    "mode": "both",
+    "parameters": {
+      "productIds": {
+        "type": "array",
+        "description": "List of product IDs to compare",
+        "required": true,
+        "items": {
+          "type": "string",
+          "description": "Product ID"
+        },
+        "min": 2,
+        "max": 5
+      },
+      "attributes": {
+        "type": "array",
+        "description": "Specific attributes to compare (if not provided, compares all common attributes)",
+        "required": false,
+        "items": {
+          "type": "string",
+          "description": "Attribute name to compare",
+          "enum": ["price", "features", "specifications", "ratings", "availability", "warranty", "dimensions"]
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "comparison": {
+          "type": "object",
+          "description": "Comparison matrix with products and their attributes"
+        },
+        "recommendation": {
+          "type": "object",
+          "description": "AI-generated recommendation based on comparison"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 60000
+    },
+    "monitoring": {
+      "trackExecutionTime": true,
+      "sampleRate": 1.0
+    },
+    "ui": {
+      "component": "ComparisonTable",
+      "props": {
+        "highlightDifferences": true,
+        "showRecommendation": true
+      }
+    }
+  },
+  "addToComparison": {
+    "id": "addToComparison",
+    "name": "Add to Comparison",
+    "description": "Add a product to the comparison list",
+    "category": "comparison",
+    "mode": "both",
+    "parameters": {
+      "productId": {
+        "type": "string",
+        "description": "ID of the product to add to comparison",
+        "required": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "comparisonList": {
+          "type": "array",
+          "description": "Updated list of products in comparison"
+        },
+        "addedProduct": {
+          "type": "object",
+          "description": "Details of the product added"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "ComparisonUpdate",
+      "props": {
+        "showNotification": true
+      }
+    }
+  },
+  "removeFromComparison": {
+    "id": "removeFromComparison",
+    "name": "Remove from Comparison",
+    "description": "Remove a product from the comparison list",
+    "category": "comparison",
+    "mode": "both",
+    "parameters": {
+      "productId": {
+        "type": "string",
+        "description": "ID of the product to remove from comparison",
+        "required": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "comparisonList": {
+          "type": "array",
+          "description": "Updated list of products in comparison"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "ComparisonUpdate"
+    }
+  },
+  "getComparisonList": {
+    "id": "getComparisonList",
+    "name": "Get Comparison List",
+    "description": "Retrieve the current list of products in comparison",
+    "category": "comparison",
+    "mode": "both",
+    "parameters": {},
+    "returns": {
+      "type": "object",
+      "properties": {
+        "comparisonList": {
+          "type": "array",
+          "description": "List of products currently in comparison"
+        },
+        "count": {
+          "type": "number",
+          "description": "Number of products in comparison"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 30,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "ComparisonList"
+    }
+  },
+  "clearComparison": {
+    "id": "clearComparison",
+    "name": "Clear Comparison",
+    "description": "Remove all products from the comparison list",
+    "category": "comparison",
+    "mode": "both",
+    "parameters": {},
+    "returns": {
+      "type": "object",
+      "properties": {
+        "comparisonList": {
+          "type": "array",
+          "description": "Empty comparison list"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "ComparisonUpdate",
+      "props": {
+        "showNotification": true
+      }
+    }
+  }
+}

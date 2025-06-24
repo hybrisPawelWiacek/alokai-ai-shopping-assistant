@@ -1,0 +1,85 @@
+{
+  "id": "1",
+  "orderDate": "2024-07-09T09:33:34.000Z",
+  "status": "READY",
+  "lineItems": [
+    {
+      "id": "0",
+      "attributes": [],
+      "unitPrice": {
+        "currency": "USD",
+        "amount": 26.28,
+        "precisionAmount": "26.28"
+      },
+      "totalPrice": {
+        "currency": "USD",
+        "amount": 26.28,
+        "precisionAmount": "26.28"
+      },
+      "quantity": 1,
+      "image": {
+        "alt": "Snowboard Ski Tool Red FBI 6",
+        "url": "sap/medias/context/bWFzdGVyfGltYWdlc3wxMDQwMHxpbWFnZS9qcGVnfGFERmhMMmcyWXk4NE56azJOalF6TlRrd01UYzB8MTRlZDY5NGNiNDM1OWI4Njg3ZjI0NjBiMmFlY2RkNTI3MTE3YTE2ZWMzNWFmM2ZhMWQyNjZlMTdlOGVkMjhiYw"
+      },
+      "productId": "300013358",
+      "productName": "Snowboard Ski Tool Red FBI 6",
+      "sku": "300013358"
+    }
+  ],
+  "subtotalPrice": {
+    "currency": "USD",
+    "amount": 19.900000000000002,
+    "precisionAmount": "19.90"
+  },
+  "totalShippingPrice": {
+    "currency": "USD",
+    "amount": 11.99,
+    "precisionAmount": "11.99"
+  },
+  "totalTax": {
+    "currency": "USD",
+    "amount": 6.38,
+    "precisionAmount": "6.38"
+  },
+  "totalPrice": {
+    "currency": "USD",
+    "amount": 38.27,
+    "precisionAmount": "38.27"
+  },
+  "shippingAddress": {
+    "titleCode": "mr",
+    "address1": "Street",
+    "address2": null,
+    "city": "Los Angeles",
+    "country": "US",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phoneNumber": "58185185815",
+    "postalCode": "414",
+    "state": "California"
+  },
+  "billingAddress": {
+    "titleCode": "mr",
+    "address1": "Street",
+    "address2": null,
+    "city": "Los Angeles",
+    "country": "US",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phoneNumber": "58185185815",
+    "postalCode": "414",
+    "state": null
+  },
+  "shippingMethod": {
+    "id": "standard-gross",
+    "name": "Standard Delivery",
+    "description": "3-5 business days",
+    "price": {
+      "currency": "USD",
+      "amount": 11.99,
+      "precisionAmount": "11.99"
+    },
+    "estimatedDelivery": null
+  },
+  "paymentMethod": "CARD"
+}

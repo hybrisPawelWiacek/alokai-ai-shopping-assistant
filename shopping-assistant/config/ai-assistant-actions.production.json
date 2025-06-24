@@ -1,0 +1,77 @@
+{
+  "version": "1.0.0",
+  "environment": "production",
+  "globals": {
+    "security": {
+      "rateLimit": {
+        "requests": 50,
+        "windowMs": 60000
+      }
+    },
+    "performance": {
+      "timeoutMs": 20000,
+      "retries": 2
+    },
+    "observability": {
+      "logging": {
+        "level": "warn",
+        "includeParams": false,
+        "includeResult": false
+      },
+      "metrics": {
+        "enabled": true,
+        "customLabels": {
+          "service": "ai-shopping-assistant",
+          "environment": "production"
+        }
+      },
+      "tracing": {
+        "enabled": true,
+        "propagateContext": true
+      }
+    }
+  },
+  "actions": [
+    {
+      "id": "search",
+      "performance": {
+        "timeoutMs": 3000,
+        "retries": 3
+      },
+      "udl": {
+        "caching": {
+          "enabled": true,
+          "ttlSeconds": 600
+        }
+      }
+    },
+    {
+      "id": "checkout",
+      "security": {
+        "requiresAuth": true,
+        "rateLimit": {
+          "requests": 10,
+          "windowMs": 300000
+        }
+      },
+      "performance": {
+        "timeoutMs": 15000
+      }
+    },
+    {
+      "id": "create_quote",
+      "security": {
+        "requiresAuth": true,
+        "requiredPermissions": ["create_quote", "b2b_customer"],
+        "rateLimit": {
+          "requests": 20,
+          "windowMs": 3600000
+        }
+      }
+    },
+    {
+      "id": "ask_question",
+      "enabled": false
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "reviews": [
+    {
+      "id": "d0c7a23f-8f35-46ce-958a-f48df2c61a27",
+      "title": "Great product!",
+      "text": "I'm really happy with this purchase. The product works great and was easy to install.",
+      "rating": 4,
+      "reviewer": "Emily Johnson",
+      "createdAt": "2022-12-30T12:34:56Z"
+    },
+    {
+      "id": "13c2f433-8a46-41a7-a166-502e20703d0b",
+      "title": "Disappointing",
+      "text": "I had high hopes for this product, but it just didn't deliver. It didn't work as well as advertised.",
+      "rating": 2,
+      "reviewer": "John Smith",
+      "createdAt": "2022-11-20T09:30:00Z"
+    },
+    {
+      "id": "b48bda18-6b5f-4638-96de-f7eaf0f1b15e",
+      "title": "Love it!",
+      "text": "This product exceeded my expectations. It's easy to use and works really well.",
+      "rating": 5,
+      "reviewer": "Sarah Lee",
+      "createdAt": "2022-10-15T15:45:00Z"
+    },
+    {
+      "id": "4c4e3b1d-9259-4f0f-9a85-c7d8dbd496b8",
+      "title": "Not worth the price",
+      "text": "I expected more from this product, especially considering the high price. It was just okay, nothing special.",
+      "rating": 3,
+      "reviewer": "David Kim",
+      "createdAt": "2022-09-10T08:15:00Z"
+    },
+    {
+      "id": "a0b63c17-465d-4569-b073-cd938ed1c25b",
+      "title": "Terrible product",
+      "text": "This product was a complete waste of money. It didn't work at all and I had to return it.",
+      "rating": 1,
+      "reviewer": "Jessica Nguyen",
+      "createdAt": "2022-08-05T17:30:00Z"
+    }
+  ],
+  "pagination": {
+    "currentPage": 0,
+    "totalPages": 2,
+    "pageSize": 5,
+    "totalResults": 7
+  }
+}

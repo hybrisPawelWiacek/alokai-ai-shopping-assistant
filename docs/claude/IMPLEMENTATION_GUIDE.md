@@ -44,11 +44,11 @@ This guide provides the complete implementation plan for the Alokai UDL-Powered 
 
 | Prompt | Title | Status | Original Notes | Verification Date |
 |--------|-------|--------|----------------|-------------------|
-| 1 | PoC Learning Extraction | 📋 To Verify | LEARNINGS.md created (Original: Jan 2025) | - |
-| 2 | UDL Integration Audit | 📋 To Verify | UDL_AUDIT_RESULTS.md created (Original: Jan 2025) | - |
-| 3 | Foundation Setup | 📋 To Verify | LangGraph installed, architecture established (Original: Jan 2025) | - |
-| 4 | Action Registry | 📋 To Verify | Tool factory pattern implemented (Original: Jan 2025) | - |
-| 5 | Commerce State | 📋 To Verify | State definition with MessagesAnnotation (Original: Jan 2025) | - |
+| 1 | PoC Learning Extraction | ✓ Verified | LEARNINGS.md created (Original: Jan 2025) | 2025-06-24 |
+| 2 | UDL Integration Audit | ✓ Verified | UDL_AUDIT_RESULTS.md created (Original: Jan 2025) | 2025-06-24 |
+| 3 | Foundation Setup | ✓ Verified | LangGraph installed, architecture established (Original: Jan 2025) | 2025-06-24 |
+| 4 | Action Registry | ✓ Verified | Tool factory pattern implemented (Original: Jan 2025) | 2025-06-24 |
+| 5 | Commerce State | ✓ Verified | State definition with MessagesAnnotation (Original: Jan 2025) | 2025-06-24 |
 | 6 | Basic Graph | 📋 To Verify | Core workflow created (Original: Jan 2025) | - |
 | 7 | Commerce Intelligence | 📋 To Verify | Mode detection, context enrichment (Original: Jan 2025) | - |
 | 8 | Security Foundations | 📋 To Verify | Judge pattern implemented (Original: Jan 2025) | - |

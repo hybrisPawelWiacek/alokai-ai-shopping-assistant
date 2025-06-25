@@ -1,5 +1,8 @@
 # Integration test suite
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 This is an integration test suite made in Playwright for Storefront app.
 
 ## Running the test suite

@@ -1,5 +1,8 @@
 # Mock Implementation Guide
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 This directory contains mock implementations that follow Alokai's Unified Data Layer (UDL) patterns. These mocks enable development without backend dependencies while ensuring compatibility with the real SDK.
 
 ## Overview

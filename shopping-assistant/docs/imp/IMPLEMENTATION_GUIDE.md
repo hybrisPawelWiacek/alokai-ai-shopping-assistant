@@ -65,12 +65,15 @@ This guide provides the complete implementation plan for the Alokai UDL-Powered 
 | 17 | Testing Framework | ✓ Verified | Unit, integration, security tests (Original: Jan 2025) | 2025-06-26 |
 | 18 | API Route Integration | ✓ Verified | New API endpoint (Original: Jan 2025) | 2025-06-26 |
 | 19 | Frontend Integration | ✓ Verified | New UI components (Original: Jan 2025) | 2025-06-26 |
-| 20 | Connect Core UDL Methods | 📋 To Verify | Replace mocks with real SDK | - |
-| 21 | Implement Custom Extensions | 📋 To Verify | B2B middleware methods | - |
+| 20 | Connect Core UDL Methods | ✓ Verified | Replace mocks with real SDK (Original: Jan 2025) | 2025-06-26 |
+| 21 | Implement Custom Extensions | ✓ Verified | B2B middleware methods | 2025-06-26 |
 | 22 | Integration Testing | 📋 To Verify | Test with real backend | - |
 | 23 | Production Readiness | 📋 To Verify | Deployment preparation | - |
 | 24 | Documentation & Handoff | 📋 To Verify | Complete documentation (Original: Jan 2025) | - |
 | 25 | Production Validation | 📋 To Verify | Final validation | - |
+| 26 | Error Handling Integration | 📋 To Implement | Integrate error framework | - |
+| 27 | Performance Optimization | 📋 To Implement | Achieve <250ms response | - |
+| 28 | Security Hardening | 📋 To Implement | Multi-layer security | - |
 
 ## Verification Process Guidelines (June 2025)
 
@@ -848,7 +851,7 @@ Use the existing test setup as a reference but include security and performance 
 
 ---
 
-### PROMPT 21: Implement Custom Extensions in Middleware
+### PROMPT 21: Implement Custom Extensions in Middleware ✓ Verified June 2025
 **Goal**: Create real custom extension methods in middleware to replace B2B mocks
 
 **Prompt to Claude**:
@@ -996,6 +999,263 @@ Create a LAUNCH_CHECKLIST.md with go/no-go criteria and results."
 - Performance targets met
 - No security vulnerabilities
 - Ready for production
+
+### PROMPT 26: Error Handling Framework Integration
+
+**Priority**: High  
+**Dependencies**: PROMPT 16 (Error Handling Framework)  
+**Estimated Time**: 4-6 hours
+
+**Objective**: Integrate the comprehensive error handling framework into all components of the AI Shopping Assistant.
+
+**Requirements**:
+1. **Graph Node Integration**: Update all nodes to use `createSafeNode()` wrapper
+2. **Action Implementation Updates**: Wrap all actions with `withErrorHandling()`
+3. **API Route Enhancement**: Replace simple error handler with framework middleware
+4. **Recovery Strategy Activation**: Enable retry and circuit breaker patterns
+5. **B2B-Specific Error Types**: Add mode-aware error handling
+6. **Monitoring Configuration**: Set up external error reporting
+
+**Implementation Details**:
+```typescript
+// Example: Updating a graph node
+const safeDetectIntentNode = createSafeNode(detectIntentNode, {
+  critical: true,
+  maxRetries: 1,
+  fallbackState: { intent: 'general_query' }
+});
+
+// Example: Wrapping an action
+export const searchProductsAction = withErrorHandling(
+  searchProductsImplementation,
+  {
+    action: 'search-products',
+    recoveryStrategy: RecoveryStrategy.RETRY_WITH_BACKOFF,
+    maxRetries: 3,
+    fallback: () => ({ products: [], facets: [] })
+  }
+);
+
+// Example: B2B error handling
+if (mode === 'b2b' && error instanceof BulkOperationError) {
+  return handleB2BError(error, { 
+    allowPartialSuccess: true,
+    notifyAdmin: true 
+  });
+}
+```
+
+**Testing Requirements**:
+- Error scenario tests for each node and action
+- Recovery strategy validation
+- User message generation tests
+- Performance impact measurement
+
+**Success Criteria**:
+- 100% of components use error framework
+- All error scenarios have recovery strategies
+- User-friendly messages for all error types
+- <20ms overhead from error handling
+
+### PROMPT 27: Performance Optimization
+
+**Priority**: Medium  
+**Dependencies**: PROMPT 17 (Testing Framework)  
+**Estimated Time**: 6-8 hours
+
+**Objective**: Optimize the AI Shopping Assistant to achieve consistent sub-250ms response times through strategic improvements.
+
+**Requirements**:
+1. **Server-Side LLM Calls**: Move all OpenAI calls to backend (save 300ms)
+2. **Parallel UDL Operations**: Execute independent queries concurrently (save 150ms)
+3. **LRU Cache Implementation**: Add intelligent caching with normalization (40% cost reduction)
+4. **Context Window Management**: Implement sliding window (30% token reduction)
+5. **Streaming Optimization**: Improve perceived performance
+6. **Bundle Size Reduction**: Lazy load heavy components
+
+**Implementation Details**:
+```typescript
+// Parallel UDL calls
+const [products, inventory, pricing] = await Promise.all([
+  sdk.unified.searchProducts(params),
+  sdk.unified.checkInventory(productIds),
+  sdk.customExtension.getBulkPricing(items)
+]);
+
+// LRU Cache with normalization
+class NormalizedLRUCache {
+  private cache = new LRU<string, CacheEntry>({
+    max: 500,
+    ttl: 1000 * 60 * 5, // 5 minutes
+    updateAgeOnGet: true
+  });
+  
+  generateKey(method: string, params: any): string {
+    // Normalize params for better hit rate
+    const normalized = this.normalizeParams(params);
+    return `${method}:${hash(normalized)}`;
+  }
+  
+  async get<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
+    const cached = this.cache.get(key);
+    if (cached && !this.isExpired(cached)) {
+      metrics.increment('cache.hit');
+      return cached.value as T;
+    }
+    
+    metrics.increment('cache.miss');
+    const value = await fetcher();
+    this.cache.set(key, { value, timestamp: Date.now() });
+    return value;
+  }
+}
+
+// Context window management
+function manageContextWindow(messages: Message[]): Message[] {
+  const MAX_MESSAGES = 10;
+  const MAX_TOKENS = 2000;
+  
+  if (messages.length <= MAX_MESSAGES) {
+    return messages;
+  }
+  
+  // Keep system message and last N messages
+  const systemMessage = messages[0];
+  const recentMessages = messages.slice(-MAX_MESSAGES + 1);
+  
+  // Summarize older messages if needed
+  const summary = summarizeMessages(messages.slice(1, -MAX_MESSAGES + 1));
+  
+  return [systemMessage, summary, ...recentMessages];
+}
+```
+
+**Performance Targets**:
+- P50 latency: <180ms
+- P95 latency: <250ms
+- P99 latency: <300ms
+- Cache hit rate: >45%
+- Token usage: -30%
+
+**Success Criteria**:
+- Meet all performance targets
+- No degradation in accuracy
+- Improved user experience metrics
+- Reduced infrastructure costs
+
+### PROMPT 28: Security Hardening
+
+**Priority**: High  
+**Dependencies**: PROMPT 16 (Error Handling)  
+**Estimated Time**: 4-6 hours
+
+**Objective**: Implement multi-layer security architecture to protect against prompt injection, data leakage, and abuse.
+
+**Requirements**:
+1. **Multi-Layer Judge Pattern**: Input → Intent → Output validation
+2. **Context-Aware Security**: Different rules for B2B vs B2C
+3. **Output Validation Pipeline**: Prevent sensitive data exposure
+4. **Rate Limiting by Role**: Adaptive limits based on user behavior
+5. **Security Monitoring**: Real-time threat detection
+6. **Regression Test Suite**: Comprehensive security tests
+
+**Implementation Details**:
+```typescript
+// Multi-layer Judge implementation
+class SecurityJudge {
+  async validateRequest(input: string, context: SecurityContext): Promise<ValidationResult> {
+    // Layer 1: Input validation (fast)
+    const inputCheck = await this.validateInput(input);
+    if (!inputCheck.valid) {
+      metrics.increment('security.blocked.input');
+      return inputCheck;
+    }
+    
+    // Layer 2: Intent classification
+    const intent = await this.classifyIntent(input);
+    if (this.isDangerousIntent(intent, context)) {
+      metrics.increment('security.blocked.intent');
+      return { valid: false, reason: 'Unauthorized action attempted' };
+    }
+    
+    // Layer 3: LLM analysis (for sophisticated attacks)
+    if (this.requiresDeepAnalysis(input, intent)) {
+      const llmCheck = await this.analyzewithLLM(input, context);
+      if (!llmCheck.safe) {
+        metrics.increment('security.blocked.llm');
+        return { valid: false, reason: llmCheck.reason };
+      }
+    }
+    
+    return { valid: true };
+  }
+  
+  // Context-aware rules
+  private isDangerousIntent(intent: Intent, context: SecurityContext): boolean {
+    if (context.mode === 'b2c') {
+      // B2C restrictions
+      return B2C_FORBIDDEN_INTENTS.includes(intent.type);
+    } else {
+      // B2B has different rules
+      return B2B_FORBIDDEN_INTENTS.includes(intent.type) ||
+             (intent.type === 'bulk_operation' && !context.user.permissions.bulk);
+    }
+  }
+}
+
+// Output validation pipeline
+class OutputValidator {
+  async validateResponse(response: any, context: SecurityContext): Promise<any> {
+    // Remove sensitive data
+    const sanitized = this.removeSensitiveData(response);
+    
+    // Check for data leakage
+    if (this.detectDataLeakage(sanitized, context)) {
+      throw new SecurityError('Potential data leakage detected');
+    }
+    
+    // Validate business rules
+    if (context.mode === 'b2b') {
+      this.validateB2BBusinessRules(sanitized, context);
+    }
+    
+    return sanitized;
+  }
+}
+
+// Adaptive rate limiting
+class AdaptiveRateLimiter extends RateLimiter {
+  async checkLimit(clientId: string, context: SecurityContext): Promise<RateLimitResult> {
+    // Base limit from role
+    let limit = this.getLimitForRole(context.user.role);
+    
+    // Adjust based on behavior
+    const behavior = await this.analyzeBehavior(clientId);
+    if (behavior.suspicious) {
+      limit = Math.floor(limit * 0.5); // Reduce limit for suspicious behavior
+    } else if (behavior.trusted) {
+      limit = Math.floor(limit * 1.5); // Increase for trusted users
+    }
+    
+    return super.checkLimit(clientId, { ...context, limit });
+  }
+}
+```
+
+**Security Test Scenarios**:
+- Prompt injection attempts (8 variants)
+- Data exfiltration attempts
+- Price manipulation attempts
+- Unauthorized B2B access
+- Rate limit bypass attempts
+- XSS/SQL injection prevention
+
+**Success Criteria**:
+- 100% attack prevention in tests
+- <5% false positive rate
+- <20ms security overhead
+- Complete audit trail
+- No security regressions
 
 ## Key Implementation Patterns
 

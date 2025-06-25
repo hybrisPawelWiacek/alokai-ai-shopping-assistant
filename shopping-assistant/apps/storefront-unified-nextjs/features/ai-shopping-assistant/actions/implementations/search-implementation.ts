@@ -3,6 +3,7 @@ import type { CommerceState } from '../../state';
 import { z } from 'zod';
 import { AIMessage } from '@langchain/core/messages';
 import { getSdk } from '@/sdk';
+import { withSDKErrorHandling, retrySDKOperation } from '../../utils/error-handling';
 
 /**
  * Search products implementation using UDL
@@ -31,38 +32,46 @@ export async function searchProductsImplementation(
   });
 
   const validated = searchSchema.parse(params);
+  const commands: StateUpdateCommand[] = [];
 
-  // Perform the search using the SDK
-  const sdk = getSdk();
-  
-  // Build filters for UDL
-  const filters: any = {};
-  if (validated.filters?.categories?.length) {
-    filters.categoryId = validated.filters.categories;
-  }
-  if (validated.filters?.priceRange) {
-    if (validated.filters.priceRange.min !== undefined) {
-      filters.minPrice = validated.filters.priceRange.min;
+  try {
+    // Perform the search using the SDK with retry logic
+    const sdk = getSdk();
+    
+    // Build filters for UDL
+    const filters: any = {};
+    if (validated.filters?.categories?.length) {
+      filters.categoryId = validated.filters.categories;
     }
-    if (validated.filters.priceRange.max !== undefined) {
-      filters.maxPrice = validated.filters.priceRange.max;
+    if (validated.filters?.priceRange) {
+      if (validated.filters.priceRange.min !== undefined) {
+        filters.minPrice = validated.filters.priceRange.min;
+      }
+      if (validated.filters.priceRange.max !== undefined) {
+        filters.maxPrice = validated.filters.priceRange.max;
+      }
     }
-  }
-  if (validated.filters?.brands?.length) {
-    filters.brand = validated.filters.brands;
-  }
-  
-  const searchResults = await sdk.unified.searchProducts({
-    search: validated.query,
-    filter: filters,
-    sort: validated.sortBy,
-    pageSize: validated.pagination?.limit || 20,
-    currentPage: Math.floor((validated.pagination?.offset || 0) / (validated.pagination?.limit || 20)) + 1
-  });
+    if (validated.filters?.brands?.length) {
+      filters.brand = validated.filters.brands;
+    }
+    
+    // Use retry logic for network resilience
+    const searchResults = await retrySDKOperation(
+      () => sdk.unified.searchProducts({
+        search: validated.query,
+        filter: filters,
+        sort: validated.sortBy,
+        pageSize: validated.pagination?.limit || 20,
+        currentPage: Math.floor((validated.pagination?.offset || 0) / (validated.pagination?.limit || 20)) + 1
+      }),
+      {
+        maxRetries: 2,
+        backoffMs: 500
+      }
+    );
 
-  // Return state update commands
-  return [
-    {
+    // Success: add results
+    commands.push({
       type: 'ADD_MESSAGE',
       payload: new AIMessage({
         content: `Found ${searchResults.pagination?.total || searchResults.products.length} products matching "${validated.query}"`,
@@ -75,8 +84,9 @@ export async function searchProductsImplementation(
           }
         }
       })
-    },
-    {
+    });
+
+    commands.push({
       type: 'UPDATE_CONTEXT',
       payload: {
         lastSearch: {
@@ -85,8 +95,33 @@ export async function searchProductsImplementation(
           timestamp: new Date().toISOString()
         }
       }
-    }
-  ];
+    });
+
+  } catch (error) {
+    // Handle SDK errors gracefully
+    const errorMessage = error instanceof Error ? error.message : 'Search failed';
+    
+    commands.push({
+      type: 'SET_ERROR',
+      payload: error instanceof Error ? error : new Error(errorMessage)
+    });
+
+    commands.push({
+      type: 'ADD_MESSAGE',
+      payload: new AIMessage({
+        content: `❌ Unable to search for products: ${errorMessage}\n\nPlease try again or refine your search.`,
+        additional_kwargs: {
+          tool_use: {
+            name: 'searchProducts',
+            error: true,
+            query: validated.query
+          }
+        }
+      })
+    });
+  }
+
+  return commands;
 }
 
 /**
@@ -102,15 +137,22 @@ export async function getProductDetailsImplementation(
   });
 
   const validated = schema.parse(params);
+  const commands: StateUpdateCommand[] = [];
 
-  // Fetch product details
-  const sdk = getSdk();
-  const product = await sdk.unified.getProductDetails({ 
-    id: validated.productId
-  });
+  try {
+    // Fetch product details with error handling
+    const sdk = getSdk();
+    const product = await withSDKErrorHandling(
+      () => sdk.unified.getProductDetails({ 
+        id: validated.productId
+      }),
+      {
+        action: 'getProductDetails',
+        fallbackMessage: 'Unable to retrieve product details. The product may be unavailable or the ID may be incorrect.'
+      }
+    );
 
-  return [
-    {
+    commands.push({
       type: 'ADD_MESSAGE',
       payload: new AIMessage({
         content: `Here are the details for ${product.name}`,
@@ -121,8 +163,32 @@ export async function getProductDetailsImplementation(
           }]
         }
       })
-    }
-  ];
+    });
+
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to get product details';
+    
+    commands.push({
+      type: 'SET_ERROR',
+      payload: error instanceof Error ? error : new Error(errorMessage)
+    });
+
+    commands.push({
+      type: 'ADD_MESSAGE',
+      payload: new AIMessage({
+        content: `❌ ${errorMessage}`,
+        additional_kwargs: {
+          tool_use: {
+            name: 'getProductDetails',
+            error: true,
+            productId: validated.productId
+          }
+        }
+      })
+    });
+  }
+
+  return commands;
 }
 
 /**

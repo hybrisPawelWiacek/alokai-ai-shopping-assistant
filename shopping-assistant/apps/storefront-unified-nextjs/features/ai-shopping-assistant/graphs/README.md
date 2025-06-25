@@ -1,5 +1,8 @@
 # Commerce Agent Graph
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 This module implements the main LangGraph workflow for the AI Shopping Assistant.
 
 ## Overview

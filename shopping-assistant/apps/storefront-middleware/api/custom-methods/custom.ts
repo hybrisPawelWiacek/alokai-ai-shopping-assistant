@@ -14,6 +14,3 @@ export async function exampleCustomMethod(
   // your implementation
   return {};
 }
-
-// Export product similarity method
-export { findSimilarProducts } from "./product-similarity";

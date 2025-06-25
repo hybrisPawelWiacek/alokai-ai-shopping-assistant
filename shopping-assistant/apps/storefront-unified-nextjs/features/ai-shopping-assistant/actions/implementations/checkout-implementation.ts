@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { AIMessage } from '@langchain/core/messages';
 import { getSdk } from '@/sdk';
 import { CommerceSecurityJudge } from '../../security';
-import { mockCustomExtension } from '../../mocks/custom-extension-mock';
 
 /**
  * Checkout action implementations with B2B/B2C support
@@ -333,35 +332,32 @@ export async function createQuoteImplementation(
 
     const sdk = getSdk();
     
-    // Create quote via custom B2B method
-    // TODO: Replace with real SDK when available
-    // const quoteData = await sdk.customExtension.createQuote({
-    const quoteData = await mockCustomExtension.createQuote({
+    // Create quote from custom extension
+    const quote = await sdk.customExtension.createQuote({
       companyInfo: validated.companyInfo,
       validityDays: validated.validityDays,
       notes: validated.notes,
-      items: state.cart.items,
+      items: state.cart.items.map(item => ({
+        productId: item.productId,
+        sku: item.sku,
+        quantity: item.quantity,
+        price: item.price
+      })),
       currency: state.context.currency
     });
-
-    let response = '📋 **Quote Generated Successfully**\n\n';
-    response += `**Quote ID:** ${quoteData.quoteId}\n`;
-    response += `**Company:** ${validated.companyInfo.name}\n`;
-    response += `**Valid Until:** ${quoteData.validUntil}\n\n`;
     
-    response += '**Quote Summary:**\n';
-    response += `Items: ${state.cart.items.length}\n`;
-    response += `Subtotal: ${state.context.currency} ${state.cart.subtotal}\n`;
+    let response = '📄 **Quote Generated Successfully**\n\n';
+    response += `**Quote ID:** ${quote.quoteId}\n`;
+    response += `**Valid Until:** ${new Date(quote.validUntil).toLocaleDateString()}\n`;
+    response += `**Total Amount:** ${state.context.currency} ${quote.totalAmount.toFixed(2)}\n`;
     
-    if (quoteData.volumeDiscount) {
-      response += `Volume Discount: -${state.context.currency} ${quoteData.volumeDiscount}\n`;
+    if (quote.volumeDiscount) {
+      response += `**Volume Discount Applied:** ${quote.volumeDiscount}%\n`;
     }
     
-    response += `**Total: ${state.context.currency} ${quoteData.totalAmount}**\n\n`;
+    response += `\n[Download Quote PDF](${quote.downloadUrl})\n\n`;
+    response += '*A copy has been sent to your registered email address.*';
     
-    response += `[Download Quote PDF](${quoteData.downloadUrl})\n\n`;
-    response += '💼 *A copy has been sent to your email. Contact our sales team to discuss terms.*';
-
     commands.push({
       type: 'ADD_MESSAGE',
       payload: new AIMessage({
@@ -369,22 +365,18 @@ export async function createQuoteImplementation(
         additional_kwargs: {
           tool_use: {
             name: 'createQuote',
-            result: {
-              quoteId: quoteData.quoteId,
-              downloadUrl: quoteData.downloadUrl,
-              totalAmount: quoteData.totalAmount
-            }
+            result: quote
           }
         }
       })
     });
-
+    
     // Update context
     commands.push({
       type: 'UPDATE_CONTEXT',
       payload: {
-        lastQuoteId: quoteData.quoteId,
-        quoteGenerated: true
+        lastQuoteId: quote.quoteId,
+        lastQuoteDate: new Date().toISOString()
       }
     });
 
@@ -424,34 +416,40 @@ export async function createPurchaseOrderImplementation(
 
     const sdk = getSdk();
     
-    // Create purchase order
-    // TODO: Replace with real SDK when available
-    // const orderData = await sdk.customExtension.createPurchaseOrder({
-    const orderData = await mockCustomExtension.createPurchaseOrder({
+    // Create purchase order from custom extension
+    const purchaseOrder = await sdk.customExtension.createPurchaseOrder({
       poNumber: validated.poNumber,
       paymentTerms: validated.paymentTerms,
       approverEmail: validated.approverEmail,
-      items: state.cart.items,
-      totalAmount: state.cart.total
+      items: state.cart.items.map(item => ({
+        productId: item.productId,
+        sku: item.sku,
+        quantity: item.quantity,
+        price: item.price
+      })),
+      totalAmount: state.cart.total,
+      customerId: state.context.customer?.id || ''
     });
-
-    let response = '✅ **Purchase Order Created**\n\n';
-    response += `**Order ID:** ${orderData.orderId}\n`;
+    
+    let response = '💼 **Purchase Order Created**\n\n';
     response += `**PO Number:** ${validated.poNumber}\n`;
+    response += `**Order ID:** ${purchaseOrder.orderId}\n`;
+    response += `**Status:** ${purchaseOrder.status.toUpperCase()}\n`;
     response += `**Payment Terms:** ${validated.paymentTerms.replace('_', ' ').toUpperCase()}\n`;
-    response += `**Status:** ${orderData.status}\n\n`;
+    response += `**Total Amount:** ${state.context.currency} ${state.cart.total.toFixed(2)}\n\n`;
     
-    response += '**Next Steps:**\n';
-    response += '1. Order confirmation sent to your email\n';
-    response += '2. Goods will be shipped upon approval\n';
-    response += '3. Invoice will be sent based on payment terms\n\n';
-    
-    if (orderData.paymentInstructions) {
-      response += '**Payment Instructions:**\n';
-      response += `Bank: ${orderData.paymentInstructions.bankName}\n`;
-      response += `Reference: ${orderData.paymentInstructions.reference}\n`;
+    if (purchaseOrder.status === 'pending' && validated.approverEmail) {
+      response += `📧 *Approval request sent to ${validated.approverEmail}*\n\n`;
     }
-
+    
+    if (purchaseOrder.paymentInstructions) {
+      response += '**Payment Instructions:**\n';
+      response += `Bank: ${purchaseOrder.paymentInstructions.bankName}\n`;
+      response += `Reference: ${purchaseOrder.paymentInstructions.reference}\n\n`;
+    }
+    
+    response += '*Order confirmation has been sent to your email.*';
+    
     commands.push({
       type: 'ADD_MESSAGE',
       payload: new AIMessage({
@@ -459,28 +457,15 @@ export async function createPurchaseOrderImplementation(
         additional_kwargs: {
           tool_use: {
             name: 'createPurchaseOrder',
-            result: {
-              orderId: orderData.orderId,
-              status: orderData.status,
-              paymentTerms: validated.paymentTerms
-            }
+            result: purchaseOrder
           }
         }
       })
     });
-
-    // Clear cart after successful order
+    
+    // Clear cart after PO creation
     commands.push({
-      type: 'UPDATE_CART',
-      payload: {
-        items: [],
-        total: 0,
-        subtotal: 0,
-        tax: 0,
-        shipping: 0,
-        appliedCoupons: [],
-        lastUpdated: new Date().toISOString()
-      }
+      type: 'CLEAR_CART'
     });
 
   } catch (error) {

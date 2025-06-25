@@ -4,7 +4,7 @@ import { CSVBulkOrderParser } from '../bulk/csv-parser';
 import { BulkOrderProcessor, createBulkOperationCommands } from '../bulk/bulk-processor';
 import { B2BAlternativeSuggester, type ProductAttributes } from '../bulk/alternative-suggester';
 import type { CommerceState } from '../state';
-import { mockCustomExtension } from '../mocks/custom-extension-mock';
+// Custom extension import removed - will use context.sdk
 
 /**
  * Bulk order action parameters
@@ -130,101 +130,33 @@ export async function executeBulkOrder(
       },
       findAlternatives: async (sku) => {
         // Use custom extension for finding alternatives
-        // TODO: Replace with context.sdk.customExtension.findSimilarProducts()
-        const alternatives = await mockCustomExtension.findSimilarProducts({
+        const alternatives = await context.sdk.customExtension.findSimilarProducts({
           sku,
           maxResults: 5,
           includeOutOfStock: false,
           mode: 'b2b'
         });
 
-        // If custom method works, use it
-        if (alternatives.length > 0) {
-          return alternatives.map(alt => ({
-            sku: alt.product.sku,
-            name: alt.product.name,
-            similarity: alt.similarity,
-            availability: alt.product.availability || 'in_stock' as 'in_stock' | 'limited' | 'out_of_stock',
-            price: alt.product.price?.value?.amount || alt.product.price?.regular?.amount,
-            reason: alt.reasons.join(', ')
-          }));
-        }
-
-        // Fallback: Use intelligent suggester with mock data
-        const suggester = new B2BAlternativeSuggester({
-          maxSuggestions: 3,
-          minSimilarity: 0.6,
-          enableCrossBrand: true,
-          priceTolerancePercent: 30
-        });
-
-        // Mock original product following UDL structure
-        const originalProduct: ProductAttributes = {
-          sku,
-          name: `Product ${sku}`,
-          category: ['Electronics', 'Components'],
-          brand: 'TechBrand',
-          attributes: {
-            power: '100W',
-            voltage: '220V',
-            certification: 'CE'
-          },
-          price: 150,
-          availability: 'out_of_stock',
-          tags: ['industrial', 'professional']
-        };
-
-        // Mock candidate products
-        const mockCandidates: ProductAttributes[] = [
-          {
-            sku: `ALT-${sku}-1`,
-            name: `Alternative for ${sku} - Premium`,
-            category: ['Electronics', 'Components'],
-            brand: 'TechBrand',
-            attributes: {
-              power: '120W',
-              voltage: '220V',
-              certification: 'CE'
-            },
-            price: 180,
-            availability: 'in_stock',
-            tags: ['industrial', 'professional', 'premium']
-          },
-          {
-            sku: `ALT-${sku}-2`,
-            name: `Alternative for ${sku} - Value`,
-            category: ['Electronics', 'Components'],
-            brand: 'ValueBrand',
-            attributes: {
-              power: '100W',
-              voltage: '220V',
-              certification: 'CE'
-            },
-            price: 120,
-            availability: 'in_stock',
-            tags: ['industrial', 'value']
-          }
-        ];
-
-        const suggestions = await suggester.findAlternatives(
-          originalProduct,
-          mockCandidates,
-          100 // bulk quantity
-        );
-
-        return suggestions;
+        // Return alternatives from custom extension
+        return alternatives.map(alt => ({
+          sku: alt.product.sku,
+          name: alt.product.name,
+          similarity: alt.similarity,
+          availability: alt.product.inventory?.status || 'in_stock' as 'in_stock' | 'limited' | 'out_of_stock',
+          price: alt.product.price?.value?.amount || alt.product.price?.regular?.amount,
+          reason: alt.reasons.join(', ')
+        }));
       },
       addToCart: async (items) => {
         // Add items to cart using UDL
-        // TODO: Replace with proper cart operations
         for (const item of items) {
-          // In real implementation, use:
-          // await context.sdk.unified.addCartLineItem({
-          //   product: { productId: item.sku, sku: item.sku, quantity: item.quantity }
-          // });
-          
-          // For now, mock the operation
-          console.log(`Mock: Adding ${item.quantity} units of ${item.sku} to cart`);
+          await context.sdk.unified.addCartLineItem({
+            product: { 
+              productId: item.sku, 
+              sku: item.sku 
+            },
+            quantity: item.quantity
+          });
         }
       }
     });

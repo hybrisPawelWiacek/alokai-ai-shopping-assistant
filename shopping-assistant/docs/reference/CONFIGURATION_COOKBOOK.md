@@ -1,5 +1,8 @@
 # AI Shopping Assistant Configuration Cookbook
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 ## Table of Contents
 1. [Configuration Overview](#configuration-overview)
 2. [Basic Configurations](#basic-configurations)
@@ -637,13 +640,14 @@ The AI Shopping Assistant uses a configuration-driven approach for defining acti
     "name": "E-commerce AI Assistant",
     "description": "Complete configuration for B2C/B2B commerce",
     "author": "Commerce Team",
-    "lastUpdated": "2025-01-01"
+    "lastUpdated": "2025-06-26"
   },
   "settings": {
     "defaultMode": "b2c",
     "enableB2B": true,
     "maxSuggestions": 3,
-    "cacheTimeout": 300
+    "cacheTimeout": 300,
+    "mockMode": false
   },
   "actions": [
     {
@@ -810,4 +814,318 @@ const schema = z.object({
 });
 
 const validated = schema.parse(config);
+```
+
+## Mock Configuration (Demo Mode)
+
+### Development Mock Configuration
+```json
+{
+  "version": "1.0",
+  "environment": "development",
+  "settings": {
+    "mockMode": true,
+    "mockDataSource": "realistic",
+    "mockDelay": 100,
+    "debugMode": true
+  },
+  "mockData": {
+    "products": {
+      "count": 50,
+      "categories": ["electronics", "apparel", "home"],
+      "priceRange": { "min": 10, "max": 2000 }
+    },
+    "inventory": {
+      "strategy": "random",
+      "stockRange": { "min": 0, "max": 100 }
+    },
+    "users": {
+      "b2c": 5,
+      "b2b": 3
+    }
+  }
+}
+```
+
+### Mock SDK Configuration
+```typescript
+// Configure mock SDK for demo mode
+const mockConfig = {
+  unified: {
+    searchProducts: {
+      responseTime: 150,
+      resultCount: 10,
+      includeVariants: true
+    },
+    addCartLineItem: {
+      responseTime: 100,
+      simulateErrors: false
+    }
+  },
+  customExtension: {
+    getBulkPricing: {
+      tiers: [
+        { min: 1, max: 24, discount: 0 },
+        { min: 25, max: 99, discount: 10 },
+        { min: 100, max: null, discount: 20 }
+      ]
+    }
+  }
+};
+```
+
+## Environment-Specific Configurations
+
+### Development Environment
+```json
+{
+  "version": "1.0",
+  "environment": "development",
+  "settings": {
+    "enableDebugLogging": true,
+    "enableHotReload": true,
+    "mockMode": true,
+    "rateLimits": {
+      "requests": 1000,
+      "window": 60000
+    }
+  },
+  "overrides": {
+    "timeouts": {
+      "default": 10000,
+      "llm": 30000
+    },
+    "cache": {
+      "enabled": false
+    }
+  }
+}
+```
+
+### Staging Environment
+```json
+{
+  "version": "1.0",
+  "environment": "staging",
+  "settings": {
+    "enableDebugLogging": true,
+    "enableHotReload": false,
+    "mockMode": false,
+    "useRealBackend": true,
+    "rateLimits": {
+      "requests": 100,
+      "window": 60000
+    }
+  },
+  "overrides": {
+    "timeouts": {
+      "default": 5000,
+      "llm": 15000
+    },
+    "cache": {
+      "enabled": true,
+      "ttl": 300
+    }
+  }
+}
+```
+
+### Production Environment
+```json
+{
+  "version": "1.0",
+  "environment": "production",
+  "settings": {
+    "enableDebugLogging": false,
+    "enableHotReload": false,
+    "mockMode": false,
+    "useRealBackend": true,
+    "rateLimits": {
+      "b2c": { "requests": 60, "window": 60000 },
+      "b2b": { "requests": 120, "window": 60000 }
+    }
+  },
+  "overrides": {
+    "timeouts": {
+      "default": 3000,
+      "llm": 10000
+    },
+    "cache": {
+      "enabled": true,
+      "ttl": 600,
+      "maxSize": 10000
+    },
+    "security": {
+      "requireAuth": true,
+      "enforceRateLimit": true,
+      "validateInputs": true
+    }
+  }
+}
+```
+
+## B2B Custom Extension Configuration
+
+### Custom Extension Methods
+```json
+{
+  "customExtensions": {
+    "getBulkPricing": {
+      "enabled": true,
+      "cache": true,
+      "cacheTTL": 1800,
+      "implementation": "middleware",
+      "endpoint": "/api/custom-methods/bulk-pricing"
+    },
+    "checkBulkAvailability": {
+      "enabled": true,
+      "cache": false,
+      "implementation": "middleware",
+      "endpoint": "/api/custom-methods/bulk-availability"
+    },
+    "createQuote": {
+      "enabled": true,
+      "requiresAuth": true,
+      "permissions": ["create_quote"],
+      "implementation": "middleware"
+    },
+    "scheduleProductDemo": {
+      "enabled": true,
+      "mockInDev": true,
+      "implementation": "external",
+      "service": "calendar-service"
+    }
+  }
+}
+```
+
+## Performance Tuning Configuration
+
+### Caching Strategy
+```json
+{
+  "cache": {
+    "strategies": {
+      "search": {
+        "enabled": true,
+        "ttl": 300,
+        "keyPattern": "search:${query}:${filters}",
+        "maxSize": 1000
+      },
+      "productDetails": {
+        "enabled": true,
+        "ttl": 3600,
+        "keyPattern": "product:${id}:${locale}",
+        "maxSize": 5000
+      },
+      "bulkPricing": {
+        "enabled": true,
+        "ttl": 1800,
+        "keyPattern": "bulk:${customerId}:${items}",
+        "maxSize": 100
+      }
+    }
+  }
+}
+```
+
+### Parallel Processing
+```json
+{
+  "performance": {
+    "parallelization": {
+      "searchProducts": {
+        "batchSize": 10,
+        "maxConcurrent": 3
+      },
+      "bulkOperations": {
+        "batchSize": 25,
+        "maxConcurrent": 5,
+        "progressReporting": true
+      }
+    }
+  }
+}
+```
+
+## Configuration Migration
+
+### From Mock to Production
+```typescript
+// Configuration transformer
+function migrateConfiguration(mockConfig: Config, environment: string): Config {
+  const prodConfig = { ...mockConfig };
+  
+  // Remove mock-specific settings
+  delete prodConfig.mockData;
+  prodConfig.settings.mockMode = false;
+  
+  // Add production settings
+  prodConfig.settings.useRealBackend = true;
+  prodConfig.security = {
+    requireAuth: true,
+    validateInputs: true,
+    rateLimiting: true
+  };
+  
+  // Update endpoints
+  prodConfig.actions.forEach(action => {
+    if (action.implementation === 'mock') {
+      action.implementation = 'udl';
+    }
+  });
+  
+  return prodConfig;
+}
+```
+
+## Configuration Best Practices
+
+### 1. Start with Minimal Config
+```json
+{
+  "version": "1.0",
+  "actions": [
+    { "id": "search-products", "enabled": true },
+    { "id": "add-to-cart", "enabled": true }
+  ]
+}
+```
+
+### 2. Add Features Incrementally
+```json
+{
+  "version": "1.1",
+  "actions": [
+    { "id": "search-products", "enabled": true },
+    { "id": "add-to-cart", "enabled": true },
+    { "id": "product-comparison", "enabled": true }  // New feature
+  ]
+}
+```
+
+### 3. Use Feature Flags
+```json
+{
+  "featureFlags": {
+    "enableB2B": false,
+    "enableBulkUpload": false,
+    "enableAdvancedSearch": true,
+    "enableAIRecommendations": true
+  }
+}
+```
+
+### 4. Document Changes
+```json
+{
+  "version": "1.2",
+  "changelog": [
+    {
+      "version": "1.2",
+      "date": "2025-06-26",
+      "changes": ["Added B2B bulk operations", "Enhanced security"]
+    }
+  ]
+}
 ```

@@ -1,5 +1,8 @@
 # 🚀 Next.js Storefront App
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 Welcome to the **Next.js Storefront App**! This app leverages the power of [Next.js](https://nextjs.org/) and the **Alokai SDK** to communicate with the Middleware app. The application is built upon the **Unified Data Layer**, which you can learn more about [here](https://docs.alokai.com/storefront/unified-data-layer).
 
 ## 📝 First Steps

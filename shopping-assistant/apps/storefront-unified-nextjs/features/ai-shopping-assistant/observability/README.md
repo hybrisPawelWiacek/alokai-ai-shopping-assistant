@@ -1,5 +1,8 @@
 # Observability Layer
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 Comprehensive observability solution for the AI Shopping Assistant, providing distributed tracing, structured logging, metrics collection, and performance profiling.
 
 ## Features

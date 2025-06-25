@@ -1,5 +1,8 @@
 # AI Shopping Assistant - Testing Framework Summary
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 ## Overview
 Comprehensive testing framework implemented for the AI Shopping Assistant with focus on security, performance, and reliability.
 

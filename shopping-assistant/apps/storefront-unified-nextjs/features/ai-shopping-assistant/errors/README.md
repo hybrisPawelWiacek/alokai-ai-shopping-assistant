@@ -1,5 +1,8 @@
 # Error Handling Framework
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 Comprehensive error management system for the AI Shopping Assistant, providing structured error types, recovery strategies, user-friendly messaging, and graph execution safety.
 
 ## Features

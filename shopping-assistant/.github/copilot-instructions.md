@@ -1,5 +1,8 @@
 
 # Alokai Storefront
+
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
 Every time you choose to apply a rule(s), explicitly state the rule(s) in the output. You can abbreviate the rule description to a single word or phrase.
 
 ## Project Context

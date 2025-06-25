@@ -1,4 +1,8 @@
 # Architecture and Patterns Reference
+
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 *Technical Reference for AI Shopping Assistant Implementation*
 
 ## Table of Contents
@@ -8,12 +12,14 @@
 4. [UDL Integration Patterns](#udl-integration-patterns)
 5. [Mock to Real SDK Migration](#mock-to-real-sdk-migration)
 6. [Custom Extension Development](#custom-extension-development)
-7. [Directory Structure](#directory-structure)
-8. [Key Design Patterns](#key-design-patterns)
-9. [State Management](#state-management)
-10. [Security Architecture](#security-architecture)
-11. [Performance Strategy](#performance-strategy)
-12. [Observability Implementation](#observability-implementation)
+7. [API Routes Implementation](#api-routes-implementation)
+8. [Error Handling Integration](#error-handling-integration)
+9. [Directory Structure](#directory-structure)
+10. [Key Design Patterns](#key-design-patterns)
+11. [State Management](#state-management)
+12. [Security Architecture](#security-architecture)
+13. [Performance Strategy](#performance-strategy)
+14. [Observability Implementation](#observability-implementation)
 
 ## Architecture Overview
 
@@ -629,6 +635,368 @@ export async function requestBulkPricingImplementation(
 }
 ```
 
+### B2B Custom Extension Methods
+
+#### 1. getBulkPricing
+
+Retrieves tiered pricing for bulk quantities of a product.
+
+```typescript
+interface GetBulkPricingArgs {
+  productId: string;
+  quantities: number[];
+  customerId?: string;
+  accountId?: string;
+}
+
+interface BulkPricingResponse {
+  productId: string;
+  currency: string;
+  basePrice: number;
+  pricingTiers: Array<{
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    discount: number; // percentage
+    leadTime: string; // e.g., "5-7 business days"
+    minimumOrderQuantity?: number;
+  }>;
+  customPricingAvailable: boolean;
+  contactForQuote?: {
+    threshold: number;
+    message: string;
+  };
+}
+
+// Implementation
+export async function getBulkPricing(
+  context: IntegrationContext,
+  args: GetBulkPricingArgs
+): Promise<BulkPricingResponse> {
+  const { normalizePrice } = getNormalizers(context);
+  
+  // Get customer tier for pricing
+  const customerTier = args.customerId 
+    ? await context.api.getCustomerTier(args.customerId)
+    : 'standard';
+  
+  // Calculate bulk pricing
+  const pricingTiers = args.quantities.map(quantity => {
+    const discount = calculateBulkDiscount(quantity, customerTier);
+    const unitPrice = basePrice * (1 - discount);
+    
+    return {
+      quantity,
+      unitPrice: normalizePrice({ amount: unitPrice, currency: 'USD' }),
+      totalPrice: normalizePrice({ amount: unitPrice * quantity, currency: 'USD' }),
+      discount: discount * 100,
+      leadTime: calculateLeadTime(quantity)
+    };
+  });
+  
+  return {
+    productId: args.productId,
+    currency: 'USD',
+    basePrice: normalizePrice(basePrice),
+    pricingTiers,
+    customPricingAvailable: customerTier === 'enterprise'
+  };
+}
+```
+
+#### 2. checkBulkAvailability
+
+Checks inventory availability for large quantities across warehouses.
+
+```typescript
+interface CheckBulkAvailabilityArgs {
+  productId: string;
+  quantity: number;
+  deliveryDate?: string;
+  warehouseIds?: string[];
+}
+
+interface BulkAvailabilityResponse {
+  productId: string;
+  requestedQuantity: number;
+  availableNow: number;
+  totalAvailable: number;
+  availability: {
+    immediate: {
+      quantity: number;
+      warehouses: Array<{
+        id: string;
+        name: string;
+        quantity: number;
+        location: string;
+      }>;
+    };
+    production: {
+      quantity: number;
+      leadTime: number; // days
+      estimatedDate: string;
+    };
+    alternatives: Array<{
+      splitShipment: boolean;
+      shipments: Array<{
+        quantity: number;
+        estimatedDate: string;
+        source: 'warehouse' | 'production';
+      }>;
+    }>;
+  };
+}
+
+// Implementation includes warehouse queries and production schedules
+```
+
+#### 3. requestProductSamples
+
+Creates a sample request for B2B customers to evaluate products.
+
+```typescript
+interface RequestProductSamplesArgs {
+  productIds: string[];
+  shippingAddress: {
+    company: string;
+    attention?: string;
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+  };
+  customerId: string;
+  notes?: string;
+}
+
+interface SampleRequestResponse {
+  requestId: string;
+  status: 'pending' | 'approved' | 'shipped' | 'delivered';
+  products: Array<{
+    productId: string;
+    name: string;
+    sampleSku: string;
+    approved: boolean;
+  }>;
+  estimatedDelivery: string;
+  trackingNumber?: string;
+  approvalRequired: boolean;
+  salesRepAssigned?: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+}
+```
+
+#### 4. getAccountCredit
+
+Retrieves credit information for B2B accounts from financial systems.
+
+```typescript
+interface GetAccountCreditArgs {
+  customerId: string;
+  accountId?: string;
+  includePendingOrders?: boolean;
+}
+
+interface AccountCreditResponse {
+  accountId: string;
+  customerId: string;
+  creditLimit: number;
+  availableCredit: number;
+  usedCredit: number;
+  pendingCharges?: number;
+  currency: string;
+  paymentTerms: string; // e.g., "Net 30"
+  creditStatus: 'active' | 'hold' | 'suspended';
+  creditScore?: string;
+  lastReviewDate: string;
+  nextReviewDate: string;
+  outstandingInvoices?: Array<{
+    invoiceNumber: string;
+    amount: number;
+    dueDate: string;
+    daysPastDue: number;
+  }>;
+}
+```
+
+#### 5. scheduleProductDemo
+
+Books a product demonstration with sales team.
+
+```typescript
+interface ScheduleProductDemoArgs {
+  productIds: string[];
+  preferredTimes: Array<{
+    date: string;
+    time: string;
+    timezone: string;
+  }>;
+  attendees: Array<{
+    name: string;
+    email: string;
+    role?: string;
+  }>;
+  customerId: string;
+  demoType: 'virtual' | 'in-person';
+  notes?: string;
+}
+
+interface ProductDemoResponse {
+  demoId: string;
+  status: 'scheduled' | 'confirmed' | 'rescheduled' | 'cancelled';
+  scheduledTime: {
+    date: string;
+    time: string;
+    timezone: string;
+    duration: number;
+  };
+  meetingDetails: {
+    type: 'virtual' | 'in-person';
+    location?: string;
+    joinInstructions?: string;
+  };
+  salesRep: {
+    name: string;
+    email: string;
+    phone: string;
+    title: string;
+  };
+  products: Array<{
+    productId: string;
+    name: string;
+    demoMaterials?: string[];
+  }>;
+  calendarInvite: {
+    icsUrl: string;
+    googleCalendarUrl?: string;
+    outlookUrl?: string;
+  };
+}
+```
+
+#### 6. applyTaxExemption
+
+Applies tax exemption certificate to orders.
+
+```typescript
+interface ApplyTaxExemptionArgs {
+  exemptionCertificate: string;
+  state: string;
+  cartId?: string;
+  customerId: string;
+  expirationDate?: string;
+}
+
+interface TaxExemptionResponse {
+  exemptionId: string;
+  certificateNumber: string;
+  status: 'active' | 'expired' | 'invalid' | 'pending';
+  validStates: string[];
+  appliedToCart: boolean;
+  taxSavings?: {
+    originalTax: number;
+    exemptedTax: number;
+    netSavings: number;
+  };
+  expirationDate: string;
+  verificationDetails: {
+    verifiedAt: string;
+    verifiedBy: string;
+    method: 'manual' | 'automated';
+  };
+}
+```
+
+### B2B Extension Implementation Patterns
+
+#### Error Handling for B2B Methods
+
+```typescript
+// Specific error handling for each method
+export async function getBulkPricing(
+  context: IntegrationContext,
+  args: GetBulkPricingArgs
+): Promise<BulkPricingResponse> {
+  try {
+    // Validate B2B customer
+    const customer = await context.api.getCustomer();
+    if (!customer.isB2B) {
+      throw new Error('B2B account required');
+    }
+    
+    // Call external pricing service
+    const pricingService = await context.getApiClient('erp');
+    const pricing = await pricingService.getBulkPricing(args);
+    
+    // Normalize response
+    return normalizeBulkPricing(pricing);
+    
+  } catch (error) {
+    if (error.code === 'PRODUCT_NOT_FOUND') {
+      throw new Error(`Product ${args.productId} not found`, { cause: error });
+    }
+    if (error.code === 'UNAUTHORIZED') {
+      throw new Error('Unauthorized access to bulk pricing', { cause: error });
+    }
+    throw new Error('Failed to get bulk pricing', { cause: error });
+  }
+}
+```
+
+#### Integration with Multiple Backends
+
+```typescript
+export async function checkBulkAvailability(
+  context: IntegrationContext,
+  args: CheckBulkAvailabilityArgs
+): Promise<BulkAvailabilityResponse> {
+  // Access multiple systems
+  const warehouseApi = context.api;
+  const productionApi = await context.getApiClient('production');
+  const inventoryApi = await context.getApiClient('inventory');
+  
+  // Parallel queries for performance
+  const [warehouseStock, productionSchedule, reservedStock] = await Promise.all([
+    warehouseApi.getStock(args.productId, args.warehouseIds),
+    productionApi.getSchedule(args.productId),
+    inventoryApi.getReserved(args.productId)
+  ]);
+  
+  // Calculate availability
+  return calculateBulkAvailability({
+    requested: args.quantity,
+    warehouseStock,
+    productionSchedule,
+    reservedStock,
+    deliveryDate: args.deliveryDate
+  });
+}
+```
+
+#### Caching Strategy for B2B
+
+```typescript
+// Cache configuration per method
+const cacheConfig = {
+  getBulkPricing: {
+    ttl: 300, // 5 minutes
+    key: (args) => `bulk-pricing:${args.productId}:${args.quantities.join(',')}`
+  },
+  getAccountCredit: {
+    ttl: 60, // 1 minute - credit changes frequently
+    key: (args) => `account-credit:${args.customerId}`
+  },
+  checkBulkAvailability: {
+    ttl: 30, // 30 seconds - inventory is dynamic
+    key: (args) => `bulk-availability:${args.productId}:${args.quantity}`
+  }
+};
+```
+
 ### Testing Custom Extensions
 
 ```typescript
@@ -658,6 +1026,23 @@ it('should fetch bulk pricing', async () => {
 });
 ```
 
+### Migration Notes from Frontend
+
+The frontend currently has TODO comments where these methods should be called:
+
+```typescript
+// Before (with TODO)
+// TODO: Implement actual SDK call when custom extension is ready
+const mockPricing = { /* mock data */ };
+
+// After (with real extension)
+const pricing = await sdk.customExtension.getBulkPricing({
+  productId: product.id,
+  quantities: [50, 100, 500],
+  customerId: customer.id
+});
+```
+
 ### Custom Extension Best Practices
 
 1. **Always normalize data**: Use UDL normalizers for consistency
@@ -675,6 +1060,778 @@ it('should fetch bulk pricing', async () => {
 - ❌ Don't skip error handling - handle all edge cases
 - ❌ Don't forget authentication - verify B2B permissions
 - ❌ Don't ignore performance - add appropriate caching
+
+## API Routes Implementation
+
+### Overview
+
+The AI Shopping Assistant API is built as a Next.js 14 App Router API route at `/api/ai-shopping-assistant`. It provides a production-ready interface with authentication, rate limiting, streaming support, and comprehensive observability.
+
+### Main Route Implementation
+
+Located at `/app/api/ai-shopping-assistant/route.ts`:
+
+```typescript
+export async function POST(request: Request) {
+  const startTime = Date.now();
+  const correlationId = generateCorrelationId();
+  
+  try {
+    // Validate request
+    const body = await request.json();
+    const validated = RequestSchema.parse(body);
+    
+    // Get or create session
+    const sessionId = validated.sessionId || generateSessionId();
+    
+    // Create commerce context
+    const context = {
+      sessionId,
+      mode: validated.mode || 'b2c',
+      sdk: getSdk(), // UDL SDK instance
+      customer: await getCustomerFromAuth(request),
+      locale: validated.context?.locale || 'en',
+      currency: validated.context?.currency || 'USD'
+    };
+    
+    // Execute with graph
+    if (validated.stream) {
+      return streamResponse(validated.message, context);
+    } else {
+      return jsonResponse(validated.message, context);
+    }
+  } catch (error) {
+    return handleError(error, correlationId);
+  }
+}
+```
+
+### Authentication & Security Middleware
+
+```typescript
+// middleware.ts
+export async function authenticateRequest(request: Request): Promise<AuthResult> {
+  // 1. Check API Key
+  const apiKey = request.headers.get('x-api-key');
+  if (apiKey && VALID_API_KEYS.includes(apiKey)) {
+    return { authenticated: true, method: 'api-key' };
+  }
+  
+  // 2. Check JWT Bearer Token
+  const authHeader = request.headers.get('authorization');
+  if (authHeader?.startsWith('Bearer ')) {
+    const token = authHeader.substring(7);
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      return { 
+        authenticated: true, 
+        method: 'jwt',
+        user: decoded 
+      };
+    } catch (error) {
+      // Invalid token
+    }
+  }
+  
+  // 3. Development mode - allow anonymous
+  if (process.env.NODE_ENV === 'development') {
+    return { authenticated: true, method: 'anonymous' };
+  }
+  
+  return { authenticated: false };
+}
+```
+
+### Rate Limiting Implementation
+
+Token bucket algorithm with configurable limits:
+
+```typescript
+class RateLimiter {
+  private buckets = new Map<string, TokenBucket>();
+  
+  async checkLimit(clientId: string): Promise<RateLimitResult> {
+    let bucket = this.buckets.get(clientId);
+    
+    if (!bucket) {
+      bucket = new TokenBucket({
+        capacity: parseInt(process.env.AI_RATE_LIMIT || '60'),
+        refillRate: parseInt(process.env.AI_RATE_LIMIT || '60'),
+        windowMs: parseInt(process.env.AI_RATE_WINDOW || '60000')
+      });
+      this.buckets.set(clientId, bucket);
+    }
+    
+    const allowed = bucket.consume(1);
+    const remaining = bucket.getRemaining();
+    const resetTime = bucket.getResetTime();
+    
+    return {
+      allowed,
+      remaining,
+      resetTime,
+      retryAfter: allowed ? null : Math.ceil((resetTime - Date.now()) / 1000)
+    };
+  }
+}
+```
+
+### Request/Response Schemas
+
+```typescript
+const RequestSchema = z.object({
+  message: z.string().min(1).max(1000),
+  sessionId: z.string().uuid().optional(),
+  mode: z.enum(['b2c', 'b2b']).optional(),
+  context: z.object({
+    cartId: z.string().optional(),
+    customerId: z.string().optional(),
+    locale: z.string().optional(),
+    currency: z.string().optional()
+  }).optional(),
+  stream: z.boolean().default(true)
+});
+
+const ResponseSchema = z.object({
+  message: z.string(),
+  actions: z.array(z.object({
+    type: z.string(),
+    data: z.any()
+  })).optional(),
+  ui: z.object({
+    component: z.string(),
+    data: z.any()
+  }).optional(),
+  metadata: z.object({
+    sessionId: z.string(),
+    mode: z.enum(['b2c', 'b2b']),
+    processingTime: z.number(),
+    version: z.string()
+  })
+});
+```
+
+### Streaming Implementation
+
+Server-Sent Events (SSE) for real-time responses:
+
+```typescript
+async function streamResponse(
+  message: string, 
+  context: CommerceContext
+): Promise<Response> {
+  const encoder = new TextEncoder();
+  const stream = new TransformStream();
+  const writer = stream.writable.getWriter();
+  
+  // Start streaming in background
+  (async () => {
+    try {
+      // Send initial metadata
+      await writer.write(encoder.encode(
+        `event: metadata\ndata: ${JSON.stringify({
+          sessionId: context.sessionId,
+          mode: context.mode
+        })}\n\n`
+      ));
+      
+      // Stream graph execution
+      for await (const event of graph.stream({
+        messages: [new HumanMessage(message)],
+        context
+      })) {
+        if (event.content) {
+          await writer.write(encoder.encode(
+            `event: content\ndata: ${JSON.stringify({
+              content: event.content,
+              partial: true
+            })}\n\n`
+          ));
+        }
+        
+        if (event.actions) {
+          await writer.write(encoder.encode(
+            `event: actions\ndata: ${JSON.stringify(event.actions)}\n\n`
+          ));
+        }
+      }
+      
+      // Send completion
+      await writer.write(encoder.encode(
+        `event: done\ndata: ${JSON.stringify({
+          totalTime: Date.now() - startTime
+        })}\n\n`
+      ));
+      
+    } catch (error) {
+      await writer.write(encoder.encode(
+        `event: error\ndata: ${JSON.stringify({
+          message: error.message
+        })}\n\n`
+      ));
+    } finally {
+      await writer.close();
+    }
+  })();
+  
+  return new Response(stream.readable, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+      'X-Accel-Buffering': 'no'
+    }
+  });
+}
+```
+
+### Health Check Endpoint
+
+```typescript
+// /api/ai-shopping-assistant/health/route.ts
+export async function GET() {
+  const checks = {
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    dependencies: {} as Record<string, any>
+  };
+  
+  // Check OpenAI
+  try {
+    await openai.models.list();
+    checks.dependencies.openai = { status: 'healthy' };
+  } catch (error) {
+    checks.dependencies.openai = { 
+      status: 'unhealthy', 
+      error: error.message 
+    };
+    checks.status = 'degraded';
+  }
+  
+  // Check SDK/Middleware
+  try {
+    const sdk = getSdk();
+    await sdk.unified.getCurrencies();
+    checks.dependencies.middleware = { status: 'healthy' };
+  } catch (error) {
+    checks.dependencies.middleware = { 
+      status: 'unhealthy', 
+      error: error.message 
+    };
+    checks.status = 'unhealthy';
+  }
+  
+  // Check configuration
+  try {
+    const config = await loadConfiguration();
+    checks.dependencies.configuration = { 
+      status: 'healthy',
+      actionCount: config.actions.length
+    };
+  } catch (error) {
+    checks.dependencies.configuration = { 
+      status: 'unhealthy', 
+      error: error.message 
+    };
+    checks.status = 'degraded';
+  }
+  
+  const statusCode = checks.status === 'healthy' ? 200 : 503;
+  return Response.json(checks, { status: statusCode });
+}
+```
+
+### Error Handling Structure
+
+```typescript
+function handleError(error: unknown, correlationId: string): Response {
+  // Log error with context
+  logger.error('API route error', {
+    error,
+    correlationId,
+    stack: error instanceof Error ? error.stack : undefined
+  });
+  
+  // Determine status code and message
+  let status = 500;
+  let message = 'Internal server error';
+  let code = 'INTERNAL_ERROR';
+  
+  if (error instanceof z.ZodError) {
+    status = 400;
+    message = 'Invalid request parameters';
+    code = 'VALIDATION_ERROR';
+  } else if (error instanceof AuthenticationError) {
+    status = 401;
+    message = 'Authentication required';
+    code = 'AUTH_REQUIRED';
+  } else if (error instanceof RateLimitError) {
+    status = 429;
+    message = 'Rate limit exceeded';
+    code = 'RATE_LIMIT_EXCEEDED';
+  }
+  
+  return Response.json({
+    error: {
+      message,
+      code,
+      correlationId,
+      timestamp: new Date().toISOString()
+    }
+  }, { 
+    status,
+    headers: error instanceof RateLimitError ? {
+      'Retry-After': error.retryAfter.toString()
+    } : {}
+  });
+}
+```
+
+### Configuration via Environment Variables
+
+```bash
+# OpenAI Configuration
+OPENAI_API_KEY=your-key
+OPENAI_MODEL=gpt-4-turbo-preview
+OPENAI_TEMPERATURE=0
+OPENAI_MAX_TOKENS=2000
+
+# Authentication
+VALID_API_KEYS=key1,key2,key3  # Comma-separated
+JWT_SECRET=your-jwt-secret
+AUTH_REQUIRED=true              # Set to false for dev
+
+# Rate Limiting
+AI_RATE_LIMIT=60               # Requests per window
+AI_RATE_WINDOW=60000           # Window in milliseconds
+
+# CORS Configuration
+ALLOWED_ORIGINS=https://example.com,*.example.com
+
+# Observability
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318
+ENABLE_TRACING=true
+ENABLE_METRICS=true
+LOG_LEVEL=info
+```
+
+### OpenAPI Documentation
+
+Complete OpenAPI 3.1.0 specification provided:
+
+```yaml
+openapi: 3.1.0
+info:
+  title: AI Shopping Assistant API
+  version: 1.0.0
+  description: Production-ready AI shopping assistant with B2C/B2B support
+
+servers:
+  - url: /api/ai-shopping-assistant
+    description: API endpoint
+
+paths:
+  /:
+    post:
+      summary: Send message to AI assistant
+      operationId: chatWithAssistant
+      security:
+        - apiKey: []
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+            text/event-stream:
+              schema:
+                type: string
+                description: Server-sent events stream
+                
+  /health:
+    get:
+      summary: Health check endpoint
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+        '503':
+          description: Service is unhealthy or degraded
+```
+
+### Usage Examples
+
+#### Non-Streaming Request
+```typescript
+const response = await fetch('/api/ai-shopping-assistant', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': 'your-api-key'
+  },
+  body: JSON.stringify({
+    message: 'Show me waterproof jackets',
+    sessionId: '550e8400-e29b-41d4-a716-446655440000',
+    mode: 'b2c',
+    stream: false
+  })
+});
+
+const data = await response.json();
+console.log(data.message);
+```
+
+#### Streaming Request
+```typescript
+const response = await fetch('/api/ai-shopping-assistant', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': 'your-api-key'
+  },
+  body: JSON.stringify({
+    message: 'I need 100 units of product SKU-123',
+    mode: 'b2b',
+    stream: true
+  })
+});
+
+const reader = response.body.getReader();
+const decoder = new TextDecoder();
+
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  
+  const chunk = decoder.decode(value);
+  const events = chunk.split('\n\n').filter(Boolean);
+  
+  for (const event of events) {
+    const [eventType, eventData] = event.split('\ndata: ');
+    const type = eventType.replace('event: ', '');
+    const data = JSON.parse(eventData);
+    
+    switch (type) {
+      case 'content':
+        updateUI(data.content);
+        break;
+      case 'actions':
+        handleActions(data);
+        break;
+      case 'ui':
+        renderComponent(data);
+        break;
+    }
+  }
+}
+```
+
+### Security Considerations
+
+1. **Input Validation**: All inputs validated with Zod schemas
+2. **Authentication**: Multiple methods supported (API key, JWT)
+3. **Rate Limiting**: Token bucket algorithm prevents abuse
+4. **CORS**: Configurable origin validation
+5. **Security Headers**: Standard headers on all responses
+6. **Error Sanitization**: No sensitive data in error responses
+7. **Request Logging**: Correlation IDs for tracking
+
+### Performance Optimizations
+
+1. **Lazy Initialization**: Components initialized on first request
+2. **Connection Pooling**: Reuse HTTP connections
+3. **Streaming**: Reduces perceived latency
+4. **Caching Headers**: Appropriate cache control
+5. **Timeout Management**: Configurable timeouts
+6. **Metric Collection**: Performance tracking
+
+### Monitoring & Observability
+
+```typescript
+// Prometheus metrics
+metrics.increment('ai_assistant_requests_total', {
+  method: 'POST',
+  status: response.status,
+  mode: context.mode
+});
+
+metrics.recordHistogram('ai_assistant_response_time', {
+  duration: Date.now() - startTime,
+  streaming: validated.stream
+});
+
+// OpenTelemetry tracing
+const span = tracer.startSpan('ai-assistant-request', {
+  attributes: {
+    'request.id': correlationId,
+    'request.mode': context.mode,
+    'request.streaming': validated.stream
+  }
+});
+```
+
+## Error Handling Integration
+
+### Framework Overview
+
+A comprehensive error handling framework has been built but requires integration into existing components. The framework provides:
+
+- Type-safe error hierarchy
+- Recovery strategies (retry, circuit breaker, fallback)
+- User-friendly message generation
+- Graph node error boundaries
+- Comprehensive error reporting
+
+### Error Type Hierarchy
+
+```typescript
+// Base error class
+export abstract class BaseError extends Error {
+  abstract readonly code: string;
+  abstract readonly statusCode: number;
+  abstract readonly isRetryable: boolean;
+  abstract readonly userMessage: string;
+  
+  constructor(
+    message: string,
+    public readonly context?: Record<string, any>
+  ) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+
+// Specific error types
+export class ValidationError extends BaseError {
+  readonly code = 'VALIDATION_ERROR';
+  readonly statusCode = 400;
+  readonly isRetryable = false;
+  
+  get userMessage() {
+    return 'Please check your input and try again.';
+  }
+}
+
+export class UDLError extends BaseError {
+  readonly code = 'UDL_ERROR';
+  readonly statusCode = 502;
+  readonly isRetryable = true;
+  
+  constructor(
+    message: string,
+    public readonly method: string,
+    public readonly originalError?: unknown,
+    context?: Record<string, any>
+  ) {
+    super(message, context);
+  }
+  
+  get userMessage() {
+    return 'We\'re having trouble accessing product information. Please try again.';
+  }
+}
+
+export class ModelError extends BaseError {
+  readonly code = 'MODEL_ERROR';
+  readonly statusCode = 503;
+  readonly isRetryable = true;
+  
+  get userMessage() {
+    return 'Our AI assistant is temporarily unavailable. Please try again in a moment.';
+  }
+}
+```
+
+### Recovery Strategies
+
+```typescript
+export enum RecoveryStrategy {
+  NONE = 'none',
+  RETRY_WITH_BACKOFF = 'retry_with_backoff',
+  CIRCUIT_BREAKER = 'circuit_breaker',
+  FALLBACK = 'fallback',
+  CACHE = 'cache'
+}
+
+export async function withErrorHandling<T>(
+  operation: () => Promise<T>,
+  options: {
+    action?: string;
+    recoveryStrategy?: RecoveryStrategy;
+    maxRetries?: number;
+    fallback?: () => T;
+  } = {}
+): Promise<T> {
+  const {
+    action = 'unknown',
+    recoveryStrategy = RecoveryStrategy.NONE,
+    maxRetries = 3,
+    fallback
+  } = options;
+  
+  let lastError: Error;
+  
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error as Error;
+      
+      // Check if retryable
+      if (!isRetryable(error) || attempt === maxRetries) {
+        break;
+      }
+      
+      // Apply recovery strategy
+      if (recoveryStrategy === RecoveryStrategy.RETRY_WITH_BACKOFF) {
+        const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  }
+  
+  // Try fallback
+  if (fallback && recoveryStrategy === RecoveryStrategy.FALLBACK) {
+    try {
+      return fallback();
+    } catch (fallbackError) {
+      // Fallback also failed
+    }
+  }
+  
+  // Report and throw
+  await reportError(lastError!, { action, attempts: maxRetries + 1 });
+  throw lastError!;
+}
+```
+
+### Graph Node Error Boundaries
+
+```typescript
+export function createSafeNode<T>(
+  node: (state: T) => Promise<Partial<T>>,
+  options: {
+    critical?: boolean;
+    maxRetries?: number;
+    fallbackState?: Partial<T>;
+  } = {}
+): (state: T) => Promise<Partial<T>> {
+  return async (state: T) => {
+    try {
+      return await withErrorHandling(
+        () => node(state),
+        {
+          recoveryStrategy: RecoveryStrategy.RETRY_WITH_BACKOFF,
+          maxRetries: options.maxRetries || 1,
+          fallback: options.fallbackState ? 
+            () => options.fallbackState! : 
+            undefined
+        }
+      );
+    } catch (error) {
+      if (options.critical) {
+        throw error; // Propagate critical errors
+      }
+      
+      // Non-critical errors - log and continue
+      logger.error('Node execution failed', {
+        node: node.name,
+        error,
+        state: state
+      });
+      
+      return options.fallbackState || {};
+    }
+  };
+}
+```
+
+### Integration Tasks (TODOs)
+
+The framework is complete but needs to be integrated into:
+
+1. **Graph Nodes**: Update all nodes to use `createSafeNode()` wrapper
+2. **Action Implementations**: Wrap with `withErrorHandling()`
+3. **API Routes**: Replace simple error handler with framework
+4. **Recovery Activation**: Enable retry and circuit breaker strategies
+5. **B2B Error Handling**: Add mode-specific error types
+6. **Monitoring Setup**: Configure external error reporting
+
+### User-Friendly Error Messages
+
+```typescript
+export function generateUserMessage(error: Error): string {
+  // Check if error has built-in user message
+  if (error instanceof BaseError) {
+    return error.userMessage;
+  }
+  
+  // Map common errors to user messages
+  const errorMessages: Record<string, string> = {
+    'ECONNREFUSED': 'Unable to connect to our services. Please try again.',
+    'ETIMEDOUT': 'The request took too long. Please try again.',
+    'UNAUTHORIZED': 'Please sign in to continue.',
+    'FORBIDDEN': 'You don\'t have permission to perform this action.',
+    'NOT_FOUND': 'We couldn\'t find what you\'re looking for.',
+    'RATE_LIMIT': 'You\'re making requests too quickly. Please slow down.'
+  };
+  
+  // Check error code
+  const errorCode = (error as any).code || error.name;
+  if (errorMessages[errorCode]) {
+    return errorMessages[errorCode];
+  }
+  
+  // Default message
+  return 'Something went wrong. Please try again or contact support.';
+}
+```
+
+### Testing Error Scenarios
+
+```typescript
+describe('Error Handling', () => {
+  it('should retry on transient failures', async () => {
+    let attempts = 0;
+    const operation = jest.fn().mockImplementation(() => {
+      attempts++;
+      if (attempts < 3) {
+        throw new UDLError('Network error', 'searchProducts');
+      }
+      return { success: true };
+    });
+    
+    const result = await withErrorHandling(operation, {
+      recoveryStrategy: RecoveryStrategy.RETRY_WITH_BACKOFF,
+      maxRetries: 3
+    });
+    
+    expect(result).toEqual({ success: true });
+    expect(attempts).toBe(3);
+  });
+  
+  it('should use fallback on failure', async () => {
+    const operation = jest.fn().mockRejectedValue(new Error('Failed'));
+    const fallback = jest.fn().mockResolvedValue({ fallback: true });
+    
+    const result = await withErrorHandling(operation, {
+      recoveryStrategy: RecoveryStrategy.FALLBACK,
+      fallback
+    });
+    
+    expect(result).toEqual({ fallback: true });
+    expect(fallback).toHaveBeenCalled();
+  });
+});
+```
 
 ## Directory Structure
 
@@ -868,6 +2025,68 @@ class SecurityJudge {
     
     return { valid: true };
   }
+}
+```
+
+### Rate Limiting Implementation
+
+Token bucket algorithm for API protection:
+
+```typescript
+class RateLimiter {
+  private buckets = new Map<string, TokenBucket>();
+  
+  async checkLimit(clientId: string): Promise<RateLimitResult> {
+    let bucket = this.buckets.get(clientId);
+    
+    if (!bucket) {
+      bucket = new TokenBucket({
+        capacity: parseInt(process.env.AI_RATE_LIMIT || '60'),
+        refillRate: parseInt(process.env.AI_RATE_LIMIT || '60'),
+        windowMs: parseInt(process.env.AI_RATE_WINDOW || '60000')
+      });
+      this.buckets.set(clientId, bucket);
+    }
+    
+    const allowed = bucket.consume(1);
+    const remaining = bucket.getRemaining();
+    const resetTime = bucket.getResetTime();
+    
+    return {
+      allowed,
+      remaining,
+      resetTime,
+      retryAfter: allowed ? null : Math.ceil((resetTime - Date.now()) / 1000)
+    };
+  }
+}
+
+// Apply rate limiting in API routes
+export async function rateLimitMiddleware(
+  request: Request,
+  clientId: string
+): Promise<Response | null> {
+  const result = await rateLimiter.checkLimit(clientId);
+  
+  if (!result.allowed) {
+    return Response.json({
+      error: {
+        message: 'Rate limit exceeded',
+        code: 'RATE_LIMIT_EXCEEDED',
+        retryAfter: result.retryAfter
+      }
+    }, {
+      status: 429,
+      headers: {
+        'Retry-After': result.retryAfter!.toString(),
+        'X-RateLimit-Limit': '60',
+        'X-RateLimit-Remaining': result.remaining.toString(),
+        'X-RateLimit-Reset': result.resetTime.toString()
+      }
+    });
+  }
+  
+  return null; // Continue processing
 }
 ```
 
@@ -1131,7 +2350,7 @@ describe('Performance Requirements', () => {
 export const config = {
   // UDL Configuration
   udl: {
-    endpoint: process.env.UDL_ENDPOINT || 'http://localhost:4000',
+    endpoint: process.env.NEXT_PUBLIC_ALOKAI_MIDDLEWARE_URL || 'http://localhost:4000',
     timeout: parseInt(process.env.UDL_TIMEOUT || '5000'),
     cache: {
       enabled: process.env.UDL_CACHE_ENABLED === 'true',
@@ -1141,9 +2360,17 @@ export const config = {
   
   // AI Configuration
   ai: {
-    model: process.env.AI_MODEL || 'gpt-4-turbo-preview',
-    temperature: parseFloat(process.env.AI_TEMPERATURE || '0'),
-    maxTokens: parseInt(process.env.AI_MAX_TOKENS || '2000')
+    apiKey: process.env.OPENAI_API_KEY,
+    model: process.env.OPENAI_MODEL || 'gpt-4-turbo-preview',
+    temperature: parseFloat(process.env.OPENAI_TEMPERATURE || '0'),
+    maxTokens: parseInt(process.env.OPENAI_MAX_TOKENS || '2000')
+  },
+  
+  // Authentication Configuration
+  auth: {
+    validApiKeys: process.env.VALID_API_KEYS?.split(',') || [],
+    jwtSecret: process.env.JWT_SECRET,
+    required: process.env.AUTH_REQUIRED !== 'false'
   },
   
   // Performance Configuration
@@ -1153,15 +2380,75 @@ export const config = {
     maxConcurrent: parseInt(process.env.MAX_CONCURRENT || '10')
   },
   
+  // Rate Limiting Configuration
+  rateLimit: {
+    limit: parseInt(process.env.AI_RATE_LIMIT || '60'),
+    windowMs: parseInt(process.env.AI_RATE_WINDOW || '60000')
+  },
+  
+  // CORS Configuration
+  cors: {
+    allowedOrigins: process.env.ALLOWED_ORIGINS?.split(',') || ['*']
+  },
+  
+  // Observability Configuration
+  observability: {
+    otlpEndpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://localhost:4318',
+    enableTracing: process.env.ENABLE_TRACING === 'true',
+    enableMetrics: process.env.ENABLE_METRICS === 'true',
+    logLevel: process.env.LOG_LEVEL || 'info'
+  },
+  
   // Security Configuration
   security: {
-    rateLimit: {
-      windowMs: parseInt(process.env.RATE_LIMIT_WINDOW || '60000'),
-      maxRequests: parseInt(process.env.RATE_LIMIT_MAX || '100')
-    },
-    enableJudge: process.env.ENABLE_SECURITY_JUDGE !== 'false'
+    enableJudge: process.env.ENABLE_SECURITY_JUDGE !== 'false',
+    multistore: process.env.NEXT_PUBLIC_ALOKAI_MULTISTORE_ENABLED === 'true'
   }
 };
+```
+
+### Environment Variables Reference
+
+```bash
+# OpenAI Configuration
+OPENAI_API_KEY=your-key               # Required in production
+OPENAI_MODEL=gpt-4-turbo-preview     # Model to use
+OPENAI_TEMPERATURE=0                  # Model temperature (0-1)
+OPENAI_MAX_TOKENS=2000               # Max response tokens
+
+# Authentication
+VALID_API_KEYS=key1,key2,key3       # Comma-separated API keys
+JWT_SECRET=your-jwt-secret           # JWT signing secret
+AUTH_REQUIRED=true                   # Require auth in production
+
+# Rate Limiting
+AI_RATE_LIMIT=60                     # Requests per window
+AI_RATE_WINDOW=60000                 # Window in milliseconds
+
+# CORS Configuration
+ALLOWED_ORIGINS=https://example.com,*.example.com  # Allowed origins
+
+# Observability
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318  # OpenTelemetry endpoint
+ENABLE_TRACING=true                  # Enable distributed tracing
+ENABLE_METRICS=true                  # Enable metrics collection
+LOG_LEVEL=info                       # Logging level
+
+# Alokai Configuration
+NEXT_PUBLIC_ALOKAI_MIDDLEWARE_URL=http://localhost:4000  # Middleware URL
+NEXT_PUBLIC_ALOKAI_MULTISTORE_ENABLED=false             # Multistore support
+
+# Performance
+TARGET_RESPONSE_TIME=250             # Target response time (ms)
+TIMEOUT_MS=30000                     # Request timeout
+MAX_CONCURRENT=10                    # Max concurrent operations
+
+# Caching
+UDL_CACHE_ENABLED=true              # Enable UDL caching
+UDL_CACHE_TTL=300                   # Cache TTL in seconds
+
+# Security
+ENABLE_SECURITY_JUDGE=true          # Enable security validation
 ```
 
 ### Action Configuration Schema

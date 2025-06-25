@@ -1,5 +1,8 @@
 # AI Assistant Configuration System
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 This directory contains configuration files for the AI Shopping Assistant actions.
 
 ## Configuration Structure

@@ -1,5 +1,5 @@
 import { type ApiClientExtension } from "@vue-storefront/middleware";
-import * as methods from "../../../api/custom-methods/custom";
+import * as methods from "../../../api/custom-methods";
 
 /**
  * @description

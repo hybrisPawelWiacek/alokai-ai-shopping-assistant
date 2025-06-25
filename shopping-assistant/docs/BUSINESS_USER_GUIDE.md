@@ -1,5 +1,8 @@
 # Business User Guide - AI Shopping Assistant Configuration
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 ## Overview
 
 This guide helps business users configure and manage the AI Shopping Assistant without requiring technical knowledge. The assistant can be customized through simple configuration files to match your business needs.
@@ -22,6 +25,135 @@ The AI Shopping Assistant helps your customers find products, manage their carts
 - 🕒 24/7 customer support without additional staff
 - 📊 Valuable insights into customer behavior
 - 🔧 Easy customization without coding
+
+## Understanding Demo vs Production Mode
+
+### What is Demo Mode?
+
+Demo mode allows you to test and configure the AI Shopping Assistant without connecting to your real backend systems. It's perfect for:
+- 🧪 Testing new configurations safely
+- 👀 Demonstrating capabilities to stakeholders
+- 🎓 Training staff on the system
+- 🔧 Development and customization
+
+**In Demo Mode:**
+- Uses realistic but fake product data
+- No real orders are placed
+- No charges to credit cards
+- All features work exactly like production
+- Response times are consistent (<250ms)
+
+### What is Production Mode?
+
+Production mode connects to your real commerce backend (SAP Commerce Cloud, Shopify, etc.) and processes actual customer orders.
+
+**In Production Mode:**
+- Uses your real product catalog
+- Places actual orders
+- Processes real payments
+- Integrates with your inventory system
+- Response times depend on backend performance
+
+### How to Tell Which Mode You're In
+
+**Visual Indicators:**
+```yaml
+# Look for this in your configuration
+mode: "demo"  # or "production"
+
+# Or check the UI - demo mode shows:
+"🧪 Demo Mode - No real orders will be placed"
+```
+
+**In the Assistant Interface:**
+- Demo mode has a yellow banner at the top
+- Production mode has no banner (or a green "Live" indicator)
+
+### Feature Comparison
+
+| Feature | Demo Mode | Production Mode |
+|---------|-----------|----------------|
+| Product Search | ✅ Mock products | ✅ Your products |
+| Add to Cart | ✅ Works normally | ✅ Works normally |
+| Checkout | ✅ Simulated | ✅ Real orders |
+| Inventory | ✅ Random stock | ✅ Real stock |
+| Pricing | ✅ Sample prices | ✅ Your prices |
+| B2B Features | ✅ All available | ✅ All available |
+| Customer Data | ✅ Test accounts | ✅ Real accounts |
+| Analytics | ✅ Captured | ✅ Captured |
+| API Costs | ✅ Same | ✅ Same |
+
+### Transitioning from Demo to Production
+
+**Step 1: Configuration Update**
+```yaml
+# config/environment.yaml
+# Change from:
+mode: "demo"
+
+# To:
+mode: "production"
+backend:
+  url: "https://your-backend.com"
+  apiKey: "your-secure-api-key"
+```
+
+**Step 2: Verify Connections**
+```yaml
+# Run connection test
+healthCheck:
+  enabled: true
+  endpoints:
+    - products: "Should return your catalog"
+    - inventory: "Should show real stock"
+    - pricing: "Should reflect your prices"
+```
+
+**Step 3: Test Critical Paths**
+- Search for a real product
+- Add to cart
+- Go through checkout (use test payment)
+- Verify order appears in your system
+
+### Best Practices for Each Mode
+
+**Demo Mode Best Practices:**
+1. Test all new features here first
+2. Train your team using demo mode
+3. Show stakeholders without risk
+4. Verify configurations before production
+
+**Production Mode Best Practices:**
+1. Always test in demo first
+2. Use gradual rollouts
+3. Monitor real metrics closely
+4. Have rollback plan ready
+
+### Configuration Example
+
+```yaml
+# config/modes.yaml
+development:
+  mode: "demo"
+  features:
+    all: true  # Enable everything for testing
+  logging:
+    level: "debug"
+    
+staging:
+  mode: "production"
+  backend: "staging-backend"
+  features:
+    experimental: false  # More cautious
+    
+production:
+  mode: "production"
+  backend: "production-backend"
+  features:
+    onlyStable: true
+  monitoring:
+    enhanced: true
+```
 
 ## Understanding Actions
 
@@ -345,6 +477,20 @@ insights:
 
 ### Common Issues and Solutions
 
+#### Mode-Specific Issues
+
+**Issue: "Products look different than our catalog"**
+- **Cause**: You're in demo mode
+- **Solution**: Switch to production mode to see real products
+
+**Issue: "Orders aren't appearing in our system"**
+- **Cause**: Demo mode doesn't create real orders
+- **Solution**: Verify you're in production mode for real transactions
+
+**Issue: "Can't test without affecting real data"**
+- **Cause**: You're in production mode
+- **Solution**: Switch to demo mode for safe testing
+
 #### Assistant Not Understanding Customers
 
 **Problem**: Customers report the assistant doesn't understand their requests
@@ -466,6 +612,8 @@ monitoring:
 - **Documentation**: `/docs/ai-assistant`
 - **Video Tutorials**: Available in the admin panel
 - **Support**: ai-assistant-support@company.com
+- **Demo Environment**: `https://demo.your-store.com/ai-assistant`
+- **Mode Switching Guide**: `/docs/demo-to-production`
 
 ### Common Questions
 
@@ -503,3 +651,28 @@ scheduled:
       promotions.enabled: true
       messages.welcome: "🛍️ Black Friday Sale - Up to 50% off!"
 ```
+
+**Q: Is it safe to let customers use demo mode?**
+A: Yes! Demo mode is designed to be customer-safe:
+- No real orders or charges
+- Clear indication it's a demo
+- Same features as production
+- Great for trials or demonstrations
+
+**Q: Do I need different API keys for demo and production?**
+A: No for OpenAI (same API key works). Yes for your backend:
+- Demo mode: No backend API key needed
+- Production mode: Requires your commerce platform API credentials
+
+**Q: Can I run both modes simultaneously?**
+A: Yes, common patterns include:
+- Demo at `demo.yourstore.com`
+- Production at `www.yourstore.com`
+- Internal testing at `test.yourstore.com` (demo mode)
+
+**Q: What happens to demo data when switching to production?**
+A: Demo data is completely separate:
+- Conversations can be preserved
+- Mock products/orders are not migrated
+- User preferences transfer seamlessly
+- Analytics continue uninterrupted

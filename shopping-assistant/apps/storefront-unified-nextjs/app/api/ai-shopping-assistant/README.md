@@ -1,5 +1,8 @@
 # AI Shopping Assistant API
 
+*Version: v1.0*  
+*Last Updated: 25 June 2025*
+
 ## Overview
 
 The AI Shopping Assistant API provides intelligent shopping assistance powered by LangGraph.js. It supports both B2C and B2B modes, streaming responses, and rich UI component integration.

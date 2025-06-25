@@ -1,5 +1,6 @@
 import type { BulkOrderRow } from './csv-parser';
 import type { StateUpdateCommand } from '../types/action-definition';
+import { BulkRetryHandler, BulkOperationCircuitBreaker } from './retry-handler';
 
 /**
  * Bulk processing status
@@ -81,7 +82,19 @@ export interface BulkProcessorConfig {
  * Processes bulk orders with intelligent batching and alternative suggestions
  */
 export class BulkOrderProcessor {
-  constructor(private config: BulkProcessorConfig) {}
+  private retryHandler: BulkRetryHandler;
+  private circuitBreaker: BulkOperationCircuitBreaker;
+
+  constructor(private config: BulkProcessorConfig) {
+    this.retryHandler = new BulkRetryHandler({
+      maxAttempts: 3,
+      initialDelay: 1000,
+      maxDelay: 10000,
+      backoffMultiplier: 2,
+      retryableErrors: ['ECONNRESET', 'ETIMEDOUT', 'rate_limit', 'temporary_failure']
+    });
+    this.circuitBreaker = new BulkOperationCircuitBreaker(5, 60000);
+  }
 
   /**
    * Process bulk order rows with progress tracking
@@ -257,24 +270,39 @@ export class BulkOrderProcessor {
   }
 
   /**
-   * Check item availability
+   * Check item availability with retry logic
    */
   private async checkItemAvailability(
     item: BulkOrderRow
   ): Promise<{ available: boolean; availability?: ProductAvailability; error?: BulkProcessingError }> {
-    try {
-      const availability = await this.config.checkAvailability(item.sku);
-      
-      if (!availability.available || availability.quantity === 0) {
-        return {
-          available: false,
-          error: {
-            sku: item.sku,
-            quantity: item.quantity,
-            error: 'Product not available'
-          }
-        };
-      }
+    // Check circuit breaker
+    if (!this.circuitBreaker.canProceed()) {
+      return {
+        available: false,
+        error: {
+          sku: item.sku,
+          quantity: item.quantity,
+          error: 'Service temporarily unavailable (circuit breaker open)'
+        }
+      };
+    }
+
+    const retryResult = await this.retryHandler.executeWithRetry(
+      async () => {
+        const availability = await this.config.checkAvailability(item.sku);
+        
+        if (!availability.available || availability.quantity === 0) {
+          throw new Error('Product not available');
+        }
+
+        return availability;
+      },
+      { sku: item.sku, operation: 'check_availability' }
+    );
+
+    if (retryResult.success && retryResult.result) {
+      this.circuitBreaker.recordSuccess();
+      const availability = retryResult.result;
 
       if (availability.quantity < item.quantity) {
         // Partial availability - will be handled in processBatch
@@ -288,14 +316,19 @@ export class BulkOrderProcessor {
         available: true,
         availability
       };
-    } catch (error) {
+    } else {
+      this.circuitBreaker.recordFailure();
       return {
         available: false,
-        error: {
-          sku: item.sku,
-          quantity: item.quantity,
-          error: error instanceof Error ? error.message : 'Availability check failed'
-        }
+        error: this.retryHandler.createEnhancedError(
+          retryResult.error || new Error('Unknown error'),
+          {
+            sku: item.sku,
+            attempts: retryResult.attempts,
+            lastDelay: retryResult.finalDelay,
+            operation: 'check_availability'
+          }
+        )
       };
     }
   }

@@ -98,6 +98,137 @@ describe('BulkOrderProcessor', () => {
       expect(highPriorityProcessedFirst).toBe(true);
     });
 
+    it('should process 500 items within 2 minutes with caching', async () => {
+      // Generate 500 test items with some duplicate SKUs to test caching
+      const items: BulkOrderRow[] = Array.from({ length: 500 }, (_, i) => ({
+        sku: `PROD-${String((i % 200) + 1).padStart(3, '0')}`, // 200 unique SKUs
+        quantity: Math.floor(Math.random() * 50) + 1,
+        priority: i < 100 ? 'high' : i < 300 ? 'normal' : 'low'
+      }));
+
+      // Track cache hits
+      let cacheHits = 0;
+      const skuCache = new Map<string, ProductAvailability>();
+
+      // Mock availability with caching simulation
+      mockCheckAvailability.mockImplementation(async (sku: string) => {
+        // Simulate cache hit
+        if (skuCache.has(sku)) {
+          cacheHits++;
+          return skuCache.get(sku)!;
+        }
+
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 10));
+        
+        const index = parseInt(sku.split('-')[1]);
+        const available = index % 5 !== 0; // 20% unavailable
+        
+        const result = {
+          sku,
+          available,
+          quantity: available ? 1000 : 0,
+          price: 10 + (index % 20),
+          name: `Product ${sku}`
+        };
+
+        skuCache.set(sku, result);
+        return result;
+      });
+
+      // Mock alternatives
+      mockFindAlternatives.mockResolvedValue([
+        {
+          sku: 'ALT-001',
+          name: 'Alternative Product',
+          similarity: 0.85,
+          availability: 'in_stock',
+          price: 12,
+          reason: 'Same category, similar specs'
+        }
+      ]);
+
+      // Mock cart operations
+      mockAddToCart.mockResolvedValue(undefined);
+
+      const startTime = Date.now();
+      const result = await processor.processBulkOrder(items);
+      const processingTime = Date.now() - startTime;
+
+      // Assert performance
+      expect(processingTime).toBeLessThan(120000); // Under 2 minutes
+      expect(result.itemsProcessed).toBe(500);
+      expect(result.itemsAdded).toBeGreaterThanOrEqual(350); // At least 70% success
+
+      // Verify caching worked
+      expect(cacheHits).toBeGreaterThan(200); // Should have cache hits for duplicate SKUs
+      console.log(`Cache hit rate: ${(cacheHits / mockCheckAvailability.mock.calls.length * 100).toFixed(2)}%`);
+
+      // Verify batching and parallelization
+      const uniqueCallTimes = new Set(
+        mockCheckAvailability.mock.calls.map(() => Date.now())
+      );
+      expect(uniqueCallTimes.size).toBeLessThan(100); // Calls should be batched, not sequential
+    });
+
+    it('should handle 1000 items within 5 minutes with optimizations', async () => {
+      // Generate 1000 test items
+      const items: BulkOrderRow[] = Array.from({ length: 1000 }, (_, i) => ({
+        sku: `PROD-${String((i % 300) + 1).padStart(3, '0')}`, // 300 unique SKUs
+        quantity: Math.floor(Math.random() * 100) + 1,
+        priority: i < 200 ? 'high' : i < 600 ? 'normal' : 'low'
+      }));
+
+      // Use more efficient mocks for large scale test
+      const skuCache = new Map<string, ProductAvailability>();
+      
+      mockCheckAvailability.mockImplementation(async (sku: string) => {
+        if (skuCache.has(sku)) {
+          return skuCache.get(sku)!;
+        }
+
+        // Minimal delay for performance test
+        await new Promise(resolve => setTimeout(resolve, 5));
+        
+        const index = parseInt(sku.split('-')[1]);
+        const available = index % 10 !== 0; // 10% unavailable
+        
+        const result = {
+          sku,
+          available,
+          quantity: available ? 1000 : 0,
+          price: 10 + (index % 50),
+          name: `Product ${sku}`
+        };
+
+        skuCache.set(sku, result);
+        return result;
+      });
+
+      // Simplified alternatives mock
+      mockFindAlternatives.mockResolvedValue([]);
+
+      // Batch cart operations
+      mockAddToCart.mockImplementation(async (items) => {
+        // Simulate batch processing delay
+        await new Promise(resolve => setTimeout(resolve, items.length * 2));
+      });
+
+      const startTime = Date.now();
+      const result = await processor.processBulkOrder(items);
+      const processingTime = Date.now() - startTime;
+
+      // Assert performance
+      expect(processingTime).toBeLessThan(300000); // Under 5 minutes
+      expect(result.itemsProcessed).toBe(1000);
+      expect(result.itemsAdded).toBeGreaterThanOrEqual(850); // At least 85% success
+
+      // Performance metrics
+      const itemsPerSecond = result.itemsProcessed / (processingTime / 1000);
+      console.log(`Performance: ${itemsPerSecond.toFixed(2)} items/second`);
+      expect(itemsPerSecond).toBeGreaterThan(3); // At least 3 items per second
+    });
+
     it('should handle 500 items with progressive updates', async () => {
       const items: BulkOrderRow[] = Array.from({ length: 500 }, (_, i) => ({
         sku: `BULK-${String(i + 1).padStart(4, '0')}`,

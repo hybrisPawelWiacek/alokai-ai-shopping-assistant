@@ -49,13 +49,15 @@ This guide provides the complete implementation plan for the Alokai UDL-Powered 
 | 3 | Foundation Setup | ✓ Verified | LangGraph installed, architecture established (Original: Jan 2025) | 2025-06-24 |
 | 4 | Action Registry | ✓ Verified | Tool factory pattern implemented (Original: Jan 2025) | 2025-06-24 |
 | 5 | Commerce State | ✓ Verified | State definition with MessagesAnnotation (Original: Jan 2025) | 2025-06-24 |
-| 6 | Basic Graph | 📋 To Verify | Core workflow created (Original: Jan 2025) | - |
-| 7 | Commerce Intelligence | 📋 To Verify | Mode detection, context enrichment (Original: Jan 2025) | - |
-| 8 | Security Foundations | 📋 To Verify | Judge pattern implemented (Original: Jan 2025) | - |
-| 9 | Core Commerce Actions | 📋 To Verify | All MVP actions created (Original: Jan 2025) | - |
-| 10 | Performance Baseline | 📋 To Verify | Monitoring established (Original: Jan 2025) | - |
-| 11 | Observability Foundation | 📋 To Verify | Logging, tracing, metrics (Original: Jan 2025) | - |
-| 12 | B2B Bulk Operations | 📋 To Verify | CSV upload, bulk processing (Original: Jan 2025) | - |
+| 6 | Basic Graph | ✓ Verified | Core workflow created (Original: Jan 2025) | 2025-06-24 |
+| 7 | Commerce Intelligence | ✓ Verified | Mode detection, context enrichment (Original: Jan 2025) | 2025-06-24 |
+| 8 | Security Foundations | ✓ Verified | Judge pattern implemented (Original: Jan 2025) | 2025-06-24 |
+| 9 | Core Commerce Actions | ✓ Verified | All MVP actions created with UDL (Original: Jan 2025) | 2025-06-24 |
+| 10 | Performance Baseline | ✓ Verified | Monitoring established (Original: Jan 2025) | 2025-06-24 |
+| 11 | Observability Foundation | ✓ Verified | Logging, tracing, metrics (Original: Jan 2025) | 2025-06-24 |
+| 12 | B2B Bulk Operations | ✓ Verified | CSV upload, bulk processing (Original: Jan 2025) | 2025-06-25 |
+| 12.1 | B2B Security & Audit | ✓ Verified | Security enhancements and audit trail | 2025-06-25 |
+| 12.2 | B2B Frontend UI | ✓ Verified | CSV upload UI and progress visualization | 2025-06-25 |
 | 13 | UDL Pattern Refactoring | 📋 To Verify | All code refactored for UDL (Original: Jan 2025) | - |
 | 14 | Configuration System | 📋 To Verify | YAML/JSON config with hot-reload (Original: Jan 2025) | - |
 | 15 | Observability Layer | 📋 To Verify | OpenTelemetry, metrics, profiling (Original: Jan 2025) | - |
@@ -573,6 +575,72 @@ This is not just for production - we need this during development."
 - Progress updates stream smoothly
 - Out-of-stock handled gracefully
 - B2B users satisfied with experience
+
+---
+
+### PROMPT 12.1: B2B Bulk Operations Security & Audit
+**Goal**: Add comprehensive security and audit trail for bulk operations
+
+**Prompt to Claude**:
+```
+"Enhance the B2B bulk operations with production-grade security and audit capabilities:
+1. Implement virus scanning for uploaded CSV files
+2. Add comprehensive audit logging for all bulk operations
+3. Create enhanced input validation with business rule enforcement
+4. Add IP-based rate limiting and abuse detection
+5. Implement row-level validation with detailed error reporting
+6. Add bulk operation history tracking with rollback capability
+7. Create security alerts for suspicious patterns"
+```
+
+**Expected Deliverables**:
+- Virus scanning integration (ClamAV or cloud service)
+- Audit trail service with database schema
+- Enhanced validators for business rules
+- IP-based rate limiter
+- Row validation framework
+- Operation history tracker
+- Security alert system
+
+**Success Criteria**:
+- All uploaded files scanned before processing
+- Complete audit trail for compliance
+- Malicious patterns detected and blocked
+- Rollback possible within 24 hours
+- Security alerts sent in real-time
+
+---
+
+### PROMPT 12.2: B2B Bulk Operations Frontend UI
+**Goal**: Build comprehensive frontend for CSV upload and progress tracking
+
+**Prompt to Claude**:
+```
+"Create a rich frontend experience for B2B bulk operations:
+1. CSV upload component with drag & drop support
+2. Real-time progress visualization with SSE integration
+3. Bulk order history view with filtering and search
+4. Alternative product selection UI for out-of-stock items
+5. Error review and correction interface
+6. Bulk order templates for repeat orders
+7. Mobile-responsive design for field sales teams"
+```
+
+**Expected Deliverables**:
+- React components for CSV upload
+- Progress bar with real-time updates
+- Order history data table
+- Alternative selection modal
+- Error correction workflow
+- Template management UI
+- Responsive design system
+
+**Success Criteria**:
+- Intuitive drag & drop upload
+- Real-time progress updates work smoothly
+- Users can easily fix errors
+- Templates save time for repeat orders
+- Works on tablets for sales teams
 
 ---
 

@@ -4,7 +4,7 @@ import { getSdk } from '@/sdk';
 import { CommerceAgentGraphV2 } from '@/features/ai-shopping-assistant/graphs/commerce-graph-v2';
 import { ActionRegistryV2 } from '@/features/ai-shopping-assistant/actions/registry-v2';
 import { ConfigurationManager } from '@/features/ai-shopping-assistant/config';
-import { Loggers, metrics, traced } from '@/features/ai-shopping-assistant/observability';
+import { Loggers, metrics, traced, initializeObservability, observabilityMiddleware } from '@/features/ai-shopping-assistant/observability';
 import { withErrorHandling, ValidationError, RateLimitError } from '@/features/ai-shopping-assistant/errors';
 import { HumanMessage } from '@langchain/core/messages';
 import type { CommerceState } from '@/features/ai-shopping-assistant/state';
@@ -92,8 +92,33 @@ async function initializeComponents() {
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
   const requestId = crypto.randomUUID();
+  const correlationId = request.headers.get('x-correlation-id') || crypto.randomUUID();
   
-  return traced('api.chat', async () => {
+  // Initialize observability if not already done
+  if (!graph) {
+    await initializeObservability({
+      serviceName: 'ai-shopping-assistant-api',
+      environment: process.env.NODE_ENV || 'development',
+      telemetry: {
+        enabled: process.env.OTEL_ENABLED === 'true',
+        endpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT
+      },
+      metrics: {
+        enabled: process.env.METRICS_ENABLED === 'true',
+        endpoint: process.env.METRICS_ENDPOINT
+      }
+    });
+  }
+  
+  return traced('api.chat', async (span) => {
+    // Set span attributes
+    span.setAttributes({
+      'ai.request.id': requestId,
+      'ai.correlation.id': correlationId,
+      'ai.request.method': 'POST',
+      'ai.request.path': '/api/ai-shopping-assistant'
+    });
+    
     try {
       // Validate origin
       if (!validateOrigin(request)) {
@@ -116,9 +141,18 @@ export async function POST(request: NextRequest) {
       const body = await request.json();
       const validatedRequest = ChatRequestSchema.parse(body);
       
-      // Log request
+      // Log request with correlation ID
+      logger.info('API', 'Chat request received', {
+        requestId,
+        correlationId,
+        sessionId: validatedRequest.sessionId,
+        mode: validatedRequest.mode,
+        userId: authResult.userId || 'anonymous'
+      });
+      
       logRequest(request, authResult.userId || 'anonymous', {
         requestId,
+        correlationId,
         sessionId: validatedRequest.sessionId,
         mode: validatedRequest.mode,
       });
@@ -147,12 +181,14 @@ export async function POST(request: NextRequest) {
       
       // Process with error handling
       const result = await withErrorHandling(
-        async () => processMessage(validatedRequest, requestId),
-        { sessionId: validatedRequest.sessionId || requestId }
+        async () => processMessage(validatedRequest, requestId, correlationId),
+        { sessionId: validatedRequest.sessionId || requestId, correlationId }
       );
       
       // Track metrics
       const processingTime = Date.now() - startTime;
+      metrics.recordRequestDuration('chat', processingTime);
+      metrics.recordRequestCount('chat', true);
       metrics.recordChatProcessingTime(processingTime, { 
         mode: result.mode || 'b2c',
         environment: process.env.NODE_ENV 
@@ -163,28 +199,48 @@ export async function POST(request: NextRequest) {
         environment: process.env.NODE_ENV 
       });
       
-      // Return response
+      logger.info('API', 'Chat request completed', {
+        requestId,
+        correlationId,
+        processingTime,
+        mode: result.mode || 'b2c'
+      });
+      
+      // Return response with correlation ID header
       if (validatedRequest.stream) {
-        return createStreamingResponse(result, requestId, processingTime);
+        const response = createStreamingResponse(result, requestId, processingTime, correlationId);
+        response.headers.set('x-correlation-id', correlationId);
+        return response;
       } else {
         const response = NextResponse.json({
           ...result,
           metadata: {
             sessionId: validatedRequest.sessionId || requestId,
+            correlationId,
             mode: result.mode || 'b2c',
             processingTime,
             version: '1.0.0',
           },
         });
+        response.headers.set('x-correlation-id', correlationId);
         return addSecurityHeaders(response);
       }
       
     } catch (error) {
-      logger.error('Chat request failed', { error, requestId });
+      logger.error('API', 'Chat request failed', { 
+        error: error instanceof Error ? error.message : String(error),
+        requestId,
+        correlationId 
+      });
+      
+      metrics.recordRequestCount('chat', false);
       metrics.recordChatRequest({ 
         status: 'error',
         environment: process.env.NODE_ENV 
       });
+      
+      // Update span with error
+      span.setStatus({ code: 2, message: error instanceof Error ? error.message : 'Request failed' });
       
       // Handle different error types
       if (error instanceof z.ZodError) {
@@ -222,19 +278,21 @@ export async function POST(request: NextRequest) {
  */
 async function processMessage(
   request: ChatRequest,
-  requestId: string
+  requestId: string,
+  correlationId: string
 ): Promise<any> {
   if (!graph) {
     throw new Error('Graph not initialized');
   }
   
-  // Create initial state
+  // Create initial state with correlation ID
   const initialState: Partial<CommerceState> = {
     messages: [new HumanMessage(request.message)],
     mode: request.mode,
     context: {
       ...request.context,
       sessionId: request.sessionId || requestId,
+      correlationId,
       requestId,
     },
   };
@@ -264,7 +322,8 @@ async function processMessage(
 function createStreamingResponse(
   result: any,
   requestId: string,
-  processingTime: number
+  processingTime: number,
+  correlationId: string
 ): Response {
   const encoder = new TextEncoder();
   
@@ -276,6 +335,7 @@ function createStreamingResponse(
           type: 'metadata',
           data: {
             sessionId: requestId,
+            correlationId,
             mode: result.mode || 'b2c',
             version: '1.0.0',
           },

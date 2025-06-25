@@ -6,12 +6,14 @@
 2. [Core Architectural Principles](#core-architectural-principles)
 3. [Validated Code Patterns](#validated-code-patterns)
 4. [UDL Integration Patterns](#udl-integration-patterns)
-5. [Directory Structure](#directory-structure)
-6. [Key Design Patterns](#key-design-patterns)
-7. [State Management](#state-management)
-8. [Security Architecture](#security-architecture)
-9. [Performance Strategy](#performance-strategy)
-10. [Observability Implementation](#observability-implementation)
+5. [Mock to Real SDK Migration](#mock-to-real-sdk-migration)
+6. [Custom Extension Development](#custom-extension-development)
+7. [Directory Structure](#directory-structure)
+8. [Key Design Patterns](#key-design-patterns)
+9. [State Management](#state-management)
+10. [Security Architecture](#security-architecture)
+11. [Performance Strategy](#performance-strategy)
+12. [Observability Implementation](#observability-implementation)
 
 ## Architecture Overview
 
@@ -413,6 +415,266 @@ class B2BPricingAction {
   }
 }
 ```
+
+## Mock to Real SDK Migration
+
+### Migration Strategy
+
+The codebase uses a mock SDK factory that mirrors the exact UDL structure. This allows for incremental migration:
+
+#### Step 1: Identify Mock Usage
+```typescript
+// Current mock usage in testing
+import { createMockSdk } from '@/features/ai-shopping-assistant/mocks/mock-sdk-factory';
+
+const mockSdk = createMockSdk();
+const products = await mockSdk.unified.searchProducts({ search: 'jacket' });
+```
+
+#### Step 2: Replace with Real SDK
+```typescript
+// Production usage with real SDK
+import { getSdk } from '@/sdk';
+
+const sdk = getSdk();
+const products = await sdk.unified.searchProducts({ search: 'jacket' });
+```
+
+#### Step 3: Update Response Handling
+The mock responses already follow UDL structure, so no changes needed:
+```typescript
+// Both mock and real SDK return the same structure
+interface UDLSearchResponse {
+  products: UDLProductBase[];
+  pagination: UDLPagination;
+  facets: UDLFacet[];
+}
+```
+
+### Parameter Mapping Guide
+
+#### Search Products
+```typescript
+// Mock parameters (already UDL-compliant)
+{
+  search?: string;
+  filter?: Record<string, any>;
+  sort?: string;
+  pageSize?: number;
+  currentPage?: number;
+}
+
+// Real SDK parameters (same structure)
+{
+  search?: string;
+  filter?: Record<string, any>;
+  sort?: string;
+  pageSize?: number;
+  currentPage?: number;
+}
+```
+
+#### Cart Operations
+```typescript
+// Add to cart - Mock
+await mockSdk.unified.addCartLineItem({
+  productId: 'prod-001',
+  variantId: 'var-001',
+  quantity: 2
+});
+
+// Add to cart - Real SDK (identical)
+await sdk.unified.addCartLineItem({
+  productId: 'prod-001',
+  variantId: 'var-001',
+  quantity: 2
+});
+```
+
+### Testing During Migration
+
+```typescript
+// Test with both mock and real SDK
+describe('Product Search Migration', () => {
+  it('should work with mock SDK', async () => {
+    const mockSdk = createMockSdk();
+    const result = await searchProductsImplementation(
+      { query: 'jacket' },
+      { sdk: mockSdk }
+    );
+    expect(result.products).toBeDefined();
+  });
+  
+  it('should work with real SDK', async () => {
+    const realSdk = getSdk();
+    const result = await searchProductsImplementation(
+      { query: 'jacket' },
+      { sdk: realSdk }
+    );
+    expect(result.products).toBeDefined();
+  });
+});
+```
+
+### Migration Checklist
+
+- [ ] Replace `createMockSdk()` with `getSdk()` in production code
+- [ ] Keep mock SDK for testing purposes
+- [ ] Verify response structures match between mock and real
+- [ ] Update error handling for real API errors
+- [ ] Add retry logic for network failures
+- [ ] Monitor performance differences
+- [ ] Update caching strategies if needed
+
+## Custom Extension Development
+
+### Overview
+
+Custom extensions extend the UDL with business-specific functionality, particularly for B2B operations.
+
+### Implementation Location
+
+```typescript
+// In storefront-middleware/integrations/<your-integration>/extensions/unified.ts
+import { createUnifiedExtension } from '@vsf-enterprise/unified-api-<integration>/udl';
+import { getNormalizers } from '@vsf-enterprise/unified-api-<integration>/udl';
+
+export const unifiedApiExtension = createUnifiedExtension({
+  config,
+  customMethods: {
+    // B2B custom methods
+    getBulkPricing,
+    checkBulkAvailability,
+    requestProductSamples,
+    getAccountCredit,
+    scheduleProductDemo,
+    applyTaxExemption
+  }
+});
+```
+
+### Custom Method Pattern
+
+```typescript
+// Example: getBulkPricing implementation
+export async function getBulkPricing(
+  context: IntegrationContext,
+  args: {
+    productId: string;
+    quantities: number[];
+    customerId?: string;
+  }
+): Promise<BulkPricingResponse> {
+  // 1. Access the commerce backend API
+  const commerceApi = context.api;
+  
+  // 2. Get normalizers for consistent data structure
+  const { normalizePrice, normalizeProduct } = getNormalizers(context);
+  
+  // 3. Fetch data from backend
+  const product = await commerceApi.getProduct({ id: args.productId });
+  const customerTier = args.customerId 
+    ? await commerceApi.getCustomerTier(args.customerId)
+    : 'standard';
+  
+  // 4. Calculate bulk pricing based on business rules
+  const pricingTiers = args.quantities.map(quantity => {
+    const discount = calculateBulkDiscount(quantity, customerTier);
+    const unitPrice = product.price * (1 - discount);
+    
+    return {
+      quantity,
+      unitPrice: normalizePrice({ amount: unitPrice, currency: 'USD' }),
+      totalPrice: normalizePrice({ amount: unitPrice * quantity, currency: 'USD' }),
+      discount: discount * 100,
+      leadTime: calculateLeadTime(quantity)
+    };
+  });
+  
+  // 5. Return normalized response
+  return {
+    productId: args.productId,
+    currency: 'USD',
+    basePrice: normalizePrice(product.price),
+    pricingTiers,
+    customPricingAvailable: customerTier === 'enterprise'
+  };
+}
+```
+
+### Accessing Custom Extensions in Frontend
+
+```typescript
+// In action implementation
+export async function requestBulkPricingImplementation(
+  params: unknown,
+  state: CommerceState
+): Promise<StateUpdateCommand[]> {
+  const sdk = getSdk();
+  
+  // Call custom extension method
+  const bulkPricing = await sdk.customExtension.getBulkPricing({
+    productId: params.productId,
+    quantities: params.quantities,
+    customerId: state.context.customer?.id
+  });
+  
+  // Use the response
+  return [{
+    type: 'ADD_MESSAGE',
+    payload: new AIMessage({
+      content: formatBulkPricingResponse(bulkPricing)
+    })
+  }];
+}
+```
+
+### Testing Custom Extensions
+
+```typescript
+// Mock custom extension for testing
+const mockCustomExtension = {
+  getBulkPricing: jest.fn().mockResolvedValue({
+    productId: 'prod-001',
+    pricingTiers: [
+      { quantity: 50, unitPrice: 95, discount: 5 },
+      { quantity: 100, unitPrice: 90, discount: 10 }
+    ]
+  })
+};
+
+// Test the action
+it('should fetch bulk pricing', async () => {
+  const result = await requestBulkPricingImplementation(
+    { productId: 'prod-001', quantities: [50, 100] },
+    { sdk: { customExtension: mockCustomExtension } }
+  );
+  
+  expect(mockCustomExtension.getBulkPricing).toHaveBeenCalledWith({
+    productId: 'prod-001',
+    quantities: [50, 100],
+    customerId: undefined
+  });
+});
+```
+
+### Custom Extension Best Practices
+
+1. **Always normalize data**: Use UDL normalizers for consistency
+2. **Handle errors gracefully**: Return user-friendly error messages
+3. **Add caching**: Cache expensive operations like pricing calculations
+4. **Document thoroughly**: Include examples in CUSTOM_EXTENSIONS_SPEC.md
+5. **Version your extensions**: Support backward compatibility
+6. **Monitor performance**: Track response times and optimize
+7. **Validate inputs**: Use Zod schemas for type safety
+
+### Common Pitfalls to Avoid
+
+- ❌ Don't return raw backend responses - always normalize
+- ❌ Don't hardcode business logic - make it configurable
+- ❌ Don't skip error handling - handle all edge cases
+- ❌ Don't forget authentication - verify B2B permissions
+- ❌ Don't ignore performance - add appropriate caching
 
 ## Directory Structure
 

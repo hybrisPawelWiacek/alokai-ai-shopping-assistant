@@ -5,6 +5,7 @@ import type { StateUpdateCommand } from '../../types/action-definition';
 import { applyCommandsToState } from '../../state';
 import { ModeDetector } from '../../intelligence';
 import { CommerceSecurityJudge } from '../../security';
+import { traceLangGraphNode, logger, metrics } from '../../observability';
 
 export interface IntentDetectionResult {
   mode: 'b2c' | 'b2b';
@@ -24,11 +25,22 @@ export async function detectIntentNode(
   state: CommerceState,
   config?: RunnableConfig
 ): Promise<Partial<CommerceState>> {
-  const startTime = performance.now();
-  const lastMessage = state.messages[state.messages.length - 1];
-  if (!lastMessage || lastMessage._getType() !== 'human') {
-    return {};
-  }
+  return traceLangGraphNode('detectIntent', async (span) => {
+    const sessionId = state.context.sessionId || 'unknown';
+    const correlationId = state.context.correlationId || sessionId;
+    
+    logger.info('Graph', 'Detecting user intent', {
+      sessionId,
+      correlationId,
+      messageCount: state.messages.length
+    });
+    
+    const startTime = performance.now();
+    const lastMessage = state.messages[state.messages.length - 1];
+    if (!lastMessage || lastMessage._getType() !== 'human') {
+      logger.debug('Graph', 'No human message found, skipping intent detection', { sessionId, correlationId });
+      return {};
+    }
 
   // Initialize security judge with current context
   const securityJudge = new CommerceSecurityJudge(state.security);
@@ -124,46 +136,71 @@ Respond in JSON format:
     const finalMode = analysis.confidence > modeDetection.confidence ? analysis.mode : modeDetection.mode;
     const finalConfidence = Math.max(analysis.confidence, modeDetection.confidence);
     
-    // Create state update commands
-    const commands: StateUpdateCommand[] = [
-      { type: 'SET_MODE', payload: { mode: finalMode } },
-      { 
-        type: 'UPDATE_CONTEXT', 
-        payload: { 
-          detectedIntent: analysis.intent,
-          intentConfidence: analysis.confidence,
-          intentEntities: analysis.entities,
-          modeDetectionSignals: modeDetection.signals,
-          modeIndicators: modeDetection.indicators
-        } 
-      }
-    ];
-    
-    // Update security context if validation was performed
-    if (validationResult) {
-      commands.push({
-        type: 'UPDATE_SECURITY',
-        payload: securityJudge.getContext()
-      });
-    }
-
-    // Add performance tracking
-    commands.push({
-      type: 'UPDATE_PERFORMANCE',
-      payload: {
-        nodeExecutionTimes: {
-          detectIntent: [performance.now() - startTime]
+      // Create state update commands
+      const commands: StateUpdateCommand[] = [
+        { type: 'SET_MODE', payload: { mode: finalMode } },
+        { 
+          type: 'UPDATE_CONTEXT', 
+          payload: { 
+            detectedIntent: analysis.intent,
+            intentConfidence: analysis.confidence,
+            intentEntities: analysis.entities,
+            modeDetectionSignals: modeDetection.signals,
+            modeIndicators: modeDetection.indicators
+          } 
         }
+      ];
+      
+      // Update security context if validation was performed
+      if (validationResult) {
+        commands.push({
+          type: 'UPDATE_SECURITY',
+          payload: securityJudge.getContext()
+        });
       }
-    });
 
-    return applyCommandsToState(state, commands);
-  } catch (error) {
-    const errorCommand: StateUpdateCommand = {
-      type: 'SET_ERROR',
-      payload: new Error(`Intent detection failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
-    };
-    
-    return applyCommandsToState(state, [errorCommand]);
-  }
+      // Add performance tracking
+      const duration = performance.now() - startTime;
+      commands.push({
+        type: 'UPDATE_PERFORMANCE',
+        payload: {
+          nodeExecutionTimes: {
+            detectIntent: [duration]
+          }
+        }
+      });
+      
+      // Record metrics
+      metrics.recordNodeExecution('detectIntent', duration, true);
+      metrics.recordIntentDetection(analysis.intent, finalMode);
+
+      return applyCommandsToState(state, commands);
+    } catch (error) {
+      logger.error('AI', 'Intent detection failed', {
+        sessionId,
+        correlationId,
+        error: error instanceof Error ? error.message : String(error)
+      });
+      
+      const duration = performance.now() - startTime;
+      metrics.recordNodeExecution('detectIntent', duration, false);
+      span.setStatus({ code: 2, message: error instanceof Error ? error.message : 'Intent detection failed' });
+      
+      const errorCommand: StateUpdateCommand = {
+        type: 'SET_ERROR',
+        payload: new Error(`Intent detection failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      };
+      
+      const perfCommand: StateUpdateCommand = {
+        type: 'UPDATE_PERFORMANCE',
+        payload: {
+          nodeExecutionTimes: {
+            detectIntent: [duration]
+          }
+        }
+      };
+      
+      return applyCommandsToState(state, [errorCommand, perfCommand]);
+    }
+  });
 }

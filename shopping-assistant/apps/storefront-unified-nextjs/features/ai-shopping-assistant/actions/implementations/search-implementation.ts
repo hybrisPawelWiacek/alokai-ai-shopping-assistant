@@ -2,12 +2,11 @@ import type { StateUpdateCommand } from '../../types/action-definition';
 import type { CommerceState } from '../../state';
 import { z } from 'zod';
 import { AIMessage } from '@langchain/core/messages';
+import { getSdk } from '@/sdk';
 
 /**
- * Example implementation for search actions
- * Demonstrates how to implement actions that work with the registry
+ * Search products implementation using UDL
  */
-
 export async function searchProductsImplementation(
   params: unknown,
   state: CommerceState
@@ -33,31 +32,44 @@ export async function searchProductsImplementation(
 
   const validated = searchSchema.parse(params);
 
-  // Access commerce context from state
-  const { sdk, locale, currency } = state.context || {};
-
   // Perform the search using the SDK
-  // For now, use mock implementation until SDK is available
-  // TODO: When SDK is available, replace with:
-  // const searchResults = await sdk.unified.searchProducts({
-  //   search: validated.query,
-  //   filter: validated.filters,
-  //   sort: validated.sortBy,
-  //   pageSize: validated.pagination?.limit,
-  //   currentPage: Math.floor((validated.pagination?.offset || 0) / (validated.pagination?.limit || 20)) + 1
-  // });
-  const searchResults = await performSearch(validated, { sdk, locale, currency });
+  const sdk = getSdk();
+  
+  // Build filters for UDL
+  const filters: any = {};
+  if (validated.filters?.categories?.length) {
+    filters.categoryId = validated.filters.categories;
+  }
+  if (validated.filters?.priceRange) {
+    if (validated.filters.priceRange.min !== undefined) {
+      filters.minPrice = validated.filters.priceRange.min;
+    }
+    if (validated.filters.priceRange.max !== undefined) {
+      filters.maxPrice = validated.filters.priceRange.max;
+    }
+  }
+  if (validated.filters?.brands?.length) {
+    filters.brand = validated.filters.brands;
+  }
+  
+  const searchResults = await sdk.unified.searchProducts({
+    search: validated.query,
+    filter: filters,
+    sort: validated.sortBy,
+    pageSize: validated.pagination?.limit || 20,
+    currentPage: Math.floor((validated.pagination?.offset || 0) / (validated.pagination?.limit || 20)) + 1
+  });
 
   // Return state update commands
   return [
     {
       type: 'ADD_MESSAGE',
       payload: new AIMessage({
-        content: `Found ${searchResults.totalCount} products matching "${validated.query}"`,
+        content: `Found ${searchResults.pagination?.total || searchResults.products.length} products matching "${validated.query}"`,
         additional_kwargs: {
           searchResults: {
             products: searchResults.products,
-            totalCount: searchResults.totalCount,
+            totalCount: searchResults.pagination?.total || searchResults.products.length,
             query: validated.query,
             timestamp: new Date().toISOString()
           }
@@ -69,7 +81,7 @@ export async function searchProductsImplementation(
       payload: {
         lastSearch: {
           query: validated.query,
-          resultCount: searchResults.totalCount,
+          resultCount: searchResults.products.length,
           timestamp: new Date().toISOString()
         }
       }
@@ -77,6 +89,9 @@ export async function searchProductsImplementation(
   ];
 }
 
+/**
+ * Get product details implementation using UDL
+ */
 export async function getProductDetailsImplementation(
   params: unknown,
   state: CommerceState
@@ -87,15 +102,12 @@ export async function getProductDetailsImplementation(
   });
 
   const validated = schema.parse(params);
-  const { sdk } = state.context || {};
 
   // Fetch product details
-  // TODO: When SDK is available, replace with:
-  // const product = await sdk.unified.getProductDetails({ 
-  //   id: validated.productId,
-  //   ...(validated.includeVariants && { includeVariants: true })
-  // });
-  const product = await fetchProductDetails(validated.productId, { sdk });
+  const sdk = getSdk();
+  const product = await sdk.unified.getProductDetails({ 
+    id: validated.productId
+  });
 
   return [
     {
@@ -113,351 +125,209 @@ export async function getProductDetailsImplementation(
   ];
 }
 
-// Mock implementation following UDL structure
-// TODO: Remove this entire function when SDK is available
-async function performSearch(params: any, context: any): Promise<any> {
-  // This mock follows the exact UDL response structure from sdk.unified.searchProducts()
+/**
+ * Review-based search implementation
+ * Filters products by minimum rating and review keywords
+ */
+export async function searchWithReviewsImplementation(
+  params: unknown,
+  state: CommerceState
+): Promise<StateUpdateCommand[]> {
+  const schema = z.object({
+    query: z.string(),
+    minRating: z.number().min(0).max(5).optional(),
+    reviewKeywords: z.array(z.string()).optional(),
+    sortByReviews: z.boolean().optional()
+  });
+
+  const validated = schema.parse(params);
+  const sdk = getSdk();
   
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 100));
+  // Search products first
+  const searchResults = await sdk.unified.searchProducts({
+    search: validated.query,
+    pageSize: 50 // Get more to filter by reviews
+  });
   
-  // Mock response following Alokai UDL structure
-  const mockProducts = [
+  // Filter and sort by reviews
+  let productsWithReviews = searchResults.products;
+  
+  if (validated.minRating || validated.reviewKeywords || validated.sortByReviews) {
+    // Filter by minimum rating
+    if (validated.minRating) {
+      productsWithReviews = productsWithReviews.filter(
+        product => (product.rating?.average || 0) >= validated.minRating!
+      );
+    }
+    
+    // Sort by review score if requested
+    if (validated.sortByReviews) {
+      productsWithReviews.sort((a, b) => {
+        const scoreA = (a.rating?.average || 0) * (a.rating?.count || 0);
+        const scoreB = (b.rating?.average || 0) * (b.rating?.count || 0);
+        return scoreB - scoreA;
+      });
+    }
+  }
+  
+  return [
     {
-      id: 'prod-001',
-      sku: 'SKU-001',
-      name: 'Wireless Bluetooth Headphones',
-      slug: 'wireless-bluetooth-headphones',
-      description: 'Premium noise-cancelling wireless headphones with 30-hour battery life',
-      price: {
-        value: { 
-          amount: 149.99, 
-          currency: context.currency || 'USD',
-          precisionAmount: '14999' 
-        },
-        isDiscounted: true,
-        regular: { 
-          amount: 149.99, 
-          currency: context.currency || 'USD',
-          precisionAmount: '14999'
-        },
-        special: {
-          amount: 119.99,
-          currency: context.currency || 'USD',
-          precisionAmount: '11999'
+      type: 'ADD_MESSAGE',
+      payload: new AIMessage({
+        content: `Found ${productsWithReviews.length} products matching "${validated.query}"${
+          validated.minRating ? ` with rating ≥ ${validated.minRating}` : ''
+        }`,
+        additional_kwargs: {
+          searchResults: {
+            products: productsWithReviews.slice(0, 20), // Return top 20
+            totalCount: productsWithReviews.length,
+            query: validated.query,
+            filters: { minRating: validated.minRating },
+            timestamp: new Date().toISOString()
+          }
         }
-      },
-      primaryImage: { 
-        url: 'https://storage.example.com/products/headphones-primary.jpg', 
-        alt: 'Wireless Bluetooth Headphones',
-        label: 'Front view'
-      },
-      gallery: [
-        { url: 'https://storage.example.com/products/headphones-1.jpg', alt: 'Side view' },
-        { url: 'https://storage.example.com/products/headphones-2.jpg', alt: 'Folded view' }
-      ],
-      rating: { 
-        average: 4.5, 
-        count: 234 
-      },
-      inventory: { 
-        isInStock: true,
-        availableQuantity: 45
-      },
-      categories: [
-        { id: 'cat-electronics', name: 'Electronics', slug: 'electronics' },
-        { id: 'cat-audio', name: 'Audio', slug: 'audio' }
-      ],
-      attributes: {
-        color: 'Black',
-        connectivity: 'Bluetooth 5.0',
-        batteryLife: '30 hours',
-        weight: '250g'
-      }
-    },
-    {
-      id: 'prod-002',
-      sku: 'SKU-002',
-      name: 'Smart Fitness Watch',
-      slug: 'smart-fitness-watch',
-      description: 'Advanced fitness tracking with heart rate monitoring and GPS',
-      price: {
-        value: { 
-          amount: 299.99, 
-          currency: context.currency || 'USD',
-          precisionAmount: '29999' 
-        },
-        isDiscounted: false,
-        regular: { 
-          amount: 299.99, 
-          currency: context.currency || 'USD',
-          precisionAmount: '29999'
-        }
-      },
-      primaryImage: { 
-        url: 'https://storage.example.com/products/watch-primary.jpg', 
-        alt: 'Smart Fitness Watch',
-        label: 'Product view'
-      },
-      rating: { 
-        average: 4.7, 
-        count: 456 
-      },
-      inventory: { 
-        isInStock: true,
-        availableQuantity: 23
-      },
-      categories: [
-        { id: 'cat-electronics', name: 'Electronics', slug: 'electronics' },
-        { id: 'cat-wearables', name: 'Wearables', slug: 'wearables' }
-      ]
+      })
     }
   ];
-  
-  // Filter products based on search query
-  const filteredProducts = mockProducts.filter(product => 
-    product.name.toLowerCase().includes(params.query?.toLowerCase() || '') ||
-    product.description.toLowerCase().includes(params.query?.toLowerCase() || '')
-  );
-  
-  // Apply filters
-  let results = [...filteredProducts];
-  
-  if (params.filters?.categories?.length > 0) {
-    results = results.filter(p => 
-      p.categories.some(c => params.filters.categories.includes(c.id))
-    );
-  }
-  
-  if (params.filters?.inStock) {
-    results = results.filter(p => p.inventory.isInStock);
-  }
-  
-  if (params.filters?.priceRange) {
-    results = results.filter(p => {
-      const price = p.price.special?.amount || p.price.regular.amount;
-      return (!params.filters.priceRange.min || price >= params.filters.priceRange.min) &&
-             (!params.filters.priceRange.max || price <= params.filters.priceRange.max);
-    });
-  }
-  
-  // Apply sorting
-  if (params.sortBy) {
-    switch (params.sortBy) {
-      case 'price_asc':
-        results.sort((a, b) => 
-          (a.price.special?.amount || a.price.regular.amount) - 
-          (b.price.special?.amount || b.price.regular.amount)
-        );
-        break;
-      case 'price_desc':
-        results.sort((a, b) => 
-          (b.price.special?.amount || b.price.regular.amount) - 
-          (a.price.special?.amount || a.price.regular.amount)
-        );
-        break;
-      case 'rating':
-        results.sort((a, b) => b.rating.average - a.rating.average);
-        break;
-      case 'name':
-        results.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-    }
-  }
-  
-  // Apply pagination
-  const limit = params.pagination?.limit || 20;
-  const offset = params.pagination?.offset || 0;
-  const paginatedResults = results.slice(offset, offset + limit);
-  
-  // Return UDL-compliant search response structure
-  return {
-    products: paginatedResults,
-    pagination: {
-      page: Math.floor(offset / limit) + 1,
-      perPage: limit,
-      total: results.length,
-      totalPages: Math.ceil(results.length / limit)
-    },
-    facets: [
-      {
-        name: 'category',
-        label: 'Category',
-        type: 'multi-select',
-        values: [
-          { value: 'cat-electronics', label: 'Electronics', count: 2 },
-          { value: 'cat-audio', label: 'Audio', count: 1 },
-          { value: 'cat-wearables', label: 'Wearables', count: 1 }
-        ]
-      },
-      {
-        name: 'price',
-        label: 'Price Range',
-        type: 'range',
-        min: 119.99,
-        max: 299.99
-      },
-      {
-        name: 'rating',
-        label: 'Customer Rating',
-        type: 'multi-select',
-        values: [
-          { value: '4-5', label: '4★ & above', count: 2 },
-          { value: '3-5', label: '3★ & above', count: 2 }
-        ]
-      }
-    ]
-  };
 }
 
-// Mock implementation following UDL structure
-// TODO: Remove this entire function when SDK is available
-async function fetchProductDetails(productId: string, context: any): Promise<any> {
-  // This mock follows the exact UDL response structure from sdk.unified.getProductDetails()
+/**
+ * Find similar products implementation
+ * Uses category and attributes to find similar items
+ */
+export async function findSimilarProductsImplementation(
+  params: unknown,
+  state: CommerceState
+): Promise<StateUpdateCommand[]> {
+  const schema = z.object({
+    productId: z.string(),
+    limit: z.number().min(1).max(10).default(5)
+  });
   
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 80));
+  const validated = schema.parse(params);
+  const sdk = getSdk();
   
-  // Mock response following Alokai UDL structure
-  const mockProductDetails = {
-    id: productId,
-    sku: `SKU-${productId}`,
-    name: 'Premium Wireless Headphones',
-    slug: 'premium-wireless-headphones',
-    description: 'Experience superior sound quality with our premium wireless headphones. Features active noise cancellation, 30-hour battery life, and premium comfort padding.',
-    shortDescription: 'Premium noise-cancelling wireless headphones',
-    price: {
-      value: { 
-        amount: 249.99, 
-        currency: context.currency || 'USD',
-        precisionAmount: '24999' 
-      },
-      isDiscounted: true,
-      regular: { 
-        amount: 249.99, 
-        currency: context.currency || 'USD',
-        precisionAmount: '24999'
-      },
-      special: {
-        amount: 199.99,
-        currency: context.currency || 'USD',
-        precisionAmount: '19999'
-      }
-    },
-    primaryImage: { 
-      url: 'https://storage.example.com/products/headphones-detail.jpg', 
-      alt: 'Premium Wireless Headphones',
-      label: 'Main product image'
-    },
-    gallery: [
-      { url: 'https://storage.example.com/products/headphones-1.jpg', alt: 'Side view', label: 'Side' },
-      { url: 'https://storage.example.com/products/headphones-2.jpg', alt: 'Folded view', label: 'Folded' },
-      { url: 'https://storage.example.com/products/headphones-3.jpg', alt: 'Case included', label: 'With case' }
-    ],
-    rating: { 
-      average: 4.6, 
-      count: 1234,
-      distribution: {
-        5: 789,
-        4: 234,
-        3: 123,
-        2: 56,
-        1: 32
-      }
-    },
-    inventory: { 
-      isInStock: true,
-      availableQuantity: 156,
-      lowStockThreshold: 10
-    },
-    categories: [
-      { 
-        id: 'cat-electronics', 
-        name: 'Electronics', 
-        slug: 'electronics',
-        breadcrumbs: [
-          { id: 'root', name: 'Home', slug: '/' },
-          { id: 'cat-electronics', name: 'Electronics', slug: 'electronics' }
-        ]
-      },
-      { 
-        id: 'cat-audio', 
-        name: 'Audio', 
-        slug: 'audio',
-        breadcrumbs: [
-          { id: 'root', name: 'Home', slug: '/' },
-          { id: 'cat-electronics', name: 'Electronics', slug: 'electronics' },
-          { id: 'cat-audio', name: 'Audio', slug: 'audio' }
-        ]
-      }
-    ],
-    attributes: {
-      brand: 'AudioTech Pro',
-      model: 'AT-WH1000',
-      color: 'Midnight Black',
-      connectivity: ['Bluetooth 5.2', 'NFC', '3.5mm Jack'],
-      batteryLife: '30 hours',
-      chargingTime: '2 hours',
-      weight: '254g',
-      warranty: '2 years',
-      features: [
-        'Active Noise Cancellation',
-        'Ambient Sound Mode',
-        'Touch Controls',
-        'Voice Assistant Support',
-        'Multipoint Connectivity'
-      ]
-    },
-    variants: [
-      {
-        id: 'var-001',
-        sku: 'SKU-001-BLK',
-        name: 'Midnight Black',
-        attributes: { color: 'Black' },
-        price: { regular: { amount: 249.99 }, special: { amount: 199.99 } },
-        inventory: { isInStock: true, availableQuantity: 156 }
-      },
-      {
-        id: 'var-002',
-        sku: 'SKU-001-SLV',
-        name: 'Silver',
-        attributes: { color: 'Silver' },
-        price: { regular: { amount: 249.99 }, special: { amount: 199.99 } },
-        inventory: { isInStock: true, availableQuantity: 89 }
-      },
-      {
-        id: 'var-003',
-        sku: 'SKU-001-GLD',
-        name: 'Rose Gold',
-        attributes: { color: 'Rose Gold' },
-        price: { regular: { amount: 269.99 }, special: { amount: 219.99 } },
-        inventory: { isInStock: false, availableQuantity: 0 }
-      }
-    ],
-    seo: {
-      title: 'Premium Wireless Headphones - AudioTech Pro AT-WH1000',
-      description: 'Shop AudioTech Pro premium wireless headphones with active noise cancellation. 30-hour battery, superior comfort. Free shipping on orders over $50.',
-      keywords: ['wireless headphones', 'noise cancelling', 'bluetooth headphones', 'premium audio']
-    },
-    relatedProducts: ['prod-002', 'prod-003', 'prod-004'],
-    crossSellProducts: ['prod-005', 'prod-006'],
-    availability: 'in-stock',
-    shipping: {
-      freeShippingThreshold: 50,
-      estimatedDelivery: '3-5 business days',
-      expeditedAvailable: true
+  // Get the source product details
+  const sourceProduct = await sdk.unified.getProductDetails({ 
+    id: validated.productId 
+  });
+  
+  // Search for products in the same category
+  const categoryIds = sourceProduct.categories?.map(c => c.id) || [];
+  const similarProducts = await sdk.unified.searchProducts({
+    filter: categoryIds.length > 0 ? { categoryId: categoryIds } : {},
+    pageSize: validated.limit * 2 // Get extra to filter out source product
+  });
+  
+  // Filter out the source product and limit results
+  const filteredProducts = similarProducts.products
+    .filter(p => p.id !== validated.productId)
+    .slice(0, validated.limit);
+  
+  return [
+    {
+      type: 'ADD_MESSAGE',
+      payload: new AIMessage({
+        content: `Found ${filteredProducts.length} products similar to ${sourceProduct.name}`,
+        additional_kwargs: {
+          similarProducts: {
+            sourceProduct: {
+              id: sourceProduct.id,
+              name: sourceProduct.name
+            },
+            products: filteredProducts,
+            timestamp: new Date().toISOString()
+          }
+        }
+      })
     }
+  ];
+}
+
+/**
+ * Search products by category implementation
+ */
+export async function browseCategoryImplementation(
+  params: unknown,
+  state: CommerceState
+): Promise<StateUpdateCommand[]> {
+  const schema = z.object({
+    categoryId: z.string(),
+    filters: z.object({
+      priceRange: z.object({
+        min: z.number().min(0).optional(),
+        max: z.number().min(0).optional()
+      }).optional(),
+      brands: z.array(z.string()).optional(),
+      inStock: z.boolean().optional()
+    }).optional(),
+    sortBy: z.enum(['relevance', 'price_asc', 'price_desc', 'name', 'rating', 'newest']).optional(),
+    pagination: z.object({
+      limit: z.number().min(1).max(100).default(20),
+      page: z.number().min(1).default(1)
+    }).optional()
+  });
+
+  const validated = schema.parse(params);
+  const sdk = getSdk();
+  
+  // Build filters
+  const filters: any = {
+    categoryId: [validated.categoryId]
   };
   
-  // For B2B mode, add bulk pricing information
-  if (context.mode === 'b2b') {
-    mockProductDetails.bulkPricing = [
-      { minQuantity: 10, unitPrice: 189.99 },
-      { minQuantity: 25, unitPrice: 179.99 },
-      { minQuantity: 50, unitPrice: 169.99 },
-      { minQuantity: 100, unitPrice: 159.99 }
-    ];
+  if (validated.filters?.priceRange) {
+    if (validated.filters.priceRange.min !== undefined) {
+      filters.minPrice = validated.filters.priceRange.min;
+    }
+    if (validated.filters.priceRange.max !== undefined) {
+      filters.maxPrice = validated.filters.priceRange.max;
+    }
+  }
+  if (validated.filters?.brands?.length) {
+    filters.brand = validated.filters.brands;
   }
   
-  return mockProductDetails;
+  // Get category details
+  const category = await sdk.unified.getCategory({ id: validated.categoryId });
+  
+  // Search products in category
+  const searchResults = await sdk.unified.searchProducts({
+    filter: filters,
+    sort: validated.sortBy,
+    pageSize: validated.pagination?.limit || 20,
+    currentPage: validated.pagination?.page || 1
+  });
+  
+  return [
+    {
+      type: 'ADD_MESSAGE',
+      payload: new AIMessage({
+        content: `Browsing ${category.name}: ${searchResults.pagination?.total || searchResults.products.length} products`,
+        additional_kwargs: {
+          categoryBrowse: {
+            category: {
+              id: category.id,
+              name: category.name,
+              slug: category.slug,
+              breadcrumbs: category.breadcrumbs
+            },
+            products: searchResults.products,
+            totalCount: searchResults.pagination?.total || searchResults.products.length,
+            facets: searchResults.facets,
+            timestamp: new Date().toISOString()
+          }
+        }
+      })
+    },
+    {
+      type: 'UPDATE_CONTEXT',
+      payload: {
+        currentCategory: {
+          id: category.id,
+          name: category.name
+        }
+      }
+    }
+  ];
 }

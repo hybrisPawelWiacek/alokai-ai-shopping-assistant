@@ -309,5 +309,96 @@
       "requireB2BAccount": true,
       "validateTaxExemption": true
     }
+  },
+  "processBulkOrder": {
+    "id": "processBulkOrder",
+    "name": "Process Bulk Order",
+    "description": "Process bulk orders via CSV upload or item list with intelligent alternatives for out-of-stock items",
+    "category": "b2b",
+    "mode": "b2b",
+    "parameters": {
+      "csvContent": {
+        "type": "string",
+        "description": "CSV content with columns: sku, quantity, notes, priority",
+        "required": false,
+        "maxLength": 5242880
+      },
+      "items": {
+        "type": "array",
+        "description": "Direct list of items to order",
+        "required": false,
+        "items": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "Product SKU",
+              "required": true
+            },
+            "quantity": {
+              "type": "number",
+              "description": "Quantity to order",
+              "required": true,
+              "min": 1
+            }
+          }
+        },
+        "maxItems": 1000
+      },
+      "enableAlternatives": {
+        "type": "boolean",
+        "description": "Find alternatives for out-of-stock items",
+        "default": true
+      },
+      "priority": {
+        "type": "string",
+        "description": "Default priority for items",
+        "enum": ["high", "normal", "low"],
+        "default": "normal"
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Whether all items were processed successfully"
+        },
+        "itemsProcessed": {
+          "type": "number",
+          "description": "Total items processed"
+        },
+        "itemsAdded": {
+          "type": "number",
+          "description": "Items successfully added to cart"
+        },
+        "itemsFailed": {
+          "type": "number",
+          "description": "Items that failed to add"
+        },
+        "totalValue": {
+          "type": "number",
+          "description": "Total value of items added"
+        },
+        "alternatives": {
+          "type": "object",
+          "description": "Suggested alternatives for failed items"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 300000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "requireB2BAccount": true,
+      "maxPayloadSize": 5242880,
+      "validateInput": true
+    },
+    "performance": {
+      "timeout": 120000,
+      "streaming": true
+    }
   }
 }

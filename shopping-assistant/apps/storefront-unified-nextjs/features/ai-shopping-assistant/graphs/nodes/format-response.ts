@@ -4,6 +4,7 @@ import type { CommerceState } from '../../state';
 import type { StateUpdateCommand } from '../../types/action-definition';
 import { applyCommandsToState } from '../../state';
 import { CommerceSecurityJudge } from '../../security';
+import { traceLangGraphNode, logger, metrics } from '../../observability';
 
 /**
  * Formats the final response for the user
@@ -13,33 +14,62 @@ export async function formatResponseNode(
   state: CommerceState,
   config?: RunnableConfig
 ): Promise<Partial<CommerceState>> {
-  const startTime = performance.now();
-  
-  // Find the last AI message
-  const lastAIMessage = [...state.messages]
-    .reverse()
-    .find(msg => msg._getType() === 'ai') as AIMessage | undefined;
+  return traceLangGraphNode('formatResponse', async (span) => {
+    const sessionId = state.context.sessionId || 'unknown';
+    const correlationId = state.context.correlationId || sessionId;
+    const startTime = performance.now();
+    
+    logger.info('Graph', 'Formatting response', {
+      sessionId,
+      correlationId,
+      messageCount: state.messages.length,
+      hasError: !!state.error
+    });
+    
+    // Add attributes to span
+    span.setAttributes({
+      'ai.session.id': sessionId,
+      'ai.correlation.id': correlationId,
+      'ai.mode': state.mode,
+      'ai.has_error': !!state.error
+    });
+    
+    // Find the last AI message
+    const lastAIMessage = [...state.messages]
+      .reverse()
+      .find(msg => msg._getType() === 'ai') as AIMessage | undefined;
 
-  if (!lastAIMessage) {
-    return {};
-  }
-
-  try {
-    let formattedResponse: string;
-    let additionalData: Record<string, any> = {};
-
-    // Check if we have tool results to format
-    if (hasToolResults(state)) {
-      const toolResults = extractToolResults(state);
-      formattedResponse = formatToolResults(toolResults, state);
-      additionalData = toolResults;
-    } else if (lastAIMessage.tool_calls && lastAIMessage.tool_calls.length > 0) {
-      // Tool calls were made but no results yet - this shouldn't happen
-      formattedResponse = "I'm processing your request...";
-    } else {
-      // Regular AI response without tools
-      formattedResponse = lastAIMessage.content as string || "I'm here to help you shop!";
+    if (!lastAIMessage) {
+      logger.debug('Graph', 'No AI message found to format', { sessionId, correlationId });
+      return {};
     }
+
+    try {
+      let formattedResponse: string;
+      let additionalData: Record<string, any> = {};
+
+      // Check if we have tool results to format
+      if (hasToolResults(state)) {
+        const toolResults = extractToolResults(state);
+        logger.debug('Graph', 'Formatting tool results', {
+          sessionId,
+          correlationId,
+          tools: Object.keys(toolResults)
+        });
+        formattedResponse = formatToolResults(toolResults, state);
+        additionalData = toolResults;
+      } else if (lastAIMessage.tool_calls && lastAIMessage.tool_calls.length > 0) {
+        // Tool calls were made but no results yet - this shouldn't happen
+        logger.warn('Graph', 'Tool calls without results', {
+          sessionId,
+          correlationId,
+          toolCalls: lastAIMessage.tool_calls.map(tc => tc.name)
+        });
+        formattedResponse = "I'm processing your request...";
+      } else {
+        // Regular AI response without tools
+        formattedResponse = lastAIMessage.content as string || "I'm here to help you shop!";
+      }
 
     // Apply mode-specific formatting
     formattedResponse = applyModeFormatting(formattedResponse, state);
@@ -50,17 +80,24 @@ export async function formatResponseNode(
       formattedResponse += `\n\n**What would you like to do next?**\n${suggestions.map(s => `- ${s}`).join('\n')}`;
     }
     
-    // Security validation for output
-    const securityJudge = new CommerceSecurityJudge(state.security);
-    const outputValidation = await securityJudge.validate(formattedResponse, state, 'output');
-    
-    if (!outputValidation.isValid) {
-      // Filter the output if security issues detected
-      formattedResponse = await securityJudge.filterOutput(formattedResponse, state);
+      // Security validation for output
+      const securityJudge = new CommerceSecurityJudge(state.security);
+      const outputValidation = await securityJudge.validate(formattedResponse, state, 'output');
       
-      // Log security event
-      console.warn('Security filtering applied to output:', outputValidation.reason);
-    }
+      if (!outputValidation.isValid) {
+        // Filter the output if security issues detected
+        formattedResponse = await securityJudge.filterOutput(formattedResponse, state);
+        
+        // Log security event
+        logger.warn('Security', 'Output filtering applied', {
+          sessionId,
+          correlationId,
+          reason: outputValidation.reason,
+          severity: outputValidation.severity
+        });
+        
+        metrics.recordSecurityFilter('formatResponse', outputValidation.severity);
+      }
 
     // Create formatted AI message
     const formattedMessage = new AIMessage({
@@ -73,47 +110,83 @@ export async function formatResponseNode(
       }
     });
 
-    // Track performance and security
-    const commands: StateUpdateCommand[] = [
-      {
-        type: 'UPDATE_PERFORMANCE',
-        payload: {
-          nodeExecutionTimes: {
-            formatResponse: [performance.now() - startTime]
+      // Track performance and security
+      const duration = performance.now() - startTime;
+      const commands: StateUpdateCommand[] = [
+        {
+          type: 'UPDATE_PERFORMANCE',
+          payload: {
+            nodeExecutionTimes: {
+              formatResponse: [duration]
+            }
           }
         }
+      ];
+      
+      // Update security context if validation was performed
+      if (outputValidation) {
+        commands.push({
+          type: 'UPDATE_SECURITY',
+          payload: securityJudge.getContext()
+        });
       }
-    ];
-    
-    // Update security context if validation was performed
-    if (outputValidation) {
-      commands.push({
-        type: 'UPDATE_SECURITY',
-        payload: securityJudge.getContext()
+      
+      // Record metrics
+      metrics.recordNodeExecution('formatResponse', duration, true);
+      metrics.recordResponseFormatting(state.mode, hasToolResults(state));
+      
+      // Update span with results
+      span.setAttributes({
+        'ai.response.length': formattedResponse.length,
+        'ai.response.has_tools': hasToolResults(state),
+        'ai.response.has_suggestions': generateSuggestions(state).length > 0
       });
+      
+      logger.info('Graph', 'Response formatted successfully', {
+        sessionId,
+        correlationId,
+        responseLength: formattedResponse.length,
+        hasTools: hasToolResults(state),
+        suggestionCount: generateSuggestions(state).length
+      });
+
+      const stateUpdates = applyCommandsToState(state, commands);
+      
+      return {
+        ...stateUpdates,
+        messages: [formattedMessage]
+      };
+    } catch (error) {
+      logger.error('Graph', 'Response formatting failed', {
+        sessionId,
+        correlationId,
+        error: error instanceof Error ? error.message : String(error)
+      });
+      
+      const duration = performance.now() - startTime;
+      metrics.recordNodeExecution('formatResponse', duration, false);
+      span.setStatus({ code: 2, message: error instanceof Error ? error.message : 'Response formatting failed' });
+      
+      // Format error response
+      const errorMessage = new AIMessage({
+        content: "I apologize, but I encountered an issue formatting the response. Please try your request again.",
+        additional_kwargs: {
+          error: error instanceof Error ? error.message : 'Unknown error',
+          timestamp: new Date().toISOString()
+        }
+      });
+
+      return {
+        messages: [errorMessage],
+        error: error instanceof Error ? error : new Error('Unknown error'),
+        performance: {
+          nodeExecutionTimes: {
+            formatResponse: [duration]
+          }
+        }
+      };
     }
-
-    const stateUpdates = applyCommandsToState(state, commands);
-    
-    return {
-      ...stateUpdates,
-      messages: [formattedMessage]
-    };
-  } catch (error) {
-    // Format error response
-    const errorMessage = new AIMessage({
-      content: "I apologize, but I encountered an issue formatting the response. Please try your request again.",
-      additional_kwargs: {
-        error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: new Date().toISOString()
-      }
-    });
-
-    return {
-      messages: [errorMessage],
-      error: error instanceof Error ? error : new Error('Unknown error')
-    };
-  }
+  });
 }
 
 /**

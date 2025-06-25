@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { createPortal } from 'react-dom';
 import ChatInterface from '../chat-interface';
 import type { ShoppingAssistantWidgetProps } from '../types';
+import { PerformanceDashboard } from '@/features/ai-shopping-assistant/components/performance-dashboard';
 
 export default function ShoppingAssistantWidget({
   position = 'bottom-right',
@@ -14,6 +15,7 @@ export default function ShoppingAssistantWidget({
   className,
 }: ShoppingAssistantWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [showPerformance, setShowPerformance] = useState(false);
 
   const positionClasses = {
     'bottom-right': 'bottom-4 right-4',

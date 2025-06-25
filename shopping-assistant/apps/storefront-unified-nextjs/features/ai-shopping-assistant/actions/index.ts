@@ -8,9 +8,17 @@ import cartActions from './cart.json';
 import comparisonActions from './comparison.json';
 import checkoutActions from './checkout.json';
 import b2bActions from './b2b.json';
+import customerActions from './customer.json';
+import ordersActions from './orders.json';
 
 // Import implementations
-import { searchProductsImplementation, getProductDetailsImplementation } from './implementations/search-implementation';
+import { 
+  searchProductsImplementation, 
+  getProductDetailsImplementation,
+  searchWithReviewsImplementation,
+  findSimilarProductsImplementation,
+  browseCategoryImplementation
+} from './implementations/search-implementation';
 import { 
   addToCartImplementation, 
   updateCartItemImplementation, 
@@ -38,8 +46,24 @@ import {
   requestSampleImplementation,
   getAccountCreditImplementation,
   scheduleProductDemoImplementation,
-  getTaxExemptionImplementation
+  getTaxExemptionImplementation,
+  processBulkOrderImplementation
 } from './implementations/b2b-implementation';
+import {
+  loginImplementation,
+  registerImplementation,
+  getProfileImplementation,
+  updateProfileImplementation,
+  changePasswordImplementation,
+  logoutImplementation,
+  manageAddressesImplementation
+} from './implementations/customer-implementation';
+import {
+  getOrdersImplementation,
+  getOrderDetailsImplementation,
+  trackOrderImplementation,
+  reorderItemsImplementation
+} from './implementations/orders-implementation';
 
 /**
  * Converts JSON action definitions to properly typed ActionDefinition objects
@@ -192,6 +216,68 @@ export function createActionRegistry(config?: {
   registry.register(
     convertJsonToActionDefinition(b2bActions.getTaxExemption),
     getTaxExemptionImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(b2bActions.processBulkOrder),
+    processBulkOrderImplementation
+  );
+
+  // Register customer actions
+  registry.register(
+    convertJsonToActionDefinition(customerActions.login),
+    loginImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(customerActions.register),
+    registerImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(customerActions.getProfile),
+    getProfileImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(customerActions.updateProfile),
+    updateProfileImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(customerActions.changePassword),
+    changePasswordImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(customerActions.logout),
+    logoutImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(customerActions.manageAddresses),
+    manageAddressesImplementation
+  );
+
+  // Register order actions
+  registry.register(
+    convertJsonToActionDefinition(ordersActions.getOrders),
+    getOrdersImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(ordersActions.getOrderDetails),
+    getOrderDetailsImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(ordersActions.trackOrder),
+    trackOrderImplementation
+  );
+
+  registry.register(
+    convertJsonToActionDefinition(ordersActions.reorderItems),
+    reorderItemsImplementation
   );
 
   return registry;

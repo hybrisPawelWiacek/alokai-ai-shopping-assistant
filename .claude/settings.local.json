@@ -15,7 +15,10 @@
       "Bash(ls:*)",
       "Bash(rm:*)",
       "Bash(brew install:*)",
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }

@@ -1,0 +1,329 @@
+{
+  "login": {
+    "id": "login",
+    "name": "Login",
+    "description": "Authenticate customer with email and password",
+    "category": "customer",
+    "mode": "both",
+    "parameters": {
+      "email": {
+        "type": "string",
+        "description": "Customer email address",
+        "required": true,
+        "format": "email"
+      },
+      "password": {
+        "type": "string",
+        "description": "Customer password",
+        "required": true,
+        "sensitive": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Whether login was successful"
+        },
+        "customer": {
+          "type": "object",
+          "description": "Customer profile data"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 5,
+      "windowMs": 300000
+    },
+    "security": {
+      "validateInput": true,
+      "sanitizeSensitive": true
+    }
+  },
+  "register": {
+    "id": "register",
+    "name": "Register",
+    "description": "Create a new customer account",
+    "category": "customer",
+    "mode": "both",
+    "parameters": {
+      "email": {
+        "type": "string",
+        "description": "Email address",
+        "required": true,
+        "format": "email"
+      },
+      "password": {
+        "type": "string",
+        "description": "Password (min 8 characters)",
+        "required": true,
+        "sensitive": true,
+        "minLength": 8
+      },
+      "firstName": {
+        "type": "string",
+        "description": "First name",
+        "required": true
+      },
+      "lastName": {
+        "type": "string",
+        "description": "Last name",
+        "required": true
+      },
+      "company": {
+        "type": "string",
+        "description": "Company name (for B2B)",
+        "required": false
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Whether registration was successful"
+        },
+        "customer": {
+          "type": "object",
+          "description": "New customer profile"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 3,
+      "windowMs": 3600000
+    }
+  },
+  "getProfile": {
+    "id": "getProfile",
+    "name": "Get Profile",
+    "description": "Get current customer profile information",
+    "category": "customer",
+    "mode": "both",
+    "parameters": {},
+    "returns": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "type": "object",
+          "description": "Customer profile data"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 30,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true
+    }
+  },
+  "updateProfile": {
+    "id": "updateProfile",
+    "name": "Update Profile",
+    "description": "Update customer profile information",
+    "category": "customer",
+    "mode": "both",
+    "parameters": {
+      "firstName": {
+        "type": "string",
+        "description": "First name",
+        "required": false
+      },
+      "lastName": {
+        "type": "string",
+        "description": "Last name",
+        "required": false
+      },
+      "email": {
+        "type": "string",
+        "description": "Email address",
+        "required": false,
+        "format": "email"
+      },
+      "phone": {
+        "type": "string",
+        "description": "Phone number",
+        "required": false
+      },
+      "company": {
+        "type": "string",
+        "description": "Company name",
+        "required": false
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "type": "object",
+          "description": "Updated customer profile"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "validateInput": true
+    }
+  },
+  "changePassword": {
+    "id": "changePassword",
+    "name": "Change Password",
+    "description": "Change customer password",
+    "category": "customer",
+    "mode": "both",
+    "parameters": {
+      "currentPassword": {
+        "type": "string",
+        "description": "Current password",
+        "required": true,
+        "sensitive": true
+      },
+      "newPassword": {
+        "type": "string",
+        "description": "New password (min 8 characters)",
+        "required": true,
+        "sensitive": true,
+        "minLength": 8
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Whether password change was successful"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 3,
+      "windowMs": 300000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "sanitizeSensitive": true
+    }
+  },
+  "logout": {
+    "id": "logout",
+    "name": "Logout",
+    "description": "Logout current customer",
+    "category": "customer",
+    "mode": "both",
+    "parameters": {},
+    "returns": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Whether logout was successful"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true
+    }
+  },
+  "manageAddresses": {
+    "id": "manageAddresses",
+    "name": "Manage Addresses",
+    "description": "View and manage shipping/billing addresses",
+    "category": "customer",
+    "mode": "both",
+    "parameters": {
+      "action": {
+        "type": "string",
+        "description": "Action to perform",
+        "required": true,
+        "enum": ["list", "add", "update", "delete", "setDefault"]
+      },
+      "addressId": {
+        "type": "string",
+        "description": "Address ID (for update/delete/setDefault)",
+        "required": false
+      },
+      "address": {
+        "type": "object",
+        "description": "Address data (for add/update)",
+        "required": false,
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "required": true
+          },
+          "lastName": {
+            "type": "string",
+            "required": true
+          },
+          "address1": {
+            "type": "string",
+            "required": true
+          },
+          "address2": {
+            "type": "string",
+            "required": false
+          },
+          "city": {
+            "type": "string",
+            "required": true
+          },
+          "state": {
+            "type": "string",
+            "required": true
+          },
+          "postalCode": {
+            "type": "string",
+            "required": true
+          },
+          "country": {
+            "type": "string",
+            "required": true
+          },
+          "phone": {
+            "type": "string",
+            "required": false
+          },
+          "isDefault": {
+            "type": "boolean",
+            "required": false
+          }
+        }
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "addresses": {
+          "type": "array",
+          "description": "List of addresses (for list action)"
+        },
+        "address": {
+          "type": "object",
+          "description": "Created/updated address (for add/update)"
+        },
+        "success": {
+          "type": "boolean",
+          "description": "Whether action was successful"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true,
+      "validateInput": true
+    }
+  }
+}

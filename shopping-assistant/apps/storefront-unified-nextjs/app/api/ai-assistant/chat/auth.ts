@@ -9,6 +9,14 @@ export interface AuthResult {
   userId?: string;
   role?: 'customer' | 'business' | 'admin';
   permissions?: string[];
+  isB2B?: boolean;
+  accountId?: string;
+  customLimits?: {
+    dailyValue?: number;
+    monthlyValue?: number;
+    singleOrderValue?: number;
+    singleOrderItems?: number;
+  };
 }
 
 /**
@@ -19,6 +27,13 @@ interface SessionData {
   role: 'customer' | 'business' | 'admin';
   permissions?: string[];
   expiresAt: number;
+  accountId?: string;
+  customLimits?: {
+    dailyValue?: number;
+    monthlyValue?: number;
+    singleOrderValue?: number;
+    singleOrderItems?: number;
+  };
 }
 
 /**
@@ -36,7 +51,8 @@ export async function authenticateUser(request: NextRequest): Promise<AuthResult
           isAuthenticated: true,
           userId: `anonymous_${Date.now()}`,
           role: 'customer',
-          permissions: ['chat.read', 'chat.write']
+          permissions: ['chat.read', 'chat.write'],
+          isB2B: false
         };
       }
       return { isAuthenticated: false };
@@ -51,7 +67,10 @@ export async function authenticateUser(request: NextRequest): Promise<AuthResult
       isAuthenticated: true,
       userId: sessionData.userId,
       role: sessionData.role,
-      permissions: sessionData.permissions || []
+      permissions: sessionData.permissions || [],
+      isB2B: sessionData.role === 'business' || sessionData.role === 'admin',
+      accountId: sessionData.accountId,
+      customLimits: sessionData.customLimits
     };
   } catch (error) {
     console.error('Authentication error:', error);
@@ -89,7 +108,9 @@ async function getSessionData(request: NextRequest): Promise<SessionData | null>
           userId: session.userId,
           role: session.role || 'customer',
           permissions: session.permissions,
-          expiresAt: session.expiresAt || Date.now() + 86400000 // 24 hours
+          expiresAt: session.expiresAt || Date.now() + 86400000, // 24 hours
+          accountId: session.accountId,
+          customLimits: session.customLimits
         };
       }
     } catch {
@@ -104,7 +125,8 @@ async function getSessionData(request: NextRequest): Promise<SessionData | null>
       userId: `service_${apiKey.substring(0, 8)}`,
       role: 'admin',
       permissions: ['all'],
-      expiresAt: Date.now() + 3600000 // 1 hour
+      expiresAt: Date.now() + 3600000, // 1 hour
+      accountId: `service_${apiKey.substring(0, 8)}`
     };
   }
 
@@ -125,7 +147,9 @@ function parseSessionToken(token: string): SessionData | null {
         userId: data.userId,
         role: data.role || 'customer',
         permissions: data.permissions,
-        expiresAt: data.expiresAt
+        expiresAt: data.expiresAt,
+        accountId: data.accountId,
+        customLimits: data.customLimits
       };
     }
   } catch {

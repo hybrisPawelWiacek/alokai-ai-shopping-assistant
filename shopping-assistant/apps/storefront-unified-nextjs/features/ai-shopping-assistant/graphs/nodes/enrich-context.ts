@@ -3,6 +3,7 @@ import type { CommerceState, AvailableActions } from '../../state';
 import type { StateUpdateCommand } from '../../types/action-definition';
 import { applyCommandsToState, isActionAvailable } from '../../state';
 import { ContextEnricher } from '../../intelligence';
+import { traceLangGraphNode, logger, metrics } from '../../observability';
 
 /**
  * Enriches the conversation context with commerce-specific information
@@ -12,26 +13,67 @@ export async function enrichContextNode(
   state: CommerceState,
   config?: RunnableConfig
 ): Promise<Partial<CommerceState>> {
-  const startTime = performance.now();
-  
-  try {
-    // Use ContextEnricher for intelligent context analysis
-    const lastMessage = state.messages[state.messages.length - 1];
-    const enrichment = ContextEnricher.enrichContext(state, lastMessage);
+  return traceLangGraphNode('enrichContext', async (span) => {
+    const sessionId = state.context.sessionId || 'unknown';
+    const correlationId = state.context.correlationId || sessionId;
+    const startTime = performance.now();
     
-    // Determine available actions based on current state
-    const availableActions = determineAvailableActions(state);
+    logger.info('Graph', 'Enriching context', {
+      sessionId,
+      correlationId,
+      mode: state.mode,
+      intent: state.context.detectedIntent
+    });
     
-    // Merge intelligent enrichments with business logic enrichments
-    const contextEnrichments = {
-      ...buildContextEnrichments(state),
-      ...enrichment.enrichedContext,
-      enrichmentInsights: enrichment.insights,
-      actionSuggestions: enrichment.suggestions
-    };
+    // Add attributes to span
+    span.setAttributes({
+      'ai.session.id': sessionId,
+      'ai.correlation.id': correlationId,
+      'ai.mode': state.mode,
+      'ai.intent': state.context.detectedIntent || 'unknown'
+    });
     
-    // Check for security constraints
-    const securityChecks = performSecurityChecks(state);
+    try {
+      // Use ContextEnricher for intelligent context analysis
+      const lastMessage = state.messages[state.messages.length - 1];
+      const enrichment = ContextEnricher.enrichContext(state, lastMessage);
+      
+      logger.debug('Intelligence', 'Context enrichment completed', {
+        sessionId,
+        correlationId,
+        insights: enrichment.insights.length,
+        suggestions: enrichment.suggestions.length
+      });
+    
+      // Determine available actions based on current state
+      const availableActions = determineAvailableActions(state);
+      
+      logger.info('Graph', 'Available actions determined', {
+        sessionId,
+        correlationId,
+        suggested: availableActions.suggested,
+        enabled: availableActions.enabled.length,
+        disabled: availableActions.disabled.length
+      });
+      
+      // Merge intelligent enrichments with business logic enrichments
+      const contextEnrichments = {
+        ...buildContextEnrichments(state),
+        ...enrichment.enrichedContext,
+        enrichmentInsights: enrichment.insights,
+        actionSuggestions: enrichment.suggestions
+      };
+      
+      // Check for security constraints
+      const securityChecks = performSecurityChecks(state);
+      
+      if (securityChecks.hasIssues) {
+        logger.warn('Security', 'Security patterns detected', {
+          sessionId,
+          correlationId,
+          patterns: securityChecks.patterns
+        });
+      }
     
     // Create state update commands
     const commands: StateUpdateCommand[] = [
@@ -56,25 +98,58 @@ export async function enrichContextNode(
       });
     }
     
-    // Track performance
-    commands.push({
-      type: 'UPDATE_PERFORMANCE',
-      payload: {
-        nodeExecutionTimes: {
-          enrichContext: [performance.now() - startTime]
+      // Track performance
+      const duration = performance.now() - startTime;
+      commands.push({
+        type: 'UPDATE_PERFORMANCE',
+        payload: {
+          nodeExecutionTimes: {
+            enrichContext: [duration]
+          }
         }
-      }
-    });
-    
-    return applyCommandsToState(state, commands);
-  } catch (error) {
-    const errorCommand: StateUpdateCommand = {
-      type: 'SET_ERROR',
-      payload: new Error(`Context enrichment failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
-    };
-    
-    return applyCommandsToState(state, [errorCommand]);
-  }
+      });
+      
+      // Record metrics
+      metrics.recordNodeExecution('enrichContext', duration, true);
+      metrics.recordAvailableActions(availableActions.enabled.length, availableActions.disabled.length);
+      
+      // Update span with results
+      span.setAttributes({
+        'ai.actions.enabled': availableActions.enabled.length,
+        'ai.actions.disabled': availableActions.disabled.length,
+        'ai.actions.suggested': availableActions.suggested.length,
+        'ai.security.issues': securityChecks.hasIssues ? 1 : 0
+      });
+      
+      return applyCommandsToState(state, commands);
+    } catch (error) {
+      logger.error('Graph', 'Context enrichment failed', {
+        sessionId,
+        correlationId,
+        error: error instanceof Error ? error.message : String(error)
+      });
+      
+      const duration = performance.now() - startTime;
+      metrics.recordNodeExecution('enrichContext', duration, false);
+      span.setStatus({ code: 2, message: error instanceof Error ? error.message : 'Context enrichment failed' });
+      
+      const errorCommand: StateUpdateCommand = {
+        type: 'SET_ERROR',
+        payload: new Error(`Context enrichment failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      };
+      
+      const perfCommand: StateUpdateCommand = {
+        type: 'UPDATE_PERFORMANCE',
+        payload: {
+          nodeExecutionTimes: {
+            enrichContext: [duration]
+          }
+        }
+      };
+      
+      return applyCommandsToState(state, [errorCommand, perfCommand]);
+    }
+  });
 }
 
 /**

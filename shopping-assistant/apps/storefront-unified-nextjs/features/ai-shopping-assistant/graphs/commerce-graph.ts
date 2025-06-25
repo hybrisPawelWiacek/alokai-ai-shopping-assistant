@@ -10,6 +10,7 @@ import { detectIntentNode } from './nodes/detect-intent';
 import { enrichContextNode } from './nodes/enrich-context';
 import { selectActionNode } from './nodes/select-action';
 import { formatResponseNode } from './nodes/format-response';
+import { executeToolsNode } from './nodes/execute-tools';
 
 /**
  * Main LangGraph workflow for the commerce AI assistant
@@ -49,7 +50,9 @@ export class CommerceAgentGraph {
       .addNode('selectAction', (state: CommerceState, config?: RunnableConfig) => 
         selectActionNode(state, this.toolRegistry, config)
       )
-      .addNode('toolNode', this.toolNode)
+      .addNode('toolNode', (state: CommerceState, config?: RunnableConfig) =>
+        executeToolsNode(state, this.toolNode, config)
+      )
       .addNode('formatResponse', formatResponseNode);
 
     // Set up graph flow

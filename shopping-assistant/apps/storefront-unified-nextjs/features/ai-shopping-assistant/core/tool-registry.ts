@@ -3,8 +3,53 @@ import { LangGraphActionFactory } from './tool-factory';
 import type { ActionDefinition, StateUpdateCommand, LogEntry } from '../types/action-definition';
 
 /**
+ * Simple LRU Cache implementation for tool caching
+ */
+class LRUCache<K, V> {
+  private cache: Map<K, V> = new Map();
+  private accessOrder: K[] = [];
+
+  constructor(private maxSize: number = 100) {}
+
+  get(key: K): V | undefined {
+    const value = this.cache.get(key);
+    if (value !== undefined) {
+      // Move to end (most recently used)
+      this.accessOrder = this.accessOrder.filter(k => k !== key);
+      this.accessOrder.push(key);
+    }
+    return value;
+  }
+
+  set(key: K, value: V): void {
+    if (this.cache.has(key)) {
+      // Update existing, move to end
+      this.accessOrder = this.accessOrder.filter(k => k !== key);
+    } else if (this.cache.size >= this.maxSize) {
+      // Evict least recently used
+      const lru = this.accessOrder.shift();
+      if (lru !== undefined) {
+        this.cache.delete(lru);
+      }
+    }
+    this.cache.set(key, value);
+    this.accessOrder.push(key);
+  }
+
+  clear(): void {
+    this.cache.clear();
+    this.accessOrder = [];
+  }
+
+  size(): number {
+    return this.cache.size;
+  }
+}
+
+/**
  * Registry for managing LangGraph tools dynamically
  * Supports runtime registration, updates, and removal of tools
+ * Includes LRU caching for compiled tools and schemas
  */
 export class CommerceToolRegistry {
   private tools: Map<string, DynamicStructuredTool> = new Map();
@@ -12,11 +57,19 @@ export class CommerceToolRegistry {
   private implementations: Map<string, (params: unknown, state: unknown) => Promise<StateUpdateCommand[]>> = new Map();
   private factory: LangGraphActionFactory;
   private changeListeners: Array<(event: ToolChangeEvent) => void> = [];
+  
+  // Caching
+  private toolCache: LRUCache<string, DynamicStructuredTool>;
+  private schemaCache: LRUCache<string, any>;
+  private cacheHits = 0;
+  private cacheMisses = 0;
 
   constructor(
     private config: {
       enablePerformanceTracking?: boolean;
       enableSecurityValidation?: boolean;
+      enableCaching?: boolean;
+      cacheSize?: number;
       logger?: (entry: LogEntry) => void;
       onToolChange?: (event: ToolChangeEvent) => void;
     } = {}
@@ -26,6 +79,11 @@ export class CommerceToolRegistry {
       enableSecurityValidation: config.enableSecurityValidation ?? true,
       logger: config.logger
     });
+
+    // Initialize caches
+    const cacheSize = config.cacheSize || 50;
+    this.toolCache = new LRUCache(cacheSize);
+    this.schemaCache = new LRUCache(cacheSize * 2); // Schema cache can be larger
 
     if (config.onToolChange) {
       this.changeListeners.push(config.onToolChange);
@@ -47,8 +105,22 @@ export class CommerceToolRegistry {
       throw new Error(`Tool with id ${definition.id} already registered. Use update() to modify existing tools.`);
     }
 
-    // Create tool using factory
-    const tool = this.factory.createTool(definition, implementation);
+    // Try to get from cache first
+    const cacheKey = this.getCacheKey(definition);
+    let tool = this.config.enableCaching !== false ? this.toolCache.get(cacheKey) : undefined;
+    
+    if (tool) {
+      this.cacheHits++;
+    } else {
+      // Create tool using factory
+      this.cacheMisses++;
+      tool = this.factory.createTool(definition, implementation);
+      
+      // Cache the created tool
+      if (this.config.enableCaching !== false) {
+        this.toolCache.set(cacheKey, tool);
+      }
+    }
 
     // Store in registry
     this.tools.set(definition.id, tool);
@@ -92,6 +164,12 @@ export class CommerceToolRegistry {
 
     // Use new implementation or keep existing
     const implementation = updates.implementation || existingImplementation;
+
+    // Invalidate cache for old definition
+    if (this.config.enableCaching !== false) {
+      const oldCacheKey = this.getCacheKey(existingDefinition);
+      this.toolCache.set(oldCacheKey, undefined as any); // Invalidate
+    }
 
     // Create new tool
     const tool = this.factory.createTool(updatedDefinition, implementation);
@@ -248,6 +326,26 @@ export class CommerceToolRegistry {
   }
 
   /**
+   * Gets cache statistics
+   */
+  getCacheStats(): {
+    cacheHits: number;
+    cacheMisses: number;
+    hitRate: number;
+    toolCacheSize: number;
+    schemaCacheSize: number;
+  } {
+    const total = this.cacheHits + this.cacheMisses;
+    return {
+      cacheHits: this.cacheHits,
+      cacheMisses: this.cacheMisses,
+      hitRate: total > 0 ? this.cacheHits / total : 0,
+      toolCacheSize: this.toolCache.size(),
+      schemaCacheSize: this.schemaCache.size()
+    };
+  }
+
+  /**
    * Clears all tools from the registry
    */
   clear(): void {
@@ -255,6 +353,12 @@ export class CommerceToolRegistry {
     for (const toolId of toolIds) {
       this.unregister(toolId);
     }
+    
+    // Clear caches
+    this.toolCache.clear();
+    this.schemaCache.clear();
+    this.cacheHits = 0;
+    this.cacheMisses = 0;
   }
 
   /**
@@ -299,6 +403,22 @@ export class CommerceToolRegistry {
         console.error('Error in tool change listener:', error);
       }
     }
+  }
+
+  /**
+   * Generates a cache key for a tool definition
+   */
+  private getCacheKey(definition: ActionDefinition): string {
+    // Create a stable key based on definition properties
+    const key = `${definition.id}_${definition.name}_${definition.mode}_${definition.category}_${JSON.stringify(definition.parameters)}`;
+    // Simple hash function for shorter keys
+    let hash = 0;
+    for (let i = 0; i < key.length; i++) {
+      const char = key.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return `tool_${definition.id}_${hash}`;
   }
 }
 

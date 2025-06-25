@@ -2,9 +2,12 @@ import type { RunnableConfig } from '@langchain/core/runnables';
 import { ChatOpenAI } from '@langchain/openai';
 import { AIMessage } from '@langchain/core/messages';
 import type { CommerceState } from '../../state';
+import type { StateUpdateCommand } from '../../types/action-definition';
+import { applyCommandsToState } from '../../state';
 import { CommerceToolRegistry } from '../../core/tool-registry';
 import { IntentPredictor, ModeDetector } from '../../intelligence';
 import { CommerceSecurityJudge } from '../../security';
+import { traceLangGraphNode, logger, metrics } from '../../observability';
 
 /**
  * Selects and invokes the appropriate action based on user intent and context
@@ -15,25 +18,63 @@ export async function selectActionNode(
   toolRegistry: CommerceToolRegistry,
   config?: RunnableConfig
 ): Promise<Partial<CommerceState>> {
-  const lastMessage = state.messages[state.messages.length - 1];
-  if (!lastMessage || lastMessage._getType() !== 'human') {
-    return {};
-  }
+  return traceLangGraphNode('selectAction', async (span) => {
+    const sessionId = state.context.sessionId || 'unknown';
+    const correlationId = state.context.correlationId || sessionId;
+    const startTime = performance.now();
+    
+    logger.info('Graph', 'Selecting action', {
+      sessionId,
+      correlationId,
+      mode: state.mode,
+      intent: state.context.detectedIntent,
+      availableActions: state.availableActions.enabled.length
+    });
+    
+    const lastMessage = state.messages[state.messages.length - 1];
+    if (!lastMessage || lastMessage._getType() !== 'human') {
+      logger.debug('Graph', 'No human message found, skipping action selection', { sessionId, correlationId });
+      return {};
+    }
 
-  // Get intent predictions for intelligent action selection
-  const intentPredictions = IntentPredictor.predictNextIntent(state);
-  const actionRecommendations = IntentPredictor.recommendActions(state);
-  
-  // Get tools appropriate for the current mode
-  const tools = toolRegistry.getToolsForMode(state.mode);
-  
-  // Filter tools based on available actions and prioritize based on predictions
-  const availableTools = tools.filter(tool => 
-    state.availableActions.enabled.includes(tool.name)
-  );
-  
-  // Sort tools to prioritize predicted actions
-  const prioritizedTools = sortToolsByPredictions(availableTools, actionRecommendations);
+    // Add attributes to span
+    span.setAttributes({
+      'ai.session.id': sessionId,
+      'ai.correlation.id': correlationId,
+      'ai.mode': state.mode,
+      'ai.intent': state.context.detectedIntent || 'unknown',
+      'ai.trust_score': state.security.trustScore
+    });
+    
+    // Get intent predictions for intelligent action selection
+    const intentPredictions = IntentPredictor.predictNextIntent(state);
+    const actionRecommendations = IntentPredictor.recommendActions(state);
+    
+    logger.debug('Intelligence', 'Predictions generated', {
+      sessionId,
+      correlationId,
+      nextIntents: intentPredictions.slice(0, 3).map(p => p.intent),
+      recommendedActions: actionRecommendations.slice(0, 3).map(r => r.actionId)
+    });
+    
+    // Get tools appropriate for the current mode
+    const tools = toolRegistry.getToolsForMode(state.mode);
+    
+    // Filter tools based on available actions and prioritize based on predictions
+    const availableTools = tools.filter(tool => 
+      state.availableActions.enabled.includes(tool.name)
+    );
+    
+    logger.info('Tools', 'Available tools filtered', {
+      sessionId,
+      correlationId,
+      totalTools: tools.length,
+      availableTools: availableTools.length,
+      toolNames: availableTools.map(t => t.name)
+    });
+    
+    // Sort tools to prioritize predicted actions
+    const prioritizedTools = sortToolsByPredictions(availableTools, actionRecommendations);
 
   // Initialize model with tools
   const model = new ChatOpenAI({
@@ -47,32 +88,94 @@ export async function selectActionNode(
   // Build system message with rich context and predictions
   const systemMessage = buildSystemMessage(state, intentPredictions, actionRecommendations);
 
-  try {
-    // Invoke model with conversation history
-    const response = await model.invoke([
-      { role: 'system', content: systemMessage },
-      ...state.messages
-    ], config);
-
-    // Return the AI response which may contain tool calls
-    return {
-      messages: [response]
-    };
-  } catch (error) {
-    // Create error response
-    const errorMessage = new AIMessage({
-      content: "I encountered an error while processing your request. Please try again.",
-      additional_kwargs: {
-        error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: new Date().toISOString()
+    try {
+      logger.debug('AI', 'Invoking model with tools', {
+        sessionId,
+        correlationId,
+        toolCount: prioritizedTools.length,
+        messageCount: state.messages.length
+      });
+      
+      // Invoke model with conversation history
+      const response = await model.invoke([
+        { role: 'system', content: systemMessage },
+        ...state.messages
+      ], config);
+      
+      // Log tool calls if any
+      if (response.tool_calls && response.tool_calls.length > 0) {
+        logger.info('AI', 'Tools selected for execution', {
+          sessionId,
+          correlationId,
+          tools: response.tool_calls.map(tc => ({ name: tc.name, id: tc.id }))
+        });
+        
+        // Update span with tool information
+        span.setAttributes({
+          'ai.tools.count': response.tool_calls.length,
+          'ai.tools.names': response.tool_calls.map(tc => tc.name).join(',')
+        });
       }
-    });
 
-    return {
-      messages: [errorMessage],
-      error: error instanceof Error ? error : new Error('Unknown error')
-    };
-  }
+      // Track performance
+      const duration = performance.now() - startTime;
+      const commands: StateUpdateCommand[] = [
+        {
+          type: 'UPDATE_PERFORMANCE',
+          payload: {
+            nodeExecutionTimes: {
+              selectAction: [duration]
+            }
+          }
+        }
+      ];
+      
+      // Record metrics
+      metrics.recordNodeExecution('selectAction', duration, true);
+      if (response.tool_calls && response.tool_calls.length > 0) {
+        response.tool_calls.forEach(tc => {
+          metrics.recordActionSelection(tc.name, state.mode);
+        });
+      }
+
+      const stateUpdates = applyCommandsToState(state, commands);
+
+      // Return the AI response which may contain tool calls
+      return {
+        ...stateUpdates,
+        messages: [response]
+      };
+    } catch (error) {
+      logger.error('AI', 'Action selection failed', {
+        sessionId,
+        correlationId,
+        error: error instanceof Error ? error.message : String(error)
+      });
+      
+      const duration = performance.now() - startTime;
+      metrics.recordNodeExecution('selectAction', duration, false);
+      span.setStatus({ code: 2, message: error instanceof Error ? error.message : 'Action selection failed' });
+      
+      // Create error response
+      const errorMessage = new AIMessage({
+        content: "I encountered an error while processing your request. Please try again.",
+        additional_kwargs: {
+          error: error instanceof Error ? error.message : 'Unknown error',
+          timestamp: new Date().toISOString()
+        }
+      });
+
+      return {
+        messages: [errorMessage],
+        error: error instanceof Error ? error : new Error('Unknown error'),
+        performance: {
+          nodeExecutionTimes: {
+            selectAction: [duration]
+          }
+        }
+      };
+    }
+  });
 }
 
 /**

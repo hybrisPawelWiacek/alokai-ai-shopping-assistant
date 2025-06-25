@@ -1,0 +1,151 @@
+{
+  "getOrders": {
+    "id": "getOrders",
+    "name": "Get Orders",
+    "description": "Retrieve customer order history",
+    "category": "orders",
+    "mode": "both",
+    "parameters": {
+      "status": {
+        "type": "string",
+        "description": "Filter by order status",
+        "required": false,
+        "enum": ["all", "pending", "processing", "shipped", "delivered", "cancelled"]
+      },
+      "limit": {
+        "type": "number",
+        "description": "Number of orders to retrieve",
+        "required": false,
+        "default": 10,
+        "min": 1,
+        "max": 50
+      },
+      "offset": {
+        "type": "number",
+        "description": "Number of orders to skip",
+        "required": false,
+        "default": 0
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "type": "array",
+          "description": "List of orders"
+        },
+        "totalCount": {
+          "type": "number",
+          "description": "Total number of orders"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 20,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true
+    },
+    "ui": {
+      "component": "OrderList"
+    }
+  },
+  "getOrderDetails": {
+    "id": "getOrderDetails",
+    "name": "Get Order Details",
+    "description": "Get detailed information about a specific order",
+    "category": "orders",
+    "mode": "both",
+    "parameters": {
+      "orderId": {
+        "type": "string",
+        "description": "Order ID",
+        "required": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "order": {
+          "type": "object",
+          "description": "Detailed order information"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 30,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true
+    },
+    "ui": {
+      "component": "OrderDetail"
+    }
+  },
+  "trackOrder": {
+    "id": "trackOrder",
+    "name": "Track Order",
+    "description": "Get shipping status and tracking information for an order",
+    "category": "orders",
+    "mode": "both",
+    "parameters": {
+      "orderId": {
+        "type": "string",
+        "description": "Order ID to track",
+        "required": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "trackingInfo": {
+          "type": "object",
+          "description": "Tracking information including status and location"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 30,
+      "windowMs": 60000
+    },
+    "ui": {
+      "component": "OrderTracking"
+    }
+  },
+  "reorderItems": {
+    "id": "reorderItems",
+    "name": "Reorder Items",
+    "description": "Add all items from a previous order to the cart",
+    "category": "orders",
+    "mode": "both",
+    "parameters": {
+      "orderId": {
+        "type": "string",
+        "description": "Order ID to reorder from",
+        "required": true
+      }
+    },
+    "returns": {
+      "type": "object",
+      "properties": {
+        "cart": {
+          "type": "object",
+          "description": "Updated cart with reordered items"
+        },
+        "addedItems": {
+          "type": "array",
+          "description": "List of items added to cart"
+        }
+      }
+    },
+    "rateLimit": {
+      "maxCalls": 10,
+      "windowMs": 60000
+    },
+    "security": {
+      "requireAuthentication": true
+    }
+  }
+}

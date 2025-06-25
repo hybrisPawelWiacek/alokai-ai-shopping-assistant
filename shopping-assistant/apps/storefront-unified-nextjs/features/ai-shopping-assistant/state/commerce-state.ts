@@ -10,6 +10,7 @@ export interface CommerceContext {
   currency: string;
   customerId?: string;
   sessionId: string;
+  correlationId?: string; // For request tracking across all operations
   sdk?: any; // Will be typed with actual SDK interface
   lastSearch?: {
     query: string;
@@ -117,6 +118,8 @@ export interface PerformanceMetrics {
   toolExecutionCount: number;
   cacheHits: number;
   cacheMisses: number;
+  cacheHitRate?: number;
+  lastUpdated?: string;
 }
 
 /**

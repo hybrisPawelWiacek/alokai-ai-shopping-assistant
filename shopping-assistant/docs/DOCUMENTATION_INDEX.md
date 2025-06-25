@@ -39,7 +39,6 @@ For business users, product managers, and stakeholders.
 |----------|---------|----------|
 | [FEATURE_SHOWCASE.md](./FEATURE_SHOWCASE.md) | Interactive demos and capabilities | Business Users |
 | [BUSINESS_USER_GUIDE.md](./BUSINESS_USER_GUIDE.md) | Configuration without coding | Business Users |
-| [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) | Common issues and solutions | Support & Developers |
 
 ## 📖 Reference Documentation (Deep Dives)
 
@@ -59,6 +58,7 @@ For business users, product managers, and stakeholders.
 | [CONFIGURATION_COOKBOOK.md](./reference/CONFIGURATION_COOKBOOK.md) | Configuration examples and patterns | Developers |
 | [PERFORMANCE_TUNING.md](./reference/PERFORMANCE_TUNING.md) | Optimization strategies | DevOps & Developers |
 | [SECURITY_BEST_PRACTICES.md](./reference/SECURITY_BEST_PRACTICES.md) | Security implementation guide | Security & Developers |
+| [TROUBLESHOOTING.md](./reference/TROUBLESHOOTING.md) | Detailed troubleshooting guide | Developers & Support |
 
 ### 💰 Business & Planning References
 | Document | Purpose | Audience |
@@ -154,7 +154,7 @@ Contains comprehensive UDL documentation including:
 1. Review [INFRASTRUCTURE_GUIDE.md](./reference/INFRASTRUCTURE_GUIDE.md) for deployment
 2. Optimize with [PERFORMANCE_TUNING.md](./reference/PERFORMANCE_TUNING.md)
 3. Secure with [SECURITY_BEST_PRACTICES.md](./reference/SECURITY_BEST_PRACTICES.md)
-4. Monitor using guidance in [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
+4. Monitor using guidance in [TROUBLESHOOTING.md](./reference/TROUBLESHOOTING.md)
 
 ### For Project Managers
 1. Check [PROJECT_STATUS.md](./PROJECT_STATUS.md) for current state
@@ -173,7 +173,7 @@ Contains comprehensive UDL documentation including:
 
 ### 🔄 Living Documents (Regularly Updated)
 - PROJECT_STATUS.md - Weekly updates
-- TROUBLESHOOTING.md - As issues discovered
+- TROUBLESHOOTING.md (reference/) - As issues discovered
 - CONFIGURATION_COOKBOOK.md - New patterns added
 - LEARNINGS_AND_ISSUES.md - Ongoing discoveries
 
@@ -193,14 +193,14 @@ Contains comprehensive UDL documentation including:
 - **Performance**: PERFORMANCE_TUNING.md, COST_ANALYSIS.md
 - **Security**: SECURITY_BEST_PRACTICES.md
 - **Deployment**: INFRASTRUCTURE_GUIDE.md
-- **Problems**: TROUBLESHOOTING.md
+- **Problems**: TROUBLESHOOTING.md (in reference/)
 - **Planning**: PROJECT_STATUS.md, MIGRATION_GUIDE.md
 
 ### By Role
 - **Business Owner**: FEATURE_SHOWCASE → BUSINESS_USER_GUIDE → COST_ANALYSIS
 - **Developer**: GETTING_STARTED → ARCHITECTURE → DEVELOPMENT_WORKFLOW
 - **DevOps**: INFRASTRUCTURE_GUIDE → PERFORMANCE_TUNING → SECURITY_BEST_PRACTICES
-- **Support**: TROUBLESHOOTING → DEMO_VS_PRODUCTION → BUSINESS_USER_GUIDE
+- **Support**: TROUBLESHOOTING (reference/) → DEMO_VS_PRODUCTION → BUSINESS_USER_GUIDE
 
 ## 📝 Documentation Standards
 
@@ -224,7 +224,7 @@ To add or update documentation:
 
 ### 📊 Documentation Stats
 - **Essential Docs**: 7 (what humans actually read)
-- **Reference Docs**: 10 (comprehensive guides for deep dives)
+- **Reference Docs**: 11 (comprehensive guides for deep dives)
 - **Working Docs**: 3 (implementation tracking - consolidated from 7)
 - **Component/Module Docs**: 10 (module-specific READMEs)
 - **Changelogs/Dev**: 3 (version history and dev setup)

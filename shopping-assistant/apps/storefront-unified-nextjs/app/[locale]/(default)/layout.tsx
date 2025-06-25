@@ -3,6 +3,7 @@ import type { PropsWithChildren } from 'react';
 
 import Footer from '@/components/navigations/footer';
 import { getSdk } from '@/sdk';
+import { ShoppingAssistantWidget, ShoppingAssistantProvider } from '@/components/ai-shopping-assistant';
 
 import BottomNav from './components/bottom-nav';
 import Navbar from './components/navbar';
@@ -24,14 +25,18 @@ export async function BaseDefaultLayout({ children }: DefaultLayoutProps) {
   const currencies = await sdk.unified.getCurrencies();
 
   return (
-    <>
+    <ShoppingAssistantProvider defaultEnabled={true} defaultMode="b2c">
       <Navbar />
       <main>{children}</main>
       <BottomNav />
       <ScrollToTop />
       <Footer className="mb-[58px] md:mb-0" />
       <UserSettingsModal initialCurrency={currencies} />
-    </>
+      <ShoppingAssistantWidget 
+        position="bottom-right"
+        triggerText="AI Assistant"
+      />
+    </ShoppingAssistantProvider>
   );
 }
 

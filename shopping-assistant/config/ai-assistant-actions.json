@@ -356,6 +356,224 @@
       "performance": {
         "timeoutMs": 15000
       }
+    },
+    {
+      "id": "get_product_details",
+      "name": "Get Product Details",
+      "description": "Retrieve detailed information about a specific product including variants, pricing, and availability",
+      "category": "search",
+      "enabled": true,
+      "parameters": {
+        "productId": {
+          "type": "string",
+          "required": true,
+          "description": "Product ID or SKU",
+          "min": 1,
+          "max": 100
+        },
+        "includeVariants": {
+          "type": "boolean",
+          "required": false,
+          "description": "Include product variants in the response",
+          "default": true
+        },
+        "includeReviews": {
+          "type": "boolean",
+          "required": false,
+          "description": "Include customer reviews",
+          "default": false
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "getProductDetailsImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": true },
+        "b2b": { 
+          "enabled": true,
+          "overrides": {
+            "parameters": {
+              "includeBulkPricing": {
+                "type": "boolean",
+                "default": true
+              }
+            }
+          }
+        }
+      },
+      "udl": {
+        "methods": ["sdk.unified.getProductDetails"],
+        "dataFlow": "read",
+        "caching": {
+          "enabled": true,
+          "ttlSeconds": 600
+        }
+      },
+      "response": {
+        "format": "json",
+        "includeMetadata": true
+      }
+    },
+    {
+      "id": "request_bulk_pricing",
+      "name": "Request Bulk Pricing",
+      "description": "Get volume-based pricing tiers for bulk orders",
+      "category": "b2b",
+      "enabled": true,
+      "parameters": {
+        "productId": {
+          "type": "string",
+          "required": true,
+          "description": "Product ID to get bulk pricing for"
+        },
+        "quantities": {
+          "type": "array",
+          "required": true,
+          "description": "List of quantities to get pricing for",
+          "items": {
+            "type": "number",
+            "min": 50
+          },
+          "min": 1,
+          "max": 5
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "requestBulkPricingImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": false },
+        "b2b": { 
+          "enabled": true,
+          "requiredFields": ["organization"]
+        }
+      },
+      "security": {
+        "requiresAuth": true,
+        "requiredPermissions": ["view_bulk_pricing"]
+      },
+      "udl": {
+        "methods": ["sdk.unified.getProductDetails", "sdk.customExtension.getBulkPricing"],
+        "dataFlow": "read"
+      },
+      "performance": {
+        "timeoutMs": 5000
+      },
+      "response": {
+        "format": "markdown",
+        "template": "**Bulk Pricing for {{productName}}**\n\n{{#each tiers}}• {{quantity}}+ units: {{currency}} {{unitPrice}}/unit (Save {{discount}}%)\n{{/each}}"
+      }
+    },
+    {
+      "id": "track_order",
+      "name": "Track Order",
+      "description": "Track the status and location of an existing order",
+      "category": "customer",
+      "enabled": true,
+      "parameters": {
+        "orderId": {
+          "type": "string",
+          "required": true,
+          "description": "Order ID or tracking number",
+          "pattern": "^[A-Z0-9-]+$"
+        },
+        "email": {
+          "type": "string",
+          "required": false,
+          "description": "Email for order verification",
+          "pattern": "^[\\w.-]+@[\\w.-]+\\.\\w+$"
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "trackOrderImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": true },
+        "b2b": { "enabled": true }
+      },
+      "security": {
+        "inputValidation": {
+          "maxLength": 50,
+          "bannedPatterns": ["<script", "javascript:", "onclick"]
+        }
+      },
+      "udl": {
+        "methods": ["sdk.unified.getOrder"],
+        "dataFlow": "read",
+        "caching": {
+          "enabled": true,
+          "ttlSeconds": 60,
+          "invalidateOn": ["order_status_change"]
+        }
+      },
+      "response": {
+        "format": "markdown",
+        "includeMetadata": false
+      },
+      "observability": {
+        "logging": {
+          "level": "info",
+          "includeParams": false
+        }
+      }
+    },
+    {
+      "id": "apply_coupon",
+      "name": "Apply Coupon",
+      "description": "Apply a discount coupon or promotional code to the current cart",
+      "category": "checkout",
+      "enabled": true,
+      "parameters": {
+        "couponCode": {
+          "type": "string",
+          "required": true,
+          "description": "Coupon or promotional code",
+          "pattern": "^[A-Z0-9_-]+$",
+          "min": 3,
+          "max": 20
+        }
+      },
+      "implementation": {
+        "type": "function",
+        "handler": "applyCouponImplementation"
+      },
+      "modes": {
+        "b2c": { "enabled": true },
+        "b2b": { 
+          "enabled": true,
+          "overrides": {
+            "security": {
+              "requiresAuth": true
+            }
+          }
+        }
+      },
+      "security": {
+        "rateLimit": {
+          "requests": 5,
+          "windowMs": 60000
+        },
+        "inputValidation": {
+          "bannedPatterns": ["ADMIN", "TEST", "DEBUG", "STAFF", "FREE", "100OFF"]
+        }
+      },
+      "udl": {
+        "methods": ["sdk.unified.applyCoupon", "sdk.unified.getCart"],
+        "dataFlow": "write",
+        "caching": {
+          "invalidateOn": ["cart"]
+        }
+      },
+      "performance": {
+        "timeoutMs": 5000,
+        "retries": 1
+      },
+      "response": {
+        "format": "markdown"
+      }
     }
   ]
 }

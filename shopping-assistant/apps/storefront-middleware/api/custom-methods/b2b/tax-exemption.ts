@@ -1,4 +1,5 @@
 import { type IntegrationContext } from "../../../types";
+import { getNormalizers } from "@vsf-enterprise/unified-api-sapcc/udl";
 import type { ApplyTaxExemptionArgs, TaxExemptionResponse } from './types';
 
 /**
@@ -11,14 +12,20 @@ export async function applyTaxExemption(
   const { exemptionCertificate, state, cartId, customerId, expirationDate } = args;
   
   try {
+    // IMPORTANT: Always use normalizers when fetching data from context.api
+    // This ensures UDL consistency across all backends
+    const { normalizeCustomer, normalizeCart } = getNormalizers(context);
+    
     // Validate B2B authorization
-    const customer = await context.api.getCustomer();
-    if (!customer.isB2B) {
+    const rawCustomer = await context.api.getCustomer();
+    const customer = normalizeCustomer(rawCustomer);
+    
+    if (!customer.organizationId) {
       throw new Error('Tax exemption is only available for B2B customers');
     }
     
     // Verify customer access
-    if (customerId !== customer.uid) {
+    if (customerId !== customer.id) {
       throw new Error('Customer ID mismatch');
     }
     
@@ -65,11 +72,12 @@ export async function applyTaxExemption(
     
     if (cartId) {
       try {
-        // Get current cart
-        const cart = await context.api.getCart();
+        // Get current cart with normalization
+        const rawCart = await context.api.getCart();
+        const cart = normalizeCart(rawCart);
         
-        if (cart && cart.code === cartId) {
-          const originalTax = cart.totalTax?.value || 0;
+        if (cart && cart.id === cartId) {
+          const originalTax = cart.totals?.tax || 0;
           
           // TODO: Apply exemption to cart via API
           // await context.api.applyTaxExemption({ 

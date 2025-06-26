@@ -12,22 +12,29 @@ export async function checkBulkAvailability(
   const { productId, quantity, deliveryDate, warehouseIds } = args;
   
   try {
+    // IMPORTANT: Always use normalizers when fetching data from context.api
+    // This ensures UDL consistency across all backends
+    const { normalizeCustomer, normalizeProduct } = getNormalizers(context);
+    
     // Validate B2B authorization
-    const customer = await context.api.getCustomer();
-    if (!customer.isB2B) {
+    const rawCustomer = await context.api.getCustomer();
+    const customer = normalizeCustomer(rawCustomer);
+    
+    if (!customer.organizationId) {
       throw new Error('Bulk availability check is only available for B2B customers');
     }
     
     // Get product details with stock information
-    const product = await context.api.getProduct({ code: productId });
-    if (!product) {
+    const rawProduct = await context.api.getProduct({ code: productId });
+    if (!rawProduct) {
       throw new Error(`Product ${productId} not found`);
     }
+    const product = normalizeProduct(rawProduct);
     
-    // Get stock information
-    const stock = product.stock;
-    const currentStock = stock?.stockLevel || 0;
-    const inStockStatus = stock?.stockLevelStatus || 'outOfStock';
+    // Get stock information from normalized product
+    // Note: UDL normalized product has quantityLimit for stock
+    const currentStock = product.quantityLimit || 0;
+    const inStockStatus = currentStock > 0 ? 'inStock' : 'outOfStock';
     
     // TODO: Real integration with warehouse management system
     // const warehouseService = await context.getApiClient("wms");
@@ -107,7 +114,7 @@ export async function checkBulkAvailability(
       productId,
       requestedQuantity: quantity,
       availableNow,
-      totalAvailable: availableNow + (product.purchasable ? 999999 : 0), // Assume unlimited production capacity
+      totalAvailable: availableNow + (currentStock > 0 ? 999999 : 0), // Assume unlimited production capacity if in stock
       availability: {
         immediate: {
           quantity: availableNow,

@@ -117,6 +117,58 @@ const { data } = useQuery({
 });
 ```
 
+## 🚨 CRITICAL: Normalizers in Custom Methods
+
+**When to Use Normalizers:**
+- ALWAYS when fetching data from `context.api.*` in middleware custom methods
+- This ensures UDL consistency across different e-commerce backends
+- Without normalizers, you're returning raw backend-specific data structures
+
+**Correct Pattern:**
+```typescript
+// ✅ ALWAYS normalize data from context.api
+import { getNormalizers } from "@vsf-enterprise/unified-api-sapcc/udl";
+
+export async function customMethod(context: IntegrationContext, args: any) {
+  const { normalizeCustomer, normalizeProduct, normalizeCart } = getNormalizers(context);
+  
+  // Fetch and normalize
+  const rawCustomer = await context.api.getCustomer();
+  const customer = normalizeCustomer(rawCustomer); // Now in UDL format
+  
+  // Use normalized data
+  if (!customer.organizationId) { // UDL property, not backend-specific
+    throw new Error('B2B only');
+  }
+}
+```
+
+**Wrong Pattern:**
+```typescript
+// ❌ NEVER use raw API responses directly
+export async function customMethod(context: IntegrationContext, args: any) {
+  const customer = await context.api.getCustomer();
+  
+  // This uses backend-specific properties!
+  if (!customer.isB2B) { // SAP-specific, not UDL
+    throw new Error('B2B only');
+  }
+}
+```
+
+**Common Normalizers:**
+- `normalizeProduct()` - For product data
+- `normalizeCart()` - For cart data
+- `normalizeCustomer()` - For customer data
+- `normalizeOrder()` - For order data
+- `normalizePrice()` - For price formatting
+
+**Key UDL Properties:**
+- Customer B2B check: Use `customer.organizationId` (not `isB2B`)
+- Customer ID: Use `customer.id` (not `uid`)
+- Cart ID: Use `cart.id` (not `code`)
+- Product stock: Use `product.quantityLimit` (not `stock.stockLevel`)
+
 ## Common Development Tasks
 
 ### Custom Methods & Extensions
@@ -134,9 +186,12 @@ export async function customMethod(
   const contentful = await context.getApiClient("contentful"); // Access other integrations
   const { normalizeProduct } = getNormalizers(context);
   
-  // Implementation MUST use UDL
+  // Implementation MUST use UDL - normalize ALL data from context.api
   const rawData = await ecommerceApi.getProducts(args);
-  return normalizeProduct(rawData);
+  return {
+    products: rawData.map(p => normalizeProduct(p)), // Normalize each product
+    // other fields...
+  };
 }
 
 // Extend normalizers (integrations/<name>/extensions/unified.ts)

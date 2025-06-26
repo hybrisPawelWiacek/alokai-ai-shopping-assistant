@@ -1,4 +1,5 @@
 import { type IntegrationContext } from "../../../types";
+import { getNormalizers } from "@vsf-enterprise/unified-api-sapcc/udl";
 import type { GetAccountCreditArgs, AccountCreditResponse, OutstandingInvoice } from './types';
 
 /**
@@ -11,22 +12,28 @@ export async function getAccountCredit(
   const { customerId, accountId, includePendingOrders = false } = args;
   
   try {
+    // IMPORTANT: Always use normalizers when fetching data from context.api
+    // This ensures UDL consistency across all backends
+    const { normalizeCustomer } = getNormalizers(context);
+    
     // Validate B2B authorization
-    const customer = await context.api.getCustomer();
-    if (!customer.isB2B) {
+    const rawCustomer = await context.api.getCustomer();
+    const customer = normalizeCustomer(rawCustomer);
+    
+    if (!customer.organizationId) {
       throw new Error('Account credit information is only available for B2B customers');
     }
     
     // Verify customer access
-    if (customerId && customer.uid !== customerId) {
+    if (customerId && customer.id !== customerId) {
       throw new Error('Unauthorized access to customer credit information');
     }
     
     // TODO: Real integration with ERP/accounting system
     // const erpClient = await context.getApiClient("erp");
     // const creditInfo = await erpClient.api.getAccountCredit({
-    //   customerId: customerId || customer.uid,
-    //   accountId: accountId || customer.accountId,
+    //   customerId: customerId || customer.id,
+    //   accountId: accountId || customer.organizationId,
     //   includePendingOrders: includePendingOrders
     // });
     
@@ -73,13 +80,13 @@ export async function getAccountCredit(
     nextReview.setMonth(nextReview.getMonth() + 3);
     
     return {
-      accountId: accountId || customer.accountId || `ACC-${customer.uid}`,
-      customerId: customer.uid,
+      accountId: accountId || customer.organizationId || `ACC-${customer.id}`,
+      customerId: customer.id,
       creditLimit,
       availableCredit: Math.max(0, availableCredit),
       usedCredit,
       pendingCharges: includePendingOrders ? pendingCharges : undefined,
-      currency: customer.currency?.isocode || 'USD',
+      currency: 'USD', // Normalized customer doesn't have currency in UDL
       paymentTerms: getPaymentTerms(customer),
       creditStatus: availableCredit > creditLimit * 0.1 ? 'active' : 'hold',
       creditScore: calculateCreditScore(customer, outstandingInvoices),
@@ -97,34 +104,21 @@ export async function getAccountCredit(
 function determineCreditLimit(customer: any): number {
   // Mock credit limit based on customer type
   // In real implementation, this would come from ERP
-  const accountType = customer.accountType || 'STANDARD';
+  // Note: Normalized customer structure doesn't have accountType, using organizationId as proxy
+  const hasOrg = !!customer.organizationId;
   
-  switch (accountType) {
-    case 'ENTERPRISE':
-      return 100000;
-    case 'PREMIUM':
-      return 50000;
-    case 'STANDARD':
-      return 25000;
-    default:
-      return 10000;
+  // For B2B customers with org, provide higher limits
+  if (hasOrg) {
+    return 50000; // Default B2B credit limit
   }
+  return 10000; // Should not reach here as we validate B2B earlier
 }
 
 function getPaymentTerms(customer: any): string {
-  // Mock payment terms based on account type
-  const accountType = customer.accountType || 'STANDARD';
-  
-  switch (accountType) {
-    case 'ENTERPRISE':
-      return 'Net 60';
-    case 'PREMIUM':
-      return 'Net 45';
-    case 'STANDARD':
-      return 'Net 30';
-    default:
-      return 'Net 15';
-  }
+  // Mock payment terms for B2B customers
+  // In real implementation, this would come from customer contract
+  // All B2B customers get Net 30 by default
+  return 'Net 30';
 }
 
 function calculateCreditScore(customer: any, invoices: OutstandingInvoice[]): string {

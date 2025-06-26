@@ -48,6 +48,9 @@ For business users, product managers, and stakeholders.
 | Document | Purpose | Audience |
 |----------|---------|----------|
 | [ARCHITECTURE.md](./reference/ARCHITECTURE.md) | System design and patterns | Architects |
+| [UDL_CONTRACT.md](./reference/UDL_CONTRACT.md) | UDL as contract between frontend and e-commerce platforms | Architects & Developers |
+| [UDL_COMPREHENSIVE_GUIDE.md](./reference/UDL_COMPREHENSIVE_GUIDE.md) | Navigate extensive UDL documentation | Developers |
+| [SAPCC_SPECIFIC_DATA_ACCESS.md](./reference/SAPCC_SPECIFIC_DATA_ACCESS.md) | Access SAPCC features beyond UDL | Integration Developers |
 | [AI_INTEGRATION_GUIDE.md](./reference/AI_INTEGRATION_GUIDE.md) | Extending with new actions | Developers |
 | [DEVELOPMENT_WORKFLOW.md](./reference/DEVELOPMENT_WORKFLOW.md) | How to add new features | Developers |
 | [INFRASTRUCTURE_GUIDE.md](./reference/INFRASTRUCTURE_GUIDE.md) | Deployment and scaling | DevOps |
@@ -59,6 +62,7 @@ For business users, product managers, and stakeholders.
 | [PERFORMANCE_TUNING.md](./reference/PERFORMANCE_TUNING.md) | Optimization strategies | DevOps & Developers |
 | [SECURITY_BEST_PRACTICES.md](./reference/SECURITY_BEST_PRACTICES.md) | Security implementation guide | Security & Developers |
 | [TROUBLESHOOTING.md](./reference/TROUBLESHOOTING.md) | Detailed troubleshooting guide | Developers & Support |
+| [SAPCC_SPECIFIC_DATA_ACCESS.md](./reference/SAPCC_SPECIFIC_DATA_ACCESS.md) | Accessing SAPCC-specific data while maintaining UDL | Integration Developers |
 
 ### 💰 Business & Planning References
 | Document | Purpose | Audience |
@@ -131,10 +135,14 @@ Version history and development setup documentation.
 *Technical specifications in `./docs/unified-data-model/`*
 
 Contains comprehensive UDL documentation including:
-- Unified methods reference
-- Platform-specific normalizers
-- Integration guides
+- Data model definitions and interfaces
+- Unified methods reference (searchProducts, addCartLineItem, etc.)
+- Platform-specific normalizers (SAPCC, Magento, BigCommerce, etc.)
+- Integration guides and custom method creation
+- B2B features and advanced patterns
 - Legacy version documentation
+
+> **Quick Access**: See [UDL Comprehensive Guide](./reference/UDL_COMPREHENSIVE_GUIDE.md) for easy navigation of this extensive documentation
 
 ## 🗺️ Quick Navigation Guide
 
@@ -195,6 +203,7 @@ Contains comprehensive UDL documentation including:
 - **Deployment**: INFRASTRUCTURE_GUIDE.md
 - **Problems**: TROUBLESHOOTING.md (in reference/)
 - **Planning**: PROJECT_STATUS.md, MIGRATION_GUIDE.md
+- **Platform Integration**: SAPCC_SPECIFIC_DATA_ACCESS.md, UDL_CONTRACT.md
 
 ### By Role
 - **Business Owner**: FEATURE_SHOWCASE → BUSINESS_USER_GUIDE → COST_ANALYSIS
@@ -224,12 +233,12 @@ To add or update documentation:
 
 ### 📊 Documentation Stats
 - **Essential Docs**: 7 (what humans actually read)
-- **Reference Docs**: 11 (comprehensive guides for deep dives)
+- **Reference Docs**: 12 (comprehensive guides for deep dives)
 - **Working Docs**: 3 (implementation tracking - consolidated from 7)
 - **Component/Module Docs**: 10 (module-specific READMEs)
 - **Changelogs/Dev**: 3 (version history and dev setup)
 - **API/Config**: 2 (implementation guides)
-- **Total**: 35 documents (plus external and UDL docs)
+- **Total**: 36 documents (plus external and UDL docs)
 
 💡 **Pro Tip**: If you're human, you probably only need the 7 essential docs. The reference folder is there when you need specifics.
 

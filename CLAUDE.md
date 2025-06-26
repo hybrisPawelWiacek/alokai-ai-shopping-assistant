@@ -169,6 +169,12 @@ export async function customMethod(context: IntegrationContext, args: any) {
 - Cart ID: Use `cart.id` (not `code`)
 - Product stock: Use `product.quantityLimit` (not `stock.stockLevel`)
 
+**📚 Understanding UDL:**
+- [UDL Contract](./shopping-assistant/docs/reference/UDL_CONTRACT.md) - How UDL acts as a contract between frontend and backends
+- [SAPCC Specific Data Access](./shopping-assistant/docs/reference/SAPCC_SPECIFIC_DATA_ACCESS.md) - Accessing platform-specific data beyond UDL
+- [UDL Comprehensive Guide](./shopping-assistant/docs/reference/UDL_COMPREHENSIVE_GUIDE.md) - Navigate all UDL documentation
+- [Full UDL Documentation](./shopping-assistant/docs/unified-data-model/) - Complete technical reference with normalizers, methods, and platform-specific details
+
 ## Common Development Tasks
 
 ### Custom Methods & Extensions
